@@ -59,7 +59,7 @@
                     <code class="langjs">
     [
         { text: 'One', value: 'A', no:0 },
-        { text: '2', value: '2', no:1  },
+        { text: 'Two', value: 'B', no:1  },
         { text: 'Four', value: 'D', no:2  },
     ]
                     </code>
@@ -73,7 +73,7 @@
           </h3>
           <pre class="langjs">
                     <code class="langjs">
-    A2D 가 출력
+    ABD 가 출력
                     </code>
                 </pre>
         </li>
@@ -120,7 +120,7 @@
   // objarray 에서 map 메서드를 사용하여 no 프로퍼티 추가하시오
   // [
   //   { text: 'One', value: 'A', no:0 },
-  //   { text: '2', value: '2', no:1  },
+  //   { text: 'Two', value: 'B', no:1  },
   //   { text: 'Four', value: 'D', no:2  },
   // ]
   objarray = objarray.map((value, index, array) => {
@@ -139,14 +139,17 @@
     // obj === { text: 'One', value: 'A', no:0}
     return obj.value;
   });
-  console.log(newarr); // ['A', '2', 'D']
-  const str = newarr.reduce((pvalue, cpvalue, index, array) => {
+  console.log(newarr); // ['A', 'B', 'D']
+  const str = newarr.reduce((pvalue, cvalue, index, array) => {
     // '' + 'A' = 'A'
-    // 'A' + '2' = 'A2'
-    // 'A2' + 'D' = 'A2D'
+    // 'A' + 'B' = 'AB'
+    // 'AB' + 'D' = 'ABD'
     return pvalue + cvalue;
   }, '');
-  console.log(str);
+  console.log(str); // ABD
 
 
+  const str2 = objarray.map((obj) => obj.value)
+    .reduce((pvalue, cvalue) => pvalue + cvalue, '');
+  console.log(str2); // ABD
 </script>
