@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Sample</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- CSS import -->
+    <link rel="stylesheet" href="../css/reset.css">
+</head>
+
+<body>
+    <br>
+    <img src="./singerarray.png" style="padding-left: 30px;">
+    <xmp>
+        v-for 지시자를 사용하여 자신이 좋아하는 가수들을 출력하는 테이블을 작성하여 본다.
+
+        1. Object Array 를 만들어 화면과 같이 표시되게 하시오.
+        [
+            {??1: "설현", ??2: "010-3456-8200", ??3: "서현"},
+            {??1: "혜리", ??2: "010-3456-8299", ??3: "서리"},
+        ]
+
+        2. "추가" 버튼을 만들고 클릭 이벤트를 설정하시오.
+            <button v-on:click='btnAddClick'>추가</button>
+
+        3. "추가" 버튼을 클릭하면 행이 추가되게 작성하시오.
+            // 배열명.push( {a:'1', b:'2', c:'3'})
+            배열명[배열명.length] = {a:'1', b:'2', c:'3};
+
+        4. "추가" 버튼 기능 개선
+            input 태그 3개를 추가 하고
+            "추가" 버튼을 클릭하면
+            input 입력값을 이용하여 객체를 만들고
+            만들어진 객체를 Object Array에 추가한다.
+            <label for="">이름</label><input v-model:value="name">
+            <label for="">전화번호</label><input v-model:value="tel">
+            <label for="">주소</label><input v-model:value="address">
+
+        5. 입력된 값 초기화 기능 추가
+            "추가" 버튼을 클릭하면 Object Array에 추가하고
+            input 태그에 입력된 값을 지우시오.
+    </xmp>
+    <hr>
+
+    <div id="app" class="col-md-10 offset-md-1">
+        <table id="list" class="table-bordered">
+            <thead>
+                <tr class="bg-warning text-white text-center">
+                    <th>번호</th>
+                    <th>이름</th>
+                    <th>전화번호</th>
+                    <th>주소</th>
+                </tr>
+            </thead>
+            <tbody id="contacts">
+                <tr v-for="(contact, i) in contacts" v-bind:key="i">
+                    <td>{{i+1}}</td>
+                    <td>{{contact.name}}</td>
+                    <td>{{contact.tel}}</td>
+                    <td>{{contact.address}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
+
+

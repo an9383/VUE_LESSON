@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>컴포넌트 스타일</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- CSS import -->
+    <link rel="stylesheet" href="../css/reset.css">
+
+</head>
+<body>
+    <div>
+        <br>
+        <h2>만들어볼 예제</h2>
+        <img src="./vue_style_scoped_module.png">
+    </div>
+
+    <div>
+        <table>
+            <caption>컴포넌트에 스타일 적용 방법</caption>
+            <colgroup>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>구분</th>
+                    <th>정의방법</th>
+                    <th>사용방법</th>
+                    <th>설명</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>전역 CSS</td>
+                    <td>
+                        <pre class="langjs">
+<code class="langjs">&lt;style&gt;
+    .main { }
+&lt;/style&gt;</code></pre>
+                    </td>
+                    <td>
+                        class="main"
+                    </td>
+                    <td>
+                        스타일 충돌
+                    </td>
+                </tr>
+                <tr>
+                    <td>scoped CSS</td>
+                    <td>
+                        <pre class="langjs">
+<code class="langjs">&lt;style scoped&gt;
+    .main { }
+&lt;/style&gt;</code>
+</pre>
+                    </td>
+                    <td>
+                        class="main"
+                    </td>
+                    <td>
+                        속성 선택자 이용<br/>
+                        data-v-????? 속성 생성<br/>
+                        느리다 <br/>
+                        자식(하위)컴포넌트에 상속된다.
+                    </td>
+                </tr>
+                <tr>
+                    <td>module CSS</td>
+                    <td>
+                        <pre class="langjs">
+<code class="langjs">&lt;style module&gt;
+    .hand { }
+    .border { }
+&lt;/style&gt;</code>
+</pre>
+                    </td>
+                    <td>
+                        v-bind:class="$style.hand" <br/>
+                        v-bind:class="[$style.hand, $style.border]"
+                    </td>
+                    <td>
+                        style 을 객체처럼 사용<br/>
+                        $style.클래스명
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <xmp>
+        Vue-CLI 을 사용하여 어플리케이션을 만들고 컴포넌트 스타일 적용 방법을 학습한다.
+        "Vue 컴포넌트 스타일.pdf"를 참조하여 실습합니다.
+
+
+        ##################################
+        2. 프로젝트 폴더 구조
+        ##################################
+
+
+          프로젝트
+            ├─ dist
+            ├─ node_modules
+            ├─ assets
+            │   └─ logo.png
+            ├─ public
+            │   └─ index.html
+            │   └─ favion.ico
+            └─ src
+            │   └─ components
+            │   │       └─ HelloWorld.vue  # 삭제
+            │   │       └─ CompChild1.vue      # 파일 생성. 스타일 기능을 테스트용 component
+            │   │       └─ CompChild11.vue     # 파일 생성. 스타일 기능을 테스트용 component
+            │   │       └─ CompChild2.vue      # 파일 생성. 스타일 기능을 테스트용 component
+            │   │       └─ ModuleChild1.vue     # 파일 생성. 스타일 기능을 테스트용 component
+            │   ├─ App.vue
+            │   └─ main.js
+            ├─ babel.config.js
+            ├─ package.json
+            └─ README.md
+
+
+
+        ##################################
+        3. 파일 만들기
+        ##################################
+
+        $  touch  src/components/CompChild1.vue \
+                  src/components/CompChild11.vue \
+                  src/components/CompChild2.vue \
+                  src/components/ModuleChild1.vue
+
+
+        ##################################
+        4. 전역 CSS 사용시 스타일 충돌을 이해한다.
+        ##################################
+
+            step 4-1. src/components/CompChild1.vue  에 추가
+            <style>
+                .main { border:1px solid black; background-color:yellow; }
+            </style>
+            <template>
+                <div class="main">
+                    {{msg}}
+                </div>
+            </template>
+
+
+            step 4-2. src/components/CompChild2.vue 에 추가
+            <style>
+                .main { border:1px solid black; background-color:aqua; }
+            </style>
+            <template>
+                <div class="main">
+                    {{msg}}
+                </div>
+            </template>
+
+            step 4-3. src/App.vue 수정
+            기존에 있던 모든 내용을 지우고 아래 내용을 입력한다.
+            <style>
+                #app {
+                    font-family: Avenir, Helvetica, Arial, sans-serif;
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
+                    text-align: center;
+                    color: #2c3e50;
+                }
+            </style>
+
+            <template>
+                <div id="app">
+                    <h2>{{msg}}</h2>
+                    <child1 />
+                    <child2 />
+                </div>
+            </template>
+
+
+        ##################################
+        5. Scoped CSS를 이해한다.
+        Child1 부분에는 yellow가, Child2 부분에는 aqua가 나오게 하려고 한다.
+        어떻게 하면 될까?
+
+        속성 선택자를 이용하는 Scoped CSS 의 원리를 이해한다.
+        data-v-?????
+        ##################################
+
+            step 5-1. src/components/CompChild1.vue  수정
+            변경 전
+            <style>
+                .main { border:1px solid black; background-color:yellow; }
+            </style>
+
+            변경 후: scoped 추가
+            <style scoped>
+                .main { border:1px solid black; background-color:yellow; }
+            </style>
+
+
+            step 5-2. src/components/CompChild2.vue 수정
+            변경 전
+            <style>
+                .main { border:1px solid black; background-color:aqua; }
+            </style>
+
+            변경 후: scoped 추가
+            <style scoped>
+                .main { border:1px solid black; background-color:aqua; }
+            </style>
+
+
+
+        ##################################
+        6. Scoped CSS의 자식 컴포넌트 상속에 대해서 실습한다.
+        CompChild11.vue 를 추가하고
+        CompChild11.vue 를 CompChild1.vue의 자식으로 추가한다.
+        ##################################
+
+            step 6-1. src/components/CompChild11.vue 추가
+            <style scoped>
+                .test { font-style: italic;}
+            </style>
+            <template>
+                <div class="test">
+                    <h3>{{msg}}</h3>
+                </div>
+            </template>
+
+            step 6-2. src/components/CompChild1.vue  수정
+            <style scoped>
+                .main { border:solid 1px black; background-color:yellow; }
+            </style>
+            <template>
+                <div class="main test">
+                    {{msg}}
+                    <child11 />
+                    {{msg}}
+                </div>
+            </template>
+
+
+
+        ##################################
+        7. module CSS에 대해서 학습한다.
+        ModuleChild1.vue 를 추가하고
+        ModuleChild1.vue 를 App.vue의 자식으로 추가한다.
+        ##################################
+            step 7-1. src/components/ModuleChild1.vue 에 추가
+            <style module>
+                .hand { cursor:pointer; background-color:purple; color:yellow; }
+                .box { width:100px; height:100px; background-color:aqua; }
+                .border { border:solid 1px orange; }
+            </style>
+
+            <template>
+                <div>
+                    <button v-bind:class="$style.hand"> CSS Module을 적용한 버튼 </button>
+                    <div :class="[$style.box, $style.border]">Hello World</div>
+                </div>
+            </template>
+
+
+
+            step 7-2. src/App.vue 수정
+            <style>
+                #app {
+                    font-family: Avenir, Helvetica, Arial, sans-serif;
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
+                    text-align: center;
+                    color: #2c3e50;
+                }
+            </style>
+
+            <template>
+                <div id="app">
+                    <h2>{{msg}}</h2>
+                    <CompChild1 />
+                    <CompChild2 />
+                    <ModuleChild1 />
+                </div>
+            </template>
+
+    </xmp>
+
+</body>
+</html>

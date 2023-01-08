@@ -1,0 +1,36 @@
+// Place your key bindings in this file to override the defaultsauto[]
+// https://code.visualstudio.com/docs/getstarted/keybindings
+
+// https://stackoverflow.com/questions/51861448/is-there-a-way-to-save-all-files-commit-and-upload-in-one-command-in-visual-stu
+// https://marketplace.visualstudio.com/items?itemName=ryuta46.multi-command
+[
+  {
+    "key": "f8",
+    "command": "-editor.action.marker.nextInFiles",
+    "when": "editorFocus"
+  },
+  {
+    "key": "f8",
+    "command": "workbench.action.debug.continue",
+    "when": "debugState == 'stopped'"
+  },
+  {
+    "key": "f5",
+    "command": "-workbench.action.debug.continue",
+    "when": "debugState == 'stopped'"
+  },
+  {
+    "key": "alt+f5",
+    "command": "launches.DebugNodemon"
+  },
+  {
+    "key": "alt+f5",
+    "command": "-workbench.action.editor.nextChange",
+    "when": "editorTextFocus && !textCompareEditorActive"
+  },
+  {
+    "key": "alt+f5",
+    "command": "-workbench.action.compareEditor.nextChange",
+    "when": "textCompareEditorVisible"
+  }
+]
