@@ -288,4 +288,80 @@
   </body>
 </html>
 
-
+<script>
+//   객체의 RCUD2S 사용법에 대해서 실습한다.
+// 객체 리터럴( {} ) 을 이용한 객체 선언
+
+    var foo = {
+        name : 'foo',
+        run : function () { return this.name; }
+    };
+
+
+// 생성자 함수를 이용한 객체 선언. 상속 구현 시 사용
+// ※생성자 함수란 첫 글자를 대문자로 시작하는 함수
+
+
+    function Goo(name, age) {
+        this.name = name;
+        this.run = function () { return this.name; };
+    };
+    const foo = new Goo('goo', 31);
+
+
+
+
+// 실습. 객체 RCUD 방법을 학습한다.
+
+//     // 객체 리터럴( {} )을 이용하여 객체 생성합니다.
+    var foo = {
+        name: 'foo',
+        age: 30,
+        array: [1,4,5,5],
+        run() {
+            return this.name;
+        },
+    };
+
+
+// RCUD : R. 읽기- 마침표 표기법
+// 마침표(.) 표기법을 사용하여 foo 객체의 name 값을 console.log()로 출력하시오
+
+
+
+
+
+// RCUD : R. 읽기- 대괄호 표기법
+// 대괄호( [] )표기법을 사용하여 foo 객체의 age 값을 console.log()로 출력하시오
+
+
+console.log(foo.age);
+
+
+// RCUD : Create. 추가
+// foo 객체에 키명이 gender 인 프로퍼티를 추가하고 gender 값에 "man" 을 설정하시오
+// foo 객체의 gender 값을 console.log()로 출력하시오
+
+
+
+
+// RCUD : Update. 수정
+// foo 객체에 name 값을 "bar" 로 바꾸시오
+// foo 객체의 name 값을 console.log()로 출력하시오
+
+foo.name='bar';
+foo['name']='bar';
+console.log(foo);
+
+
+// RCUD : Delete. 삭제
+// 객체에서 프로퍼티(속성)을 삭제하려면 delete 연산자를 사용한다.
+
+
+    delete foo.age;
+    delete foo.gender;
+    console.log( foo.age    );
+    console.log( foo.gender );
+
+
+</script>
