@@ -1,0 +1,30 @@
+https://www.npmjs.com/
+
+
+디버깅시 자주 사용되는 단축키
+  debugger
+  F5
+  F8 : 점프
+  F10: 한줄씩
+  F11
+
+
+react 단축키:
+  reactplugin : .html 파일에서 사용.
+  rfchtml     : 함수형 컴포넌트 코드 생성 .html 파일에서 사용.
+
+  rfc         : 함수형 컴포넌트 코드 생성 .js 파일에서 사용.
+  styled      : 스타일 컴포넌트 코드 생성(styled-components)
+  rdx         : redux 코드 생성
+
+
+메서드 매개변수 확인하는 방법: ctrl + shift + spacebar
+
+react 프로젝트 만들기
+  1.node 설치. 1번만
+
+  2. react 프로젝트 생성. 프로젝트를 만들 때 마다
+    $ npx create-react-app 프로젝트명
+
+  3. node 모듈 재설치. node_modules 폴더가 생성됨
+    $ npm install
