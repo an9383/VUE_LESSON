@@ -4,4 +4,8 @@ console.log('');
 console.log('');
 
 const arr = [];
-arr.filter()
+arr.filter();
+
+for (let index in arr) {
+  console.log(arr[index]);
+}

@@ -35,9 +35,23 @@
       {{ message }}, app1
     </div>
 
-    <div>
+    <div id="app">
       {{ message }}, app2
     </div>
 
   </body>
 </html>
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.7.8/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+  new Vue({
+    /* edtmc^2w */
+    el: 'div#app',
+    data: {
+      /* 인스턴스 안에서 사용되는 변수 등록, 공유 변수 */
+      message: '실습 완성 축하!!!!!'
+    },
+  });
+
+</script>

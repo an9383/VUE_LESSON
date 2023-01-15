@@ -170,6 +170,27 @@
 
 
       ##################################
+      아래의 4단계를 단계별로 실습한다.
+
+      $ npx babel --presets=@babel/env  src/ap06-01.js
+
+      $ npx babel src/ap06-01.js  # .babelrc 파일 필요
+
+      트랜스컴파일 수행
+      ==> src 폴더의 js 파일을 es5로 컴파일하여 build 폴더에 추가하시오.
+      ==> src\es06-01.js -> build\es06-01.js
+      $ npx babel src/ -d build/ # .babelrc 파일 필요
+
+      # packages.json 의 scripts 에 build 추가.
+      # "build": "npx babel src/ -d build/"
+      # npm run 은 package.json 의 scripts 를 실행하는 것이다
+      $ npm run build
+
+      ##################################
+
+
+
+      ##################################
       # 폴더 구조 및 파일 확인
       ##################################
         \es2015test
@@ -414,27 +435,31 @@
       $ ls -a
       .  ..  .babelrc  node_modules  package.json  package-lock.json  src
 
-      $ cat src/Example.js
-      // Example.js
+      $ cat src/Module1.js
+      // Module1.js
       const a = 1;
       const b = 2;
       const d = 4;
 
+      // export 변수나 함수를 내보낼 때 사용한다.
+      // export 파일에서 여러 번 사용 가능하다.
       export { a };
       export const c = 3;
 
+      // exprot default 변수나 함수를 내보낼 때 사용한다.
+      // export default 는 파일에서 한 번만 사용 가능하다.
       export default b; // default 는 파일당 1번만 사용 가능
 
-      $ cat src/Exmaple2.js
-      // Example2.js
-      import b, { a, c } from './Example.js';
+      $ cat src/Module2.js
+      // Module2.js
+      import b, { a, c } from './Module1.js';
 
       console.log(b); // 2 출력
       console.log(a, c); // 1 출력
 
-      $ cat src/Exmaple3.js
-      // Example3.js
-      import b1, { a, c as e } from './Example.js';
+      $ cat src/Module3.js
+      // Module3.js
+      import b1, { a, c as e } from './Module1.js';
       console.log(a, b1, e); // 1, 2, 3
 
     </xmp>
