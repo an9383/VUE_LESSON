@@ -1,30 +1,41 @@
-<template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
-</template>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<style scoped>
+section {
+  height: 150px;
+  background-color: #95db5e;
+  margin: 0 5% 20px 5%;
+  margin: 40px 0px;
 }
 
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+div {
+  margin: 40px 20px;
 }
 </style>
+
+<template>
+  <div class="container">
+    <header-comp></header-comp>
+
+    <section id="page1" data-role="page">
+      <div class="content" data-role="content">컨텐츠</div>
+    </section>
+
+    <footer-comp></footer-comp>
+  </div>
+</template>
+
+<script>
+import Header from './HeaderComp.vue';
+import Footer from './FooterComp.vue';
+
+export default {
+  data() {
+    return {
+      msg: 'Hello VueJS',
+    };
+  },
+  components: {
+    'header-comp': Header,
+    'footer-comp': Footer,
+  },
+};
+</script>
