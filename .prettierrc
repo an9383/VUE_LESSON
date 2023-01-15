@@ -8,7 +8,6 @@
   "proseWrap": "always",
   "bracketSpacing": true,
   "jsxSingleQuote": false,
-  "jsxBracketSameLine": false,
   "quoteProps": "as-needed",
   "endOfLine": "crlf"
 }

@@ -1,4 +1,3 @@
-
 <style scoped>
 header {
   height: 60px;

@@ -16,6 +16,7 @@
   //     "description": "Log output to console"
   // }
   "React Class Component": {
+    // "scope": "javascript,typescript",
     "prefix": "rcc",
     "body": [
       "// import React, { Component, PureComponent, Fragment, forwardRef } from 'react';",
@@ -111,6 +112,7 @@
     "description": "React Class Component"
   },
   "React Functional Component At plugin": {
+    // "scope": "javascript,typescript",
     "prefix": "rfchtml",
     "body": [
       "function ${1:${TM_FILENAME_BASE}}({",
@@ -163,6 +165,7 @@
     "description": "React Functional Component At plugin"
   },
   "React Functional Component": {
+    // "scope": "javascript,typescript",
     "prefix": "rfc",
     "body": [
       "import React, { useState, useEffect, useRef, useCallback, useMemo, useReducer, Fragment, forwardRef, useImperativeHandle } from 'react';",
@@ -243,6 +246,7 @@
     "description": "React Functional Component"
   },
   "React Functional Component with Redux": {
+    // "scope": "javascript,typescript",
     "prefix": "rfcrdx",
     "body": [
       "import React, { useState, useEffect, useRef, useCallback, useMemo, useReducer, Fragment, forwardRef, useImperativeHandle } from 'react';",
@@ -340,6 +344,7 @@
     "description": "React Functional Component with Redux"
   },
   "Redux Class Component": {
+    // "scope": "javascript,typescript",
     "prefix": "rdxc",
     "body": [
       "",
@@ -402,6 +407,7 @@
     "description": "Redux Class Component Script"
   },
   "Redux Function Component": {
+    // "scope": "javascript,typescript",
     "prefix": "rdxf",
     "body": [
       "",
@@ -767,6 +773,7 @@
     "description": "Redux Function Component Script"
   },
   "call a saga function": {
+    // "scope": "javascript,typescript",
     "prefix": "callsaga1",
     "body": [
       "",
@@ -789,6 +796,7 @@
     "description": "saga 함수 안에서 다른 saga 함수 호출하기"
   },
   "call a general function": {
+    // "scope": "javascript,typescript",
     "prefix": "callsaga2",
     "body": [
       "",
@@ -804,6 +812,7 @@
     "description": "saga 함수 안에서 일반 함수 호출하기"
   },
   "call a sync function": {
+    // "scope": "javascript,typescript",
     "prefix": "callsync1",
     "body": [
       "",
@@ -815,6 +824,7 @@
     "description": "saga 함수 안에서 sync 방식으로 함수 호출하기"
   },
   "call a redux state": {
+    // "scope": "javascript,typescript",
     "prefix": "callreduxstate",
     "body": [
       "",
@@ -827,6 +837,7 @@
     "description": "saga 함수 안에서 redux state 가져오는 함수 호출하기"
   },
   "styled component": {
+    // "scope": "javascript,typescript",
     "prefix": "styled",
     "body": [
       "// import styled, { css } from 'styled-components';",
@@ -855,6 +866,7 @@
     "description": "styled component 를 사용하여 스타일 작성하기"
   },
   "React script import": {
+    // "scope": "javascript,typescript",
     "prefix": "reactplugin",
     "body": [
       "",

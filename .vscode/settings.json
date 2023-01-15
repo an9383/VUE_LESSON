@@ -9,7 +9,7 @@
   "terminal.integrated.defaultProfile.windows": "Git Bash",
   "terminal.integrated.fontWeight": "normal",
   // "terminal.integrated.fontFamily": "Courier New",
-  "terminal.integrated.fontFamily": "monospace",
+  "terminal.integrated.fontFamily": "나눔고딕코딩",
 
   /*
     window 관련 설정은 프로젝트 .vscode/setting.json 에서는 정상 작동하지 않음.
@@ -34,8 +34,18 @@
   "update.enableWindowsBackgroundUpdates": false,
   "update.mode": "none",
 
-  // files
+  // git global
+  "git.autofetch": true,
+  "git.enableSmartCommit": true,
+
+  // editor global
+  "editor.minimap.enabled": false,
+  "editor.fontFamily": "나눔고딕코딩",
+
+  // files global
   "files.autoSave": "afterDelay",
+
+  // files local
   "files.insertFinalNewline": false,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
@@ -59,11 +69,10 @@
     "**/tmp": true,
     "**/build": true
   },
-  "editor.minimap.enabled": false,
 
+  // editor local
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
-  "editor.fontFamily": "나눔고딕코딩",
   "editor.fontLigatures": true,
   /* 저장 시 해당 파일 전체 포맷 여부 */
   "editor.formatOnSave": true,
@@ -79,14 +88,11 @@
   "editor.detectIndentation": false,
   "editor.codeActionsOnSave": {
     // For ESLint
-    //"source.fixAll.eslint": true,
-    "source.fixAll": true
+    "source.fixAll.eslint": true
   },
   "javascript.updateImportsOnFileMove.enabled": "always",
   "diffEditor.ignoreTrimWhitespace": false,
-  // git
-  "git.autofetch": false,
-  "git.enableSmartCommit": true,
+
   //html
   "html.format.preserveNewLines": true,
   "html.format.unformatted": "xmp,pre,code,textarea",
@@ -131,6 +137,10 @@
     "**/.meteor": true
   },
 
+  "[markdown]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+  },
   "[css]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
