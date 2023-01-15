@@ -9,7 +9,7 @@
   "terminal.integrated.defaultProfile.windows": "Git Bash",
   "terminal.integrated.fontWeight": "normal",
   // "terminal.integrated.fontFamily": "Courier New",
-  "terminal.integrated.fontFamily": "나눔고딕코딩",
+  "terminal.integrated.fontFamily": "monospace",
 
   /*
     window 관련 설정은 프로젝트 .vscode/setting.json 에서는 정상 작동하지 않음.
