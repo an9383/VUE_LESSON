@@ -37,10 +37,10 @@
 
           $ npm install -g npm@latest        #  npm 최신 버전 설치. -g: 전역 설치
 
-          $ npm -v                           #  npm 버전 확인
+          $ npm -v                           #  npm 버전 재확인
           9.3.0
 
-          $ npx -v                           #  npx(=npm extension) 버전 확인
+          $ npx -v                           #  npx(=npm extension) 버전 재확인
           9.3.0
 
 
@@ -51,8 +51,9 @@
           # vue/cli 를 전역(--global)으로 설치한다. -g: 전역 설치
           # * cli: command line interface 의 약자
           $ npm install --global @vue/cli
+          $ npm install -g @vue/cli
 
-          $ vue -V        # 설치된 vue/cli 의 버전 확인
+          $ vue -V        # 설치된 vue/cli 의 버전 재확인
           @vue/cli 5.0.8
 
       step 3. Vue 프로젝트 생성
@@ -139,7 +140,7 @@
       step 8. 소스 전체에  eslint 규칙에 맞게 포맷팅 변경하기
           정의한 ESLint 룰을 지키고 있지 않은 파일과 내용을 확인하고
           prettier 의 룰에 맞게 코드를 수정 할 수 있습니다.
-
+          $ ls                            # package.json 이 있는지 확인
           $ npx prettier --check ./src    # ESLint 룰 체크
           $ npx prettier --write ./src    # ESLint 룰에 맞게 코드 수정
 
@@ -151,9 +152,14 @@
 
       step 11. 운영 서버에 배포할 파일을 만든다. <== 웹팩 사용
           $ ls       # dist 폴더가 있는지 확인
-          babel.config.js  node_modules/  package.json  package-lock.json  public/  README.md  src/
+          babel.concfig.js  node_modules/  package.json  package-lock.json  public/  README.md  src/
 
           $ npm run build    # webpackprj01/dist/ 에 합쳐진 파일이 생성됨
+
+          $ ls               # dis 폴더 생성 여부를 확인
+
+      step 12. github.io 에 배포
+          dist 폴더 안의 파일들을  http://사용자이름.github.io 에 배포하시오
 
     </pre>
 

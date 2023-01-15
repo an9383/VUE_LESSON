@@ -19,3 +19,13 @@
         iterator를 생성해서 next()로 순회할 수 있는 자료구조가 이터러블
 
 */
+
+const cities = ['서울', '부산', '제주'];
+console.log(cities[0], cities[1], cities[2]);
+console.log(...cities);
+
+const east = ['U', 'K', 'T'];
+const west = ['N', 'C', 'G'];
+const countries = east.concat(west); // 원본이 바뀜. 문제점.
+const countries1 = [...east, ...west];
+console.log(countries1);
