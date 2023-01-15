@@ -144,7 +144,7 @@
         console.log(e.target);
         debugger;
         // 배열 복제
-        const arrFiltered = this.$data.filter((value, index, array) => {
+        const arrFiltered = this.$data.arr.filter((value, index, array) => {
           if (index > 1) {
             return true;
           }
@@ -156,6 +156,12 @@
       },
       change4(e) {
         console.log(e.target);
+        debugger;
+        // 복제
+        const arrSpread = [500, ...this.$data.arr, 70];
+
+        // 할당(대입)
+        this.$data.arr = arrSpread;
       },
     },
     components: {
