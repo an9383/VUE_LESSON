@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
     <title>Vue Template - Javascript Expression</title>
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
     <!-- CSS import -->
-    <link rel="stylesheet" href="../css/reset.css">
-</head>
+    <link rel="stylesheet"
+      href="../css/reset.css">
+  </head>
 
-<body>
+  <body>
     <xmp>
         Vue 인스턴스에서 템플릿을 만드는 방법과
         템플릿 사용시의 주의 사항을 학습한다.
@@ -39,25 +42,54 @@
     <hr>
 
     <div>
-        <div id="app1">
-            <!-- inline template -->
-            <p>{{ message }}</p>
-        </div>
+      <div id="app1">
+        <!-- inline template -->
+        <p>{{ message }}</p>
+      </div>
 
-        <hr>
+      <hr>
 
-        <div id="app2">
-            <!-- template 프로퍼티를 이용하는 방식-->
-            사랑해~~~
-        </div>
+      <div id="app2">
+        <!-- template 프로퍼티를 이용하는 방식-->
+        사랑해~~~
+      </div>
 
-        <hr>
+      <hr>
 
-        <div id="app3">
-            <!-- script 를 사용하는 방식 -->
-            사랑해~~~
-        </div>
+      <div id="app3">
+        <!-- script 를 사용하는 방식 -->
+        사랑해~~~
+      </div>
     </div>
-</body>
+  </body>
 
 </html>
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.7.8/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+  new Vue({
+    /* edtmc^2w */
+    el: '#app1',
+    data: {
+      /* 인스턴스 안에서 사용되는 변수 등록, 공유 변수 */
+      message: '<i>콧수염 괄호를 이용한 데이터 출력</i>',
+    },
+  });
+
+  new Vue({
+    /* edtmc^2w */
+    el: '#app2',
+    data: {
+      /* 인스턴스 안에서 사용되는 변수 등록, 공유 변수 */
+      message2: '<i>콧수염 괄호를 이용한 데이터 출력</i>',
+    },
+    template: `
+      <i>
+        template 속성을 이용한 데이터 출력. {{message2}}
+      </i>
+    `,
+  });
+
+
+</script>

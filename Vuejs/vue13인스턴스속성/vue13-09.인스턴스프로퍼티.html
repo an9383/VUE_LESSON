@@ -95,7 +95,19 @@
       mesg1: null,
       // mesg2: null,
     },
-    //template: ``,
+    template: `
+    <div id="app">
+      <input type="text"
+        name="message"
+        id="message"
+        value=""
+        v-on:keyup="msgKey">
+      <br />
+      <span>data 속성을 이용해서 화면 표시: {{mesg1}}</span>
+      <br />
+      <span>computed 속성을 이용해서 화면 표시: {{mesg2}}</span>
+    </div>
+    `,
     methods: {
       /* 이벤트 핸들러 등록 + 일반 함수 */
       msgKey(e) {
