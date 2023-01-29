@@ -139,20 +139,20 @@
             2. 문자열  yellow           ===> "yellow"
             3. 콤마    ;                ===> ,
         </xmp>
-      <span mouseover="spanmouseover"
-        mousedown="spanmousedown"
-        mouseup="spanmouseup"
-        mouseout="spanmouseout">
+      <span v-on:mouseover="spanmouseover"
+        v-on:mousedown="spanmousedown"
+        v-on:mouseup="spanmouseup"
+        v-on:mouseout="spanmouseout">
       </span>
-      <span mouseover="spanmouseover"
-        mousedown="spanmousedown"
-        mouseup="spanmouseup"
-        mouseout="spanmouseout">
+      <span v-on:mouseover="spanmouseover"
+        v-on:mousedown="spanmousedown"
+        v-on:mouseup="spanmouseup"
+        v-on:mouseout="spanmouseout">
       </span>
-      <span mouseover="spanmouseover"
-        mousedown="spanmousedown"
-        mouseup="spanmouseup"
-        mouseout="spanmouseout">
+      <span v-on:mouseover="spanmouseover"
+        v-on:mousedown="spanmousedown"
+        v-on:mouseup="spanmouseup"
+        v-on:mouseout="spanmouseout">
       </span>
       <hr />
 
@@ -165,15 +165,16 @@
 
         </xmp>
       <select id="sel"
-        change="selectchange">
-        <option value="../images/strawberry.gif">딸기</option>
-        <option value="../images/banana.gif">바나나</option>
-        <option value="../images/apple.gif"
-          selected>사과</option>
+        v-on:change="selectchange">
+        <option v-for="(option, index) in options"
+          v-bind:key="index"
+          v-bind:value="option.value">
+          {{ option.text }}
+        </option>
       </select>
 
       <img id="img"
-        src="img_select" />
+        v-bind:src="img_select" />
       <hr />
 
       <xmp>
@@ -205,6 +206,12 @@
       img_image3: null,
       img_but1: '../images/but1.gif',
       img_swap: '../images/img_swap_off.png',
+      img_select: '../images/strawberry.gif',
+      options: [
+        { text: '딸기', value: '../images/strawberry.gif' },
+        { text: '바나나', value: '../images/banana.gif' },
+        { text: '사과', value: '../images/apple.gif' },
+      ],
     },
     //template: ``,
     methods: {
@@ -224,25 +231,52 @@
       },
       imageover(e) {
         console.log(e.target);
-        // 이미지 위에 마우스를 내리면(mouseout ) ==> ../images/but1.gif , ../images/img_swap_off.png
         //이미지 위에 마우스를 올리면(mouseover) ==> ../images/but2.gif , ../images/img_swap_on.png
-        if( e.target.id === 'but1'){
-          e.target.src = '../images/but2.gif';
+        if (e.target.id === 'but1') {
+          this.$data.img_but1 = '../images/but2.gif';
         }
         else {
-          e.target.src = '../images/img_swap_on.png';
+          this.$data.img_swap = '../images/img_swap_on.png';
         }
       },
       imageout(e) {
         console.log(e.target);
         // 이미지 위에 마우스를 내리면(mouseout ) ==> ../images/but1.gif , ../images/img_swap_off.png
-        //이미지 위에 마우스를 올리면(mouseover) ==> ../images/but2.gif , ../images/img_swap_on.png
-        if( e.target.id === 'but1'){
-          e.target.src = '../images/but1.gif';
+        if (e.target.id === 'but1') {
+          this.$data.img_but1 = '../images/but1.gif';
         }
         else {
-          e.target.src = '../images/img_swap_off.png';
+          this.$data.img_swap = '../images/img_swap_off.png';
         }
+      },
+      spanmouseover(e) {
+        // spanmouseover. background-color 를 yellow 로 설정
+        console.log(e.target);
+        // <span style="background-color:yellow;"></span>
+        e.target.style.backgroundColor = 'yellow';
+      },
+      spanmousedown(e) {
+        // spanmousedown. background-color 를 blue 로 설정
+        // <span style="background-color:blue;"></span>
+        console.log(e.target);
+        e.target.style.backgroundColor = 'blue';
+      },
+      spanmouseup(e) {
+        // spanmouseup.   background-color 를 pink 로 설정
+        // <span style="background-color:pink;"></span>
+        console.log(e.target);
+        e.target.style.backgroundColor = 'pink';
+      },
+      spanmouseout(e) {
+        // spanmouseout.  background-color 를 red 로 설정
+        // <span style="background-color:red;"></span>
+        console.log(e.target);
+        e.target.style.backgroundColor = 'red';
+      },
+      selectchange(e) {
+        console.log(e.target.value);
+        debugger;
+        this.$data.img_select = e.target.value;
       }
     },
     components: {
