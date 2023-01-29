@@ -219,6 +219,9 @@
         3. add 할 때 this.$data.todoItems 가 빈 배열인 경우는
            오류가 발생 할 수 있으므로 방어 코드 추가
         4. 이벤트 핸들러 작성 후 버블링을 확인한다.
+            삭제 버튼을 클릭하면 click 이벤트가 bubbling 되는 것을 확인한다.
+            doneToggle 메서드 안에 debugger; 설정
+            removeTodo 메서드 안에 debugger; 설정
 
 
     methods 작업 순서
@@ -233,16 +236,13 @@
         "ap03-11.객체배열.html" 를 참조하여 작성하시오.
             1. id 값 만 있는 새로운 배열을 만든다. ==> map() 메서드 사용.
             2. map() 메서드로 만들어진 새로운 배열에서 최대값을 찾는다.
-            3. 추가될 새로운 id = max id + 1
+            3. 추가될 새로운 new id = max id + 1
 
 
     주의 사항.
         1. checked 메서드에서 class에 빈 문자열로 설정하면 안됨.
             null 로 설정하면 됨.
-        2. 삭제 버튼을 클릭하면 click 이벤트가 bubbling 되는 것을 확인한다.
-            doneToggle 메서드 안에 debugger; 설정
-            removeTodo 메서드 안에 debugger; 설정
-        3. click 이벤트가 bubbling 안되게 이벤트 취소 기능을 추가해야 한다.
+        2. click 이벤트가 bubbling 안되게 이벤트 취소 기능을 추가해야 한다.
             변경 전: v-on:click="removeTodo(todoItem.id)"
             변경 후: v-on:click.stop="removeTodo(todoItem.id)"
     </pre>
@@ -357,11 +357,9 @@
           return null;
       },
       doneToggle(id) {
-        debugger;
-        // 복제 할당 ==> map
+        // 복제 후 할당 ==> map 사용
         // 1. 배열복제
         const newTodos = this.$data.todoItems.map((item, index, array) => {
-          debugger;
           if (item.id === id) {
             item.done = !item.done;
           }
@@ -369,13 +367,53 @@
         });
 
         //2. 할당
+        this.$data.todoItems = newTodos;
       },
       removeTodo(id) {
-        debugger;
+        // 삭제 ===> filter 사용
+        // 1. 복제
+        const newTodos = this.$data.todoItems.filter((item, index, array) => {
+          if (item.id === id)
+            return false;
+          else
+            return true;
+        });
+
+        //2. 할당
+        this.$data.todoItems = newTodos;
       },
       addTodo(e) {
         console.log(e.target);
         debugger;
+
+        // 1. id 값 만 있는 새로운 배열을 만든다. ==> map() 메서드 사용.
+        // 2. map() 메서드로 만들어진 새로운 배열에서 최대값을 찾는다.
+        // 3. 추가될 새로운 new id = max id + 1
+        const ids = this.$data.todoItems.map((item, index, array) => {
+          return item.id;
+        });
+        debugger;
+        const maxid = ids.reduce((pvalue, cvalue, index, array) => {
+          debugger;
+          if (pvalue > cvalue)
+            return pvalue;
+          else
+            return cvalue;
+        }, -1);
+
+        // 배열에 추가할 객체 만들기
+        const newtodo = {
+          id: maxid + 1,
+          todo: this.$data.newTodoItem,
+          done: false,
+        };
+
+        // this.$data.todoItems 에 추가. 복제 후 할당
+        const newTodos = [...this.$data.todoItems, newtodo];
+        this.$data.todoItems = newTodos;
+
+        // 입력 값 초기화.
+        this.$data.newTodoItem = null;
       },
     },
     components: {
