@@ -66,9 +66,9 @@
       <p>
       <ul>
         <!--
-                    v-for는 javascript의 for ~ in 문과 같은 것이다
-                    javascript for( var system in systems); 문과 같다
-                -->
+            v-for는 javascript의 for ~ in 문과 같은 것이다
+            for( let system in systems){ };
+        -->
         <li v-for="system in systems">
           {{ system }}
         </li>
@@ -96,7 +96,7 @@
         </p>
         <select name=""
           id="">
-          <option v-for="(option,index) in options"
+          <option v-for="(option, index) in options"
             v-bind:key="index"
             v-bind:value="option.value">
             {{ option.text }} : {{option.value}}
@@ -117,22 +117,22 @@
     el: '#app1',
     data: {
       /* 인스턴스 안에서 사용되는 변수 등록, 공유 변수 */
-      systems: ['window','ios','android'],
-      arr: [1,2,3,4],
+      systems: ['window', 'ios', 'android'],
+      arr: [1, 2, 3, 4],
     },
   });
 
   new Vue({
-      /* edtmc^2w */
-      el: '#app2',
-      data: {
-        /* 인스턴스 안에서 사용되는 변수 등록, 공유 변수 */
-        options: [
-          { text: 'One', value: 'A' },
-          { text: 'Two', value: 'B' },
-          { text: 'Three', value: 'C' },
-          ],
-      },
+    /* edtmc^2w */
+    el: '#app2',
+    data: {
+      /* 인스턴스 안에서 사용되는 변수 등록, 공유 변수 */
+      options: [
+        { text: 'One', value: 'A' },
+        { text: 'Two', value: 'B' },
+        { text: 'Three', value: 'C' },
+      ],
+    },
   });
 
 
