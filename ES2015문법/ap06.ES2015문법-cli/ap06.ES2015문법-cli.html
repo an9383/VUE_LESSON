@@ -14,6 +14,32 @@
         rel="nofollow">npm 사용법</a>
     </div>
     <xmp>
+    
+      ##################################
+      ## ESNext 관련 학습할 내용
+      ## ESNext는 ES2015, ES2016, ES2017, ES2019, ... 를 지칭하는 용어다.
+      ##################################
+
+      학습 주제
+        . var vs let vs const
+        . 템플릿 리터럴
+        . 디폴트 매개변수
+        . 가변 매개변수
+        . function 함수 vs 화살표 함수
+        . 분해 할당(Destructure assignment)
+        . ES6 신규연산자
+          - rest 연산자
+          - spread 연산자
+        . 객체 생성
+        . 생성자로 객체 생성
+        . class로 객체 생성
+        . 비동기 처리
+          - 콜백
+          - 프로미스(Promise)
+          - async, await
+        . For … Of 루프
+        . 개선된 객체 표현식
+        . 모듈 import 와 export
 
       ##################################
       # node / npm 버전  확인 및 업그레이드
@@ -126,7 +152,7 @@
 
       npm install 을 하면 node_modules 폴더가 생성되고 해당 폴더 안에 nodemon 이 다운로드됨.
 
-      $ npm install --save nodemon
+      $ npm install --save-dev nodemon
 
 
       ##################################
@@ -155,10 +181,8 @@
         },
         "author": "",
         "license": "ISC",
-        "dependencies": {
-          "nodemon": "2.0.20"
-        },
         "devDependencies": {
+          "nodemon": "2.0.20",
           "@babel/cli": "7.18.6",
           "@babel/core": "7.18.6",
           "@babel/preset-env": "7.18.6"
@@ -398,6 +422,22 @@
       ##################################
       # 생성된 node 프로젝트에서 import/export 사용 설정
       ##################################
+
+
+    import 방식
+      import React from "redux";
+      import {Component} from "redux";
+      import React, {Component} from "redux";
+      import React as rd from "redux";
+      import * as rd from "redux";
+    
+
+    export 방식
+      export 변수나 함수를 내보낼 때 사용한다.
+      export 파일에서 여러 번 사용 가능하다.
+
+      exprot default 변수나 함수를 내보낼 때 사용한다.
+      export default 는 파일에서 한 번만 사용 가능하다.
 
       $ packages.json 에 type 설정 추가
       {

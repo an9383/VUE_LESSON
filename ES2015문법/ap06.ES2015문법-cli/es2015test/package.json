@@ -5,16 +5,14 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1" ,
-    "build": "npx babel ./src  -d ./build" ,
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx babel ./src -d ./build",
     "start": "nodemon --watch src/ --exec npm run build"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "nodemon": "2.0.20"
-  },
   "devDependencies": {
+    "nodemon": "2.0.20",
     "@babel/cli": "7.20.7",
     "@babel/core": "7.20.12",
     "@babel/preset-env": "7.20.2"
