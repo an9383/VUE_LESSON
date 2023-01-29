@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
     <title>데이터 바인딩</title>
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
     <!-- CSS import -->
-    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet"
+      href="../css/reset.css">
 
     <style>
-        p {
-            font-size: 30px;
-        }
+      p {
+        font-size: 30px;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <xmp>
         html 태그 = 엘리먼트 + 텍스트 + 어트리뷰트(속성)
 
@@ -60,34 +63,51 @@
     <hr>
 
     <div>
-        innnerText
+      innnerText
     </div>
 
     <div>
-        <span>innnerHTML</span>
+      <span>innnerHTML</span>
     </div>
 
-    <div id="my">
-        <div>
-            콧수염 표현식 데이터 바인딩: <p>{{message}}</p>
-        </div>
-        <div>
-            v-html 데이터 바인딩: <p style="color:red;" v-html="message"> </p>
-        </div>
-        <div>
-            v-text 데이터 바인딩: <p style="color:blue;" v-text="message"> </p>
-        </div>
+    <div id="app">
+      <div>
+        콧수염 표현식 데이터 바인딩: <p>{{message}}</p>
+      </div>
+      <div>
+        v-html 데이터 바인딩:
+        <p style="color:red;"
+          v-html="message"> </p>
+      </div>
+      <div>
+        v-text 데이터 바인딩:
+        <p style="color:blue;"
+          v-text="message"> </p>
+      </div>
     </div>
     <hr>
 
     <h2>v-text 지시자와 v-html 지시자의 차이점은 무엇인가?</h2>
     <div>
-        <p>
-            v-text : innerText. html 태그 제거됨.
-            <br>
-            v-html : innerHTML. html 태그 유지됨.
-        </p>
+      <p>
+        v-text : innerText. html 태그 제거됨.
+        <br>
+        v-html : innerHTML. html 태그 유지됨.
+      </p>
     </div>
-</body>
+  </body>
 
 </html>
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.7.8/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+  new Vue({
+    /* edtmc^2w */
+    el: '#app',
+    data: {
+      /* 인스턴스 안에서 사용되는 변수 등록, 공유 변수 */
+      message: '<i>첫번째 Vue.js 앱 입니다</i>',
+    },
+  });
+
+</script>

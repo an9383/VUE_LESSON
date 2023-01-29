@@ -272,7 +272,7 @@
     <hr style="margin-top: 100px;">
 
     <h2>v-for 를 사용하여 구현된 드랍 메뉴</h2>
-    <div id="app1">
+    <div id="app">
         <ul id="menu1">
             <li v-for="(mainitem, i) in mainitems" v-bind:key="i">
                 <a href="#">{{mainitem.text}}</a>
@@ -288,3 +288,19 @@
 </body>
 
 </html>
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.7.8/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+  new Vue({
+      /* edtmc^2w */
+      el: "#app",
+      data: {
+          mainitems: [
+              {text:"MENU1", subitems:[{text:"MENU1-1"},{text:"MENU1-2"}]},
+              {text:"MENU2", subitems:[{text:"MENU2-1"},{text:"MENU2-2"},{text:"MENU2-3"},{text:"MENU2-4"}]},
+              {text:"MENU3", subitems:[{text:"MENU3-1"},{text:"MENU3-2"},{text:"MENU3-3"}]},
+          ],
+      },
+  });
+</script>
