@@ -727,10 +727,11 @@
             this.$emit( "이벤트명", 전달값)
     ##################################
     # 작업 폴더 및 파일 만들기
-        $ mkdir -p src/components/vue34ex
-        $ touch src/views/Vue34exView.vue
-        $ touch src/components/vue34ex/Vue34exParent.vue
-        $ touch src/components/vue34ex/Vue34exChild.vue
+        $ ls    # package.json 파일이 있는지 확인
+        $ mkdir -p src/components/vue34ex     # 폴더 생성
+        $ touch src/views/Vue34exView.vue     # 컨테이너 콤포넌트 만들기
+        $ touch src/components/vue34ex/Vue34exParent.vue  # 프리젠테이션 컴포넌트만들기
+        $ touch src/components/vue34ex/Vue34exChild.vue   # 프리젠테이션 컴포넌트만들기
 
     페이지 링크 만들기  ==> src/App.vue 수정
 
@@ -767,8 +768,8 @@
             <!-- Child 컴포넌트를 등록하고 counter 데이터 속성을 props로 전달한다. -->
             <component-child
                 v-bind:num      ="counter"
-                v-on:add-counter="addCounter"
-                v-on:sub-counter="subCounter">
+                v-on:addCounter="addCounter"
+                v-on:subCounter="subCounter">
             </component-child>
         </div>
     </template>
@@ -782,6 +783,10 @@
             <button name="child" v-on:click="subCounter">-</button>
         </div>
     </template>
+
+
+
+
 
 
     ##################################

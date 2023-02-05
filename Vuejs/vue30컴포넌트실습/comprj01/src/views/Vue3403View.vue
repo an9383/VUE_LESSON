@@ -23,7 +23,7 @@ export default {
   methods: {
     /* 이벤트 핸들러 등록 + 일반 함수 */
     printText(param1, param2) {
-      // 매개변수 지정, arguments , rest 연산자 사용
+      // 매개변수를 넘길수 있는 방법: 매개변수 지정, arguments , rest 연산자, 분해할당 방식 사용
       debugger;
       console.log(param1, param2);
       this.$data.mesg = `param1 = ${param1}, param2 = ${param2}`;
