@@ -3,16 +3,18 @@ vue.js 를 이용해서 이미지 슬라이더를 만들어 보겠습니다.
 ## 작업 폴더 및 파일 만들기
 
 ```
+    $ ls  # package.json 이 있는지 확인
     $ mkdir -p src/components/imageslider
-    $ touch src/components/imageslider/ImageSliderComp.vue
-    $ touch src/views/ImageSliderView.vue
+    $ touch src/components/imageslider/ImageSliderComp.vue  # 프리젠테이션 컴포넌트 만들기
+    $ touch src/views/ImageSliderView.vue                   # 컨테이너 컴포넌트 만들기
 ```
 
 ## 이미지 슬라이더 파일 복사하기
 
-public/images/slider 폴더를 생성하고 이미지 슬라이더에 출력할 이미지 추가
+public/images/slider 폴더를 생성하고 이미지 슬라이더에서 사용할 이미지 추가
 
 ```
+  $ ls  # package.json 이 있는지 확인
   $ mkdir -p [프로젝트폴더]/public/images/slider
   $ cp ./slider*.jpg  [프로젝트폴더]/public/images/slider
 ```
@@ -20,23 +22,34 @@ public/images/slider 폴더를 생성하고 이미지 슬라이더에 출력할 
 ## 버튼 이미지 추가하기
 
 ```
-  $ mkdir -p  [프로젝트폴더]/public/assets
+  $ ls  # package.json 이 있는지 확인
+  $ mkdir -p  ./public/assets
   $ cp ./arrow.png [프로젝트폴더]/src/assets/
 ```
 
 ## 페이지 링크 만들기
 
 src/App.vue 수정 ==>
+```
+    | <router-link to="/imageslider">imageslider</router-link>
+```
 
 ## 라우팅 설정.
 
 url 과 view 컴포넌트 연결
 
 src/router/index.js 수정
+```
+  {
+    path: '/imageslider',
+    name: 'imageslider',
+    component: () => import('../views/ImageSliderView.vue'),
+  },
+```
 
-## View3801ImageSlider.vue 작성
+## ImageSliderView.vue 작성
 
-src/views/View3801ImageSlider.vue
+src/views/ImageSliderView.vue
 
 ```
 <template>
@@ -44,6 +57,28 @@ src/views/View3801ImageSlider.vue
     <ImageSliderComp v-bind:option="option" />
   </div>
 </template>
+```
+
+## ImageSliderView.vue 에서 사용할 data
+```
+    option: [
+      {
+        src: `/images/slider/slider01.jpg`,
+        name: '노을이 지고 난 후의 고성',
+        id: 1,
+      },
+      {
+        src: `/images/slider/slider02.jpg`,
+        name: '힘들어지쳐 쓰러진 나.',
+        id: 2,
+      },
+      {
+        src: `/images/slider/slider03.jpg`,
+        name: '카페에서 행복한 나',
+        id: 3,
+      },
+    ],
+
 ```
 
 ## ImageSliderComp.vue 작성
@@ -160,3 +195,5 @@ span.left > img {
   </div>
 </template>
 ```
+
+
