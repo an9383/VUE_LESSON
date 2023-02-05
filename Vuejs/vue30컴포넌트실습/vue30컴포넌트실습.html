@@ -357,8 +357,9 @@
         정의한 ESLint 룰을 지키고 있지 않은 파일과 내용을 확인하고
         prettier 의 룰에 맞게 코드를 수정 할 수 있습니다.
         $ ls                            # package.json 이 있는지 확인
-        $ npx prettier --check ./src    # ESLint 룰 체크
-        $ npx prettier --write ./src    # ESLint 룰에 맞게 코드 수정
+        $ npx prettier --check ./src    # ESLint 룰 체크. src 폴더 이하만 검사
+        $ npx prettier --write ./src    # ESLint 룰에 맞게 코드 수정. src 폴더 이하만 변경
+                                        # npm run lint # 와 동일
 
 
     step 4-04. 프로젝트 전체 소스에 새로운 lint 설정 적용하기
