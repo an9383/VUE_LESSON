@@ -5,7 +5,6 @@
     {{ num }}
   </span>
 </template>
-
 <script>
 export default {
   /* pdtmc^2w */

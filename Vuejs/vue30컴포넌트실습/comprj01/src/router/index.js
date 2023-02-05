@@ -22,6 +22,11 @@ const routes = [
     name: 'about',
     component: () => import('../views/Vue3104View.vue'),
   },
+  {
+    path: '/3403',
+    name: 'about',
+    component: () => import('../views/Vue3403View.vue'),
+  },
 ];
 
 const router = createRouter({
