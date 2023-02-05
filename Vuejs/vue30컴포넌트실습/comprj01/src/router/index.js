@@ -32,6 +32,11 @@ const routes = [
     name: 'about',
     component: () => import('../views/Vue34exView.vue'),
   },
+  {
+    path: '/3701',
+    name: '3701',
+    component: () => import('../views/Vue3701View.vue'),
+  },
 ];
 
 const router = createRouter({
