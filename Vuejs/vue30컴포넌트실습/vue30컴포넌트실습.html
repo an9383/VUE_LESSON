@@ -62,6 +62,10 @@
         또는
         npx vue -V   <== local 로컬설치인경우
 
+    Vue-CLI 플러그인 추가
+        vue add 플러그인명.             예시) npx vue add vuex
+        npm install --save 플러그인명.  예시) npm install --save vuex
+
 
     ##################################
     2. Vue-CLI 프로젝트 생성 및 설정 작업
@@ -72,17 +76,30 @@
         $ npm uninstall --global @vue/cli
 
     step 2-02.node, npm, vue 버전 확인
-        $ node -v
+        $ node -v                          #  node 버전 확인
         v16.18.1
 
-        $ npm -v
+        $ npm -v                           #  npm 버전 확인
         9.3.0
 
-        $ npx -v
+        $ npm install -g npm@latest        #  npm 최신 버전 설치. -g: 전역 설치
+
+        $ npm -v                           #  npm 버전 재확인
         9.3.0
 
-    step 2-03. vue cli 설치
+        $ npx -v                           #  npx(=npm extension) 버전 재확인
+        9.3.0
+
+
+    step 2-03. Vue-CLI 설치
+        # 설치된 Vue-CLI 버전 확인
+        $ vue -V
+        bash: vue: command not found
+
+        # vue/cli 를 전역(--global)으로 설치한다. -g: 전역 설치
+        # * cli: command line interface 의 약자
         $ npm install --global @vue/cli
+        $ npm install -g  @vue/cli
 
         # global 설치인 경우 Vue-CLI 버전 확인 :
         $ vue -V
@@ -99,11 +116,13 @@
     step 2-05. comprj01 프로젝트 생성. package.json 생성.
         $ npx vue create comprj01
         Vue CLI v5.0.8
-        ? Please pick a preset:
+        ** 선택에 주의 하세요
+        ? Please pick a preset: (Use arrow keys)
           Default ([Vue 3] babel, eslint)
           Default ([Vue 2] babel, eslint)
         > Manually select features
 
+        ** 선택에 주의 하세요
         ? Check the features needed for your project:
         (*) Choose Vue version
         (*) Babel
@@ -122,12 +141,14 @@
 
         ? Use history mode for router? (Requires proper server setup for index fallback in production) (Y/n) Yes
 
+        ** 선택에 주의 하세요
         ? Pick a linter / formatter config:
           ESLint with error prevention only
           ESLint + Airbnb config
           ESLint + Standard config
         > ESLint + Prettier
 
+        ** 선택에 주의 하세요
         ? Pick additional lint features:
         > (*) Lint on save
           (*) Lint and fix on commit
@@ -232,7 +253,7 @@
         |-- .browserslistrc
         |-- .eslintrc.js
         |-- .gitignore
-        |-- .prettierrc
+        |-- .prettierrc.js
         |-- babel.config.js
         |-- jsconfig.json
         |-- package.json
@@ -312,34 +333,41 @@
 
         https://prettier.io/docs/en/options.html
 
-        .prettierrc 파일을 프로젝트 루트에 만들고 아래 내용을 추가한다.
-        $ touch .prettierrc
+        .prettierrc.js 파일을 프로젝트 루트에 만들고 아래 내용을 추가한다.
+        $ touch .prettierrc.js
 
-        $ cat .prettierrc
-        {
-            "printWidth": 80,
-            "tabWidth": 2,
-            "singleQuote": true,
-            "semi": true,
-            "useTabs": false,
-            "trailingComma": "all",
-            "proseWrap": "always",
-            "requireConfig": false,
-            "bracketSpacing": true,
-            "jsxBracketSameLine": false,
-            "jsxSingleQuote": false,
-            "quoteProps": "as-needed",
-            "endOfLine": "crlf",
-        }
+        $ cat .prettierrc.js
+        module.exports = {
+          /* https://prettier.io/docs/en/options.html */
+          printWidth: 80 /* 할 줄에 130컬럼까지 허용 */,
+          tabWidth: 2 /* tab을 누르면 2칸 들여쓰기 */,
+          singleQuote: true /*문자열 리터럴로 " 대신 ' 을 사용 */,
+          semi: true /* 문장 마지막에 ; 추가설정 */,
+          useTabs: false /* 탭 대신 spacebar 를 사용 설정 */,
+          trailingComma: 'all',
+          proseWrap: 'always',
+          bracketSpacing: true,
+          jsxSingleQuote: false /*JSX 안에서는 " 을 사용 */,
+          quoteProps: 'as-needed',
+          endOfLine: 'crlf',
+        };
 
 
-    step 4-03. 프로젝트 전체 소스에 새로운 lint 설정 적용하기
+    step 4-03. 소스 전체에  eslint 규칙에 맞게 포맷팅 변경하기
+        정의한 ESLint 룰을 지키고 있지 않은 파일과 내용을 확인하고
+        prettier 의 룰에 맞게 코드를 수정 할 수 있습니다.
+        $ ls                            # package.json 이 있는지 확인
+        $ npx prettier --check ./src    # ESLint 룰 체크
+        $ npx prettier --write ./src    # ESLint 룰에 맞게 코드 수정
+
+
+    step 4-04. 프로젝트 전체 소스에 새로운 lint 설정 적용하기
     $ ls
 
     $ npm run lint
 
 
-    step 4-04. 서버 재시작
+    step 4-05. 서버 재시작
     $ npm run serve
 
 

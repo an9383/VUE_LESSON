@@ -242,7 +242,8 @@
     주의 사항.
         1. checked 메서드에서 class에 빈 문자열로 설정하면 안됨.
             null 로 설정하면 됨.
-        2. click 이벤트가 bubbling 안되게 이벤트 취소 기능을 추가해야 한다.
+        2.  "checked(todoItem.done)" 는 "todoItem.done ? 'checked': null " 와 같다. 
+        3. click 이벤트가 bubbling 안되게 이벤트 취소 기능을 추가해야 한다.
             변경 전: v-on:click="removeTodo(todoItem.id)"
             변경 후: v-on:click.stop="removeTodo(todoItem.id)"
     </pre>
@@ -357,6 +358,9 @@
           return null;
       },
       doneToggle(id) {
+        // 토글 기능 완성하기
+        // done true 이면 false 로
+        // done false 이면 true 로
         // 복제 후 할당 ==> map 사용
         // 1. 배열복제
         const newTodos = this.$data.todoItems.map((item, index, array) => {
@@ -383,9 +387,15 @@
         this.$data.todoItems = newTodos;
       },
       addTodo(e) {
-        console.log(e.target);
-        debugger;
+        // validation 추가
+        // input 태그에 빈 문자일이 입력 되는 경우는 배열에 추가되지 않게.
+        if( !this.$data.newTodoItem ) {
+            // 팝업창 실행되게 설정
+            this.$data.showModal = !this.$data.showModal;
+            return ;
+        }
 
+        // map() 와 reduce() 메서드 사용하여 max id 를 구한다.
         // 1. id 값 만 있는 새로운 배열을 만든다. ==> map() 메서드 사용.
         // 2. map() 메서드로 만들어진 새로운 배열에서 최대값을 찾는다.
         // 3. 추가될 새로운 new id = max id + 1
@@ -394,7 +404,6 @@
         });
         debugger;
         const maxid = ids.reduce((pvalue, cvalue, index, array) => {
-          debugger;
           if (pvalue > cvalue)
             return pvalue;
           else
@@ -412,7 +421,7 @@
         const newTodos = [...this.$data.todoItems, newtodo];
         this.$data.todoItems = newTodos;
 
-        // 입력 값 초기화.
+        // add 후에 input 태그에 남아있는 입력값 지우기
         this.$data.newTodoItem = null;
       },
     },
