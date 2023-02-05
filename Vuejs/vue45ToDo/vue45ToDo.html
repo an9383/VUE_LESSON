@@ -315,12 +315,12 @@
               export default {
                 // ... 중략
                 methods{
-                clearAll(){
-                  // ... 중략
+                  clearAll(){
+                    // ... 중략
+                  },
                 },
-              },
-              components: {
-                TodoHeader: TodoHeader,
+                components: {
+                  TodoHeader: TodoHeader,
                   TodoFooter: TodoFooter,
                 }
             }
@@ -369,7 +369,11 @@
               import TodoInput from "@/components/todo/TodoInput.vue";
 
               export default {
-                // ... 중략
+                // ... 중략,
+                methods: {
+                    addTodo() {
+                    }
+                }
                 components: {
                   TodoHeader: TodoHeader,
                   TodoFooter: TodoFooter,
@@ -389,10 +393,16 @@
                 props: ["todoItems"],
                 methods: {
                   checked(done) {
+                    console.log(e.target);
+                    debugger;
                   },
                   doneToggle(id) {
+                    console.log(e.target);
+                    debugger;
                   },
                   removeTodo(id) {
+                    console.log(e.target);
+                    debugger;
                   }
                 }
               };
@@ -438,6 +448,25 @@
                     ]
                   };
                 },
+                methods: {
+                  /* 이벤트 핸들러 등록 + 일반 함수 */
+                  clearAll(e) {
+                    console.log(e.target);
+                    debugger;
+                  },
+                  addTodo(e) {
+                    console.log(e.target);
+                    debugger;
+                  },
+                  doneToggle(e) {
+                    console.log(e.target);
+                    debugger;
+                  },
+                  removeTodo(e) {
+                    console.log(e.target);
+                    debugger;
+                  },
+                },
                 components: {
                   TodoHeader: TodoHeader,
                   TodoFooter: TodoFooter,
@@ -463,6 +492,8 @@
             props: [],
             methods: {
               clearAll() {
+                debugger;
+                // clearAll 이벤트 발생
                 this.$emit("clearAll");
               }
             }
