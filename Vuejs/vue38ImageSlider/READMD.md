@@ -197,3 +197,21 @@ span.left > img {
 ```
 
 
+## 실행시 0번 이미지 나오게 코드 작성
+
+## toRight() 기능 완성
+Math.min() 을 사용하여 기능 완성
+
+```
+    this.$data.currIdx = Math.min(
+      this.$data.currIdx + 1,
+      this.$props.option.length - 1,
+    );
+```
+
+## toLeft() 기능 완성A
+Math.max() 을 사용하여 기능 완성
+
+```
+    this.$data.currIdx = Math.max(this.$data.currIdx - 1, 0);
+```
