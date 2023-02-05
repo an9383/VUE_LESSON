@@ -29,6 +29,8 @@ export default {
     /* 이벤트 핸들러 등록 + 일반 함수 */
     clickAddBox(e) {
       console.log(e.target);
+      // this.$data.arr.push(this.$data.arr.length); // 비추천방식
+      this.$data.arr = [...this.$data.arr, this.$data.arr.length]; // 추천방식
     },
   },
   components: {
