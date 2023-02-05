@@ -47,6 +47,11 @@ const routes = [
     name: '4301',
     component: () => import('../views/Page4301View.vue'),
   },
+  {
+    path: '/todo',
+    name: '4todo01',
+    component: () => import('../views/TodoView.vue'),
+  },
 ];
 
 const router = createRouter({
