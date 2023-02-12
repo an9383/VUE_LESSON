@@ -30,13 +30,13 @@
 
       # 버전 확인
       $ node -v
-      v16.16.0
+      v16.18.1
 
       $ npm -v
-      8.19.2
+      9.4.2
 
       $ npx -v
-      8.19.2
+      9.4.2
 
 
       # npm 최신 버전 설치
@@ -61,12 +61,50 @@
       # package.json 파일이 있으면 서버 실행하기
       $ npm run start
 
-      # 새로운 터미널을 열고 아래 명령어를 실행하여 파일 복사하거나
-      # 윈도우 탐색기를 열고 아래 4개의 파일을 webpackprj01/src 폴더에 붙여넣기를 한다.
-      $ cp ../App.css ./src/
-      $ cp ../App.js ./src/
-      $ cp ../Footer.js ./src/
-      $ cp ../Header.js ./src/
+
+      # 새로운 터미널을 열고 아래 4개의 파일을 만든다.
+      $ ls      # packages.json 파일이 있는지 확인한다.
+      node_modules/  package.json  package-lock.json  public/  README.md  src/
+
+      $ touch ./src/App.css
+      $ touch ./src/App.js
+      $ touch ./src/Header.js
+      $ touch ./src/Footer.js
+
+
+      # ./src/App.css 수정
+      "rt03-03.파일합치기.jquery.html" 에서 css 복사하여 ./src/App.css 에 추가
+
+      # ./src/App.js 수정
+
+        import './App.css';
+        function App() {
+          return (
+            <div>
+              <div w3-include-header="header.html">
+                <header data-role="header">
+                  <h1>Header.html</h1>
+                </header>
+              </div>
+              <section id="page1" data-role="page">
+                <div class="content" data-role="content">
+                  컨텐츠
+                </div>
+              </section>
+              <div w3-include-footer="footer.html">
+                <footer data-role="footer">
+                  <h1>Footer.html</h1>
+                </footer>
+              </div>
+            </div>
+          );
+        }
+        export default App;
+
+      # ./src/Header.js 수정
+
+      # ./src/Footer.js 수정
+
 
     </pre>
   </body>
