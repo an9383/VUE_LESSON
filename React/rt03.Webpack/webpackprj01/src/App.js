@@ -8,7 +8,7 @@ function App({ ...props }) {
     <div>
       <Header></Header>
       <section id="page1" data-role="page">
-        <div class="content" data-role="content">
+        <div className="content" data-role="content">
           컨텐츠
         </div>
       </section>
