@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <title>Basic Routing 예제</title>
+    <link rel="stylesheet"
+      href="../css/reset.css" />
+    <style>
+      .active {
+        background-color: lightblue;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <xmp>
+    Routing 기법에 대해서 학습한다
+
+    v6: https://reactrouter.com/web/guides/quick-start 사이트 참조.
+    v5: https://v5.reactrouter.com/web/guides/quick-start 사이트 참조.
+
+    https://velog.io/@velopert/react-router-v6-tutorial
+    https://velog.io/@soryeongk/ReactRouterDomV6
+    https://velog.io/@ksmfou98/React-Router-v6-업데이트-정리
+
+    1. BrowserRouter 설정
+        작업파일: src/index.js
+        import { BrowserRouter } from 'react-router-dom';
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(
+            <React.StrictMode>
+                <BrowserRouter>
+                  <App />
+              </BrowserRouter>
+            </React.StrictMode>
+        );
+
+
+    2. 라우팅 설정
+        작업파일: src/App.js
+        <div>
+            <Routes>
+                <Route path="/" element={<HomeContainer />} />
+            </Routes>
+        </div>
+
+    3. 메뉴 설정
+        NavLink 컴포넌트를 사용하여 작성. a 태그 사용 불가.
+        작업파일: src/App.js
+
+        <div>
+            <ul>
+                <li><NavLink to="/">Home</NavLink></li>
+            </ul>
+            <Routes>
+                <Route path="/" element={<HomeContainer />} />
+            </Routes>
+        </div>
+
+    4. 컴포넌트 만들기
+        MenuHome
+        HomeContainer
+        MemoContainer
+        TopicsContainer
+
+        4-1. 폴더 만들기
+        $ mkdir -p src/pages/
+        $ mkdir -p src/containers/
+
+        4-2. 컴포넌트 만들기
+        $ touch src/pages/MenuHome.js \
+                src/containers/HomeContainer.js \
+                src/containers/MemoContainer.js \
+                src/containers/TopicsContainer.js
+
+
+    5. recipes 예제 추가
+        "rt21.컴포넌트실습.recipes"의 소스를 현재 프로젝트에 추가
+
+        5-1. containers 폴더에 recipes 폴더 만들기
+            $ mkdir -p src/containers/recipes
+
+        5-2. recipes 관련 소스를 src/containers/recipes 폴더에 추가
+
+        5-3. 라우팅 설정
+            <Route path="/recipes" element={<RecipesContainer />} />
+
+        5-4. 메뉴 설정
+            <li>
+                <NavLink to="/recipes">Recipes 예제</NavLink>
+            </li>
+
+
+    6. StarRating 예제 추가
+        "rt22.컴포넌트실습.StarRating"의 소스를 현재 프로젝트에 추가
+
+        6-1. containers 폴더에 starrating 폴더 만들기
+            $ mkdir -p src/containers/starrating
+
+        6-2. starrating 관련 소스를 src/containers/starrating 폴더에 추가
+
+        6-3. 라우팅 설정
+            <Route path="/starrating" element={<StarRatingContainer />} />
+
+        6-4. 메뉴 설정
+            <li>
+                <NavLink to="/starrating">StarRating  예제</NavLink>
+            </li>
+
+    7. CRUD 예제 추가
+        "rt25.컴포넌트실습.CRUD"의 소스를 현재 프로젝트에 추가
+
+        7-1. containers 폴더에 crud 폴더 만들기
+            $ mkdir -p src/containers/crud
+
+        7-2. crud 관련 소스를 src/containers/crud 폴더에 추가
+
+        7-3. 라우팅 설정
+            <Route path="/crud" element={<CrudContainer />} />
+
+        7-4. 메뉴 설정
+            <li>
+                <NavLink to="/crud">Crud 예제</NavLink>
+            </li>
+
+
+    8. css 처리 방식 변경
+        import css 방식을 styled-components 방식으로 바꾸어 본다.
+
+
+    </xmp>
+  </body>
+</html>

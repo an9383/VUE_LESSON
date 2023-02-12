@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible"
+      content="ie=edge" />
+    <title>import 를 이용한 파일 합치기 실습</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+    <!-- CSS import -->
+    <link rel="stylesheet"
+      href="../css/reset.css" />
+  </head>
+
+  <body>
+    <div style="margin: 40px 0 0 40px">
+      <a href="#"
+        onClick="window.open('../../ES2015문법/ap01.docs/npm사용법.html','npm사용법','width=800,height=400,toolbar=no,menubar=no,scrollbars=no,resizable=yes');return false;"
+        rel="nofollow">npm 사용법</a>
+    </div>
+    <pre>
+      React 에서 Webpack 실습을 위해서는 CRA(create-react-app) 를 사용해야 한다.
+
+      # CRA 는 create react app 의 약자.
+
+      # 버전 확인
+      $ node -v
+      v16.16.0
+
+      $ npm -v
+      8.19.2
+
+      $ npx -v
+      8.19.2
+
+
+      # npm 최신 버전 설치
+      $ npm install --location=global npm@latest
+
+
+      $ ls
+
+      $ npx create-react-app webpackprj01
+      5분 소요
+      pdf 읽기( rt01.docs/데이터변환-복제후할당.pdf )
+
+      # 파일 목록 조회. webpackprj01 폴더가 생성되었는지 확인.
+      $ ls
+
+      # webpackprj01 폴더로 이동하기
+      $ cd webpackprj01
+
+      # 파일 목록 조회. package.json 파일이 있는지 확인
+      $ ls
+
+      # package.json 파일이 있으면 서버 실행하기
+      $ npm run start
+
+      # 새로운 터미널을 열고 아래 명령어를 실행하여 파일 복사하거나
+      # 윈도우 탐색기를 열고 아래 4개의 파일을 webpackprj01/src 폴더에 붙여넣기를 한다.
+      $ cp ../App.css ./src/
+      $ cp ../App.js ./src/
+      $ cp ../Footer.js ./src/
+      $ cp ../Header.js ./src/
+
+    </pre>
+  </body>
+</html>

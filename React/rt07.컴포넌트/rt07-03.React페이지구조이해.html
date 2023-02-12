@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible"
+      content="ie=edge" />
+    <title>Document</title>
+
+    <link rel="stylesheet"
+      href="../css/reset.css" />
+  </head>
+
+  <body>
+    <xmp>
+        const { useState, useEffect, useRef, useCallback, useMemo } = React;
+
+        // 컴포넌트 만들기(단축키: rfc)
+        function Comp({ name }) {
+          // 컴포넌트의 상태값 설정
+          const [mesg, setMesg] = useState("hi!!!!"); // 상태값이 기본타입인 경우
+          //const [state, setState] = useState({ id: 0, name: "", age: 0, }); // 상태값이 참조타입 경우
+
+          // refIsMounted는 생명주기의 마운트와 업데이트를 구분하기 위한 ref
+          const refIsMounted = useRef(false);
+          useEffect(() => {
+            if (refIsMounted.current) {
+              // 업데이트 될 때마다 실행됨. 여러번. state 가 변경될 때마다
+            }
+            else {
+              // 마운트 완료 후에 실행됨. 한번만. focus 줄때
+              refIsMounted.current = true;
+            }
+          });
+
+          // 이벤트 핸들러 작성
+          const handler = (event) => {
+            // 이벤트 핸들러는 화살표 함수로 만들면 this bind()를 생략해도 된다
+            console.log(event.target)
+          };
+
+          // JSX로 화면 만들기
+          return (
+            <div onClick={handler}>
+              {props.name}, {mesg}
+            </div>
+          )
+        };
+
+        // 컴포넌트 를 화면에 붙이기
+        ReactDOM.render(<Comp name="Hello"></Comp>, document.getElementById("app"));
+
+        작성  순서
+          단계1: React 스크립트 플러그인 추가
+            단축키: reactplugin
+
+          단계2.Component 화면에 붙이기
+              ReactDOM.render(<컴포넌트이름 />, document.getElementById('app'));
+
+          단계3.Component 만들기
+            단축키: rfc
+    </xmp>
+    <hr />
+
+    <div id="app">
+      ?????
+    </div>
+  </body>
+
+</html>
+
+
+

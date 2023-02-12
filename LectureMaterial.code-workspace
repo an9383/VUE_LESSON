@@ -1,0 +1,20 @@
+{
+  "folders": [
+	{
+		"path": "."
+	},
+	{
+		"name": "vue",
+		"path": "../학원/LectureMaterial/vue"
+	}
+],
+  "settings": {
+    "terminal.integrated.fontWeightBold": "bold",
+    "terminal.integrated.fontSize": 15,
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "terminal.integrated.fontWeight": "normal",
+    "terminal.integrated.fontFamily": "나눔고딕코딩",
+    "window.zoomLevel": 1,
+    "files.autoSave": "afterDelay"
+  }
+}

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible"
+      content="ie=edge" />
+    <title>SideBar 만들기</title>
+
+    <!-- CSS import -->
+    <link rel="stylesheet"
+      href="../css/reset.css" />
+
+  </head>
+  <body>
+
+    <div style="margin-top: 40px;">
+      <a href="#"
+        onClick="window.open('../../ES2015문법/ap01.docs/npm사용법.html','npm사용법','width=800,height=400,toolbar=no,menubar=no,scrollbars=no,resizable=yes');return false;"
+        rel="nofollow">npm 사용법</a>
+    </div>
+
+    <xmp>
+    React CRA 을 사용하여 ToDo 어플리케이션을 만들어 본다.
+
+
+
+    ##################################
+    1. 작업 개요
+    ##################################
+
+
+    ##################################
+    2. 프로젝트 생성 작업
+       소요시간: 120 분
+    ##################################
+    "rt20.create-react-project.html"을 참조하여 프로젝트를 만들거나
+    기존에 만들어진 reactprj01 프로젝트에 추가하시오.
+
+
+    ##################################
+    3. 서버 시작
+    ##################################
+        $ ls                # package.json 파일 과 node_modules 폴더가 보이는지 확인
+        $ npm install       # package.json 에 등록된 라이브러리(모듈) 재설치. node_modules 폴더가 생성됨
+        $ npm run start     # package.json 보이면 서버 실행
+
+
+
+    ##################################
+    11. SideBar 컴포넌트 구현
+    ##################################
+
+    step 11-1. src/pages/SideBar.js 파일 만들기
+        $ touch src/pages/SideBar.js
+
+    step 11-2. src/pages/SideBar.js 의 JSX 를 기능 완성
+        "react-sidebar-on.html" 내용을 참고하여 SideBar.js 에 JSX를 만드시오
+
+    step 11-3. App.js 수정
+      import SideBar from './pages/SideBar';
+
+      function App() {
+        return (
+          <StyledApp>
+            <SideBar />
+          </StyledApp>
+        );
+
+    step 11-4. JSX 수정
+        . class 속성 ===> className
+        . for 속성 ===> htmlFor
+        . value 속성 ===> defaultValue
+        . stroke-width ===> strokeWidth
+        . style="color: rgb(255, 255, 255);"  ===> style={{ color: "rgb(255, 255, 255)", }}
+
+        css 표기법을 javascript 프로퍼티 로 바꾸는 방법
+          1. 대문자 로 바꾼다.명칭은 카멜 표기법 사용. 왜냐하면 자바스립트이기 때문.
+              예시) 대시 표기법(CSS) ==> 카멜 표기법(JS)
+              font-size ==> fontSize
+              background-color ==> backgroundColor
+          2. 값을 문자열로 바꾼다.
+          3. 구분자는 세미콜론 대신 콤마 로 바꾼다. 왜냐하면 자바스크립트 객체기이기 때문.
+
+    step 11-5. 실행 화면 확인
+
+    step 11-6. styled-components 를 이용하여 SideBar 컴포넌트 스타일링하기
+        "react-sidebar-on.html" 파일의 css 코드를 StyledSideBar 에 추가한다.
+      }
+
+    ##################################
+    step 12. SideBar 에 공유 상태값 만들기
+    ##################################
+
+    step 12-01. SideBar 를 show/ hide 하기 위한 상태값 isSidebar 만들기
+        const [isSidebar, setIsSidebar] = useState(false);
+
+    step 12-02. isSidebar 상태 기능 추가
+        변경전
+        <nav className='nav-menu active'>
+          ...중략
+        </nav>
+
+        변경후
+        {isSidebar && (
+          <nav className="nav-menu active">
+            ...중략
+          </nav>
+        )}
+
+
+    ##################################
+    step 13. SideBar 에 상태값 바꾸는 핸들러 만들기
+    ##################################
+
+    step 13-01. span.menu-bars 에 onClick 추가
+        변경전
+        <div class="navbar">
+          <span class="menu-bars">
+            ...중략
+          </span>
+        </div>
+
+        변경후
+        <div class="navbar">
+          <span class="menu-bars" onClick={handlerIsSidebar}>
+            ...중략
+          </span>
+        </div>
+
+    step 13-02. SideBar 컴포넌트에 handlerIsSidebar 핸들러 만들기
+      const handlerIsSidebar = (e) => {
+        console.log(e.targer);
+        debugger;
+        setIsSidebar(!isSidebar);
+      }
+
+
+    ##################################
+    step 14. 기존 사이트에 결합하기
+    ##################################
+
+    step 14-1. src/App.js 수정
+    import PageHome from './pages/PageHome';
+
+    const StyledApp = styled.div``;
+
+      function App() {
+        return (
+          <StyledApp>
+            <PageHome />
+          </StyledApp>
+        );
+      }
+
+    step 14-2. src/pages/PageHome.js 수정
+
+      import { Routes, Route } from 'react-router-dom';
+      import Home from '../components/Home';
+      import RecipesContainer from '../containers/recipes/App';
+      import StarRatingContainer from '../containers/starrating/RatingContainer';
+      import CrudContainer from '../containers/crud/CrudContainer';
+      import TodoContainer from '../containers/todo/TodoContainer';
+      import SideBar from './SideBar';
+      import Woops404 from './Woops404';
+
+      function PageHome({ ...props }) {
+        // JSX로 화면 만들기. 조건부 렌더링: https://ko.reactjs.org/docs/conditional-rendering.html
+        return (
+          <StyledPageHome>
+            <SideBar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/recipes" element={<RecipesContainer />} />
+              <Route path="/starrating" element={<StarRatingContainer />} />
+              <Route path="/crud" element={<CrudContainer />} />
+              <Route path="/todo" element={<TodoContainer />} />
+              <Route path="/*" element={<Woops404 />} />
+            </Routes>
+          </StyledPageHome>
+        );
+      }
+
+    step 14-3. src/pages/SideBar.js 를 열고 NavLink
+
+    step 14-4. src/pages/SideBar.js 를 열고 NavLink 에 onClick 설정하기
+
+      <NavLink to="/starrating" onClick={handlerNavLink>>
+        <span>
+          ... 중략
+        </span>
+      </NavLink>
+
+    step 14-5. src/pages/SideBar.js handlerNavLink 핸들러 만들기
+      const handlerNavLink = (e) => {
+        console.log(e.target);
+        e.stopPropagation(); // 이벤트 버블링 방지. 이벤트 취소
+        // e.preventDefault(); // 하면 페이지 이동이 안됨. a 태그의 redirect 를 막게 됨
+
+        debugger;
+        setIsSidebar(false);
+      }
+
+
+    ##################################
+    step 15. SideBar 의 메뉴 생성을 데이터로 만들기
+        메뉴를 동적으로 만드는 기능을 추가하여 본다.
+        https://github.com/briancodex/react-sidebar-v1 참고
+    ##################################
+    step 15-01. react-icons 패키지 추가.
+      https://www.npmjs.com/package/react-icons
+      $ ls  # package.json 파일이 있는지 확인
+      $ npm install react-icons
+
+
+    step 15-02. SidebarData.js 만들기.
+      $ mkdir -p src/constants
+      $ touch src/constants/SidebarData.js
+      $ cat src/constants/SidebarData.js
+
+      import React from 'react';
+      import * as FaIcons from 'react-icons/fa';
+      import * as AiIcons from 'react-icons/ai';
+      import * as IoIcons from 'react-icons/io';
+
+      export const SidebarData = [
+        {
+          title: 'Home',
+          path: '/',
+          icon: <AiIcons.AiFillHome />,
+          cName: 'nav-text',
+        },
+        {
+          title: 'Reports',
+          path: '/reports',
+          icon: <IoIcons.IoIosPaper />,
+          cName: 'nav-text',
+        },
+        {
+          title: 'Products',
+          path: '/products',
+          icon: <FaIcons.FaCartPlus />,
+          cName: 'nav-text',
+        },
+        {
+          title: 'Team',
+          path: '/team',
+          icon: <IoIcons.IoMdPeople />,
+          cName: 'nav-text',
+        },
+        {
+          title: 'Messages',
+          path: '/messages',
+          icon: <FaIcons.FaEnvelopeOpenText />,
+          cName: 'nav-text',
+        },
+        {
+          title: 'Support',
+          path: '/support',
+          icon: <IoIcons.IoMdHelpCircle />,
+          cName: 'nav-text',
+        },
+      ];
+
+    step 15-03. SideBar JSX 를 수정한다.
+    <StyledSideBar>
+      <IconContext.Provider value={{ color: '#fff' }}>
+        <div className="navbar">
+          <NavLink to="#" className="menu-bars">
+            <FaIcons.FaBars onClick={handlerIsSidebar} />
+          </NavLink>
+        </div>
+        {isSidebar && (
+          <nav className="nav-menu active">
+            <ul className="nav-menu-items" onClick={handlerIsSidebar}>
+              <li className="navbar-toggle">
+                <NavLink to="#" className="menu-bars">
+                  <AiIcons.AiOutlineClose />
+                </NavLink>
+              </li>
+              {SidebarData.map((item, index) => {
+                return (
+                  <li key={index} className={item.cName} onClick={handlerNavLink}>
+                    <NavLink to={item.path}>
+                      {item.icon}
+                      <span>{item.title}</span>
+                    </NavLink>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+        )}
+      </IconContext.Provider>
+    </StyledSideBar>
+
+
+    step 15-04. SideBar.js 에 import 추가
+      import { IconContext } from 'react-icons';
+      import * as FaIcons from 'react-icons/fa';
+      import * as AiIcons from 'react-icons/ai';
+
+      import { SidebarData } from '../constants/SidebarData';
+
+
+    step 15-04. SideBar.js 에 import 추가
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ##################################
+    21. 라우팅 설정
+      1. BrowserRouter 추가
+      2. 라우팅 설정
+      3. 링크(메뉴) 설정
+      4. 스타일링 설정
+    ##################################
+
+    21-1. 라우팅 관련 폴더 및 파일 생성
+        $ mkdir -p ./src/pages
+        $ touch ./src/pages/PageHome.js
+
+        $ mkdir -p ./src/containers/home
+        $ touch ./src/containers/home/HomeContainer.js
+
+
+    21-2. BrowserRouter 추가
+        작업파일: src/index.js 수정
+
+        변경 전
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(
+            <React.StrictMode>
+                <App />
+            </React.StrictMode>
+        );
+
+
+        변경 후
+        import { BrowserRouter } from 'react-router-dom';
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(
+            <React.StrictMode>
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>
+            </React.StrictMode>
+        );
+
+    21-3. 라우팅 설정
+        작업파일: src/App.js 수정
+        import PageHome from './pages/PageHome';
+
+        function App() {
+            return (
+                <div>
+                    <PageHome />
+                </div>
+            );
+        }
+
+    21-4. 실행 화면 확인하고 개발자 모드에서 오류 확인
+        ==> 빈 화면이 나오면 정상.
+
+    21-5. HomeContainer 컴포넌트 파일 생성
+        $ mkdir -p ./src/containers/home
+        $ touch src/containers/home/HomeContainer.js
+
+    21-6. 라우팅 폴더 및 PageHome 컴포넌트 만들기
+        $ mkdir -p ./src/pages
+        $ touch src/pages/PageHome.js
+
+    21-7. PageHome 에 라우팅 설정
+        작업파일: src/pages/PageHome.js
+
+        import { Routes, Route, NavLink } from 'react-router-dom';
+
+        import HomeContainer from '../containers/home/HomeContainer';
+        import SideBar from './SideBar';
+
+        <div>
+            <Routes>
+                <Route path="/" element={<HomeContainer />} />
+                <Route path="/todo" element={<Todo />} />
+            </Routes>
+        </div>
+
+    21-8. PageHome 에 링크 설정
+        작업파일: src/pages/PageHome.js
+
+        변경 전
+        <div>
+            <Routes>
+                <Route path="/" element={<HomeContainer />} />
+                <Route path="/todo" element={<Todo />} />
+            </Routes>
+        </div>
+
+        변경 후
+        <div>
+            <div>
+                <ul>
+                    <li><NavLink to="/">Home</NavLink></li>
+                    <li><NavLink to="/todo">Todo</NavLink></li>
+                </ul>
+            </div>
+
+            <Routes>
+                <Route path="/" element={<HomeContainer />} />
+                <Route path="/todo" element={<Todo />} />
+            </Routes>
+        </div>
+
+
+    21-9. PageHome 에 스타일링 설정
+        작업파일: src/pages/PageHome.js
+
+        변경 전
+        const StyledPageHome = styled.div`
+          /* styled 설정. https://styled-components.com/docs/basics#adapting-based-on-props */
+
+        `;
+
+        변경 후
+        const StyledPageHome = styled.div`
+          /* styled 설정. https://styled-components.com/docs/basics#adapting-based-on-props */
+          .active {
+            background-color: aqua;
+          }
+          .inactive {
+            background-color: none;
+          }
+        `;
+
+
+
+    </xmp>
+
+  </body>
+</html>

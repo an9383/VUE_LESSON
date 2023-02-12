@@ -1,0 +1,29 @@
+함수는 값이다.
+기본타입에는 실제값이 저장되고 참조타입에는 주소값이 저장된다.
+함수형 프로그래밍은 복제후 할당을 사용한다.
+  ==> map, filter, reduce 메서드 사용
+React는 Virutal DOM 을 사용한다.
+컴포넌트는 쪼개진 화면이다.
+컴포넌트를 사용하면 화면의 중복을 제거 할 수 있다.
+  ==> 화면의 재사용
+컴포넌트 트리
+컨테이너 컴포넌트는 데이터 보관하는 목적으로 사용되는 컴포넌트다
+  ==> 재사용이 어렵다
+프리젠테이션 컴포넌트는 데이터의 화면 표시 사용되는 컴포넌트다
+  ==> 재사용이 된다.
+JSX는 JavaScript XML 의 약자다.
+리액트는 데이터로 화면을 조작한다.
+  ==> state, props
+단축키:
+  reactplugin ==>
+  rfc         ==> 함수형 컴포넌트 만들 때
+  styled      ==> 컴포넌트용 CSS 만들 때
+  rdxf        ==> redux 코딩할 때
+
+리액트 프로그램 작성  순서
+  단계1: React 스크립트 플러그인 추가
+    단축키: reactplugin
+  단계2.Component 만들기
+    단축키: rfc
+  단계3.Component 화면에 붙이기
+    ReactDOM.render(<컴포넌트이름 />, document.getElementById('app'));
