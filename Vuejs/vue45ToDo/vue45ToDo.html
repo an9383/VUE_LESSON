@@ -551,7 +551,7 @@
           };
         </script>
 
-        step 9-2. src/components/todo/TodoList.vue   에 추가
+        step 9-2-1. src/components/todo/TodoList.vue   에 추가
         < script>
           export default {
             /* pdtmc^2w */
@@ -574,7 +574,7 @@
           };
         </script>
         
-        step 9-3. src/views/TodoView.vue  에 doneToggle 기능 완성
+        step 9-2-2. src/views/TodoView.vue  에 doneToggle 기능 완성
         < script>
           import TodoHeader from "@/components/todo/TodoHeader.vue";
           import TodoInput from "@/components/todo/TodoInput.vue";
@@ -628,9 +628,111 @@
           };
         </script>
 
+        step 9-3-1. src/components/todo/TodoList.vue   에 추가
+                
+        // click 이벤트 버블링 막기==> 이벤트 취소
+        // 1. window.event.stopPropagation() 호출하기
+        // 2. 템플릿에 .stop 수식자 추가
+        
+        < script>
+          export default {
+            /* pdtmc^2w */
+            props: ["todoItems"],
+            methods: {
+              checked(done) {
+                if (done) {
+                  return "checked"; // 또는 {checked: true}
+                } else {
+                  return null; // 또는 {checked: false}
+                }
+              },
+              doneToggle(id) {
+                this.$emit("doneToggle", id);
+              },
+              removeTodo(id) {
+                this.$emit("removeTodo", id);
+                
+                // click 이벤트 버블링 막기==> 이벤트 취소
+                // 1. window.event.stopPropagation() 호출하기
+                // 2. 템플릿에 .stop 수식자 추가
+                window.event.stopPropagation();
+                window.event.preventDefault();
+              },
+            }
+          };
+        </script>
+        
+        step 9-3-2. src/views/TodoView.vue  에 doneToggle 기능 완성
+        < script>
+          import TodoHeader from "@/components/todo/TodoHeader.vue";
+          import TodoInput from "@/components/todo/TodoInput.vue";
+          import TodoList from "@/components/todo/TodoList.vue";
+          import TodoFooter from "@/components/todo/TodoFooter.vue";
+
+          export default {
+            /* pdtmc^2w */
+            props: [],
+            data() {
+              return {
+                todoItems: [
+                  { id: 1, todo: "영화보기", done: false },
+                  { id: 2, todo: "주말 산책", done: true },
+                  { id: 3, todo: "ES6 학습", done: false },
+                  { id: 4, todo: "잠실 야구장", done: false }
+                ]
+              };
+            },
+            //template: ``,
+            methods: {
+              clearAll() {
+                // delete
+                this.$data.todoItems = [];
+              },
+              doneToggle(id) {
+                // update
+                const newTodos = this.$data.todoItems.map((item) => {
+                  if (item.id === id) {
+                    item.done = !item.done;
+                  }
+                  return item;
+                });
+                this.$data.todoItems = newTodos;
+              },
+              removeTodo(id) {
+                debugger;
+                console.log(id);
+
+                // 복제 후 할당
+                // 1. 배열 복제
+                const newTodos = this.$data.todoItems.filter((item) => {
+                  // false 를 반환하면 삭제된다.
+                  if (item.id === id) {
+                    return false;
+                  }
+                  return true;
+                });
+
+                // 2. 할당
+                this.$data.todoItems = newTodos;
+              },
+              addTodo(newTodoItem) {
+                debugger;
+                console.log(id);
+              },
+            },
+            components: {
+              TodoHeader: TodoHeader,
+              TodoInput: TodoInput,
+              TodoList: TodoList,
+              TodoFooter: TodoFooter
+            }
+          };
+        </script>
 
 
-        step 9-4. src/components/todo/TodoInput.vue 에 기능 완성
+
+
+        step 9-4-1. src/components/todo/TodoInput.vue 에 기능 완성
         1. this.$emit 을 사용하여 부모와 자식이 연결 되는지 확인
         2. addTodo 기능 완성.
           2-1. newTodoItem 이 빈값인 경우 넘기지 않도록 유효성 검사 추가
@@ -671,7 +773,7 @@
         </script>
 
 
-        step 9-5. src/views/TodoView.vue  에 추가
+        step 9-4-2. src/views/TodoView.vue  에 추가
         < script>
           import TodoHeader from "@/components/todo/TodoHeader.vue";
           import TodoInput from "@/components/todo/TodoInput.vue";
