@@ -35,3 +35,37 @@ const countries = east.concat(west); // "U", "K", "T", "N", "C", "G"
 // spread 연산자 는 새로운 배열이나 객체를 만들 때 주로 사용된다
 const countries1 = [...east, ...west];
 console.log(countries1); // ["U", "K", "T", "N", "C", "G"]
+
+const car1 = {
+  type:'t1',
+  color:'S1',
+  model: 2017,
+};
+const car2 = {
+  type:'t2',
+  color:'S2',
+  model: 2019,
+}
+const {type } = car1;
+console.log(type);
+
+const func = ({type}) => {
+  console.log(type);
+};
+const newcar = { ...car1, ...car2};
+func(newcar);
+func({...car1, ...car2})
+
+
+const moring = {
+  breacfast: '미역국',
+  lunuch: '삼치구이'
+};
+const dinner = '스테이크';
+
+ const meals = {
+...moring,
+dinner
+};
+console.log(meals);
+
