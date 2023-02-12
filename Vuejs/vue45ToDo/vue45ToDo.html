@@ -500,7 +500,7 @@
           };
         </script>
 
-        step 9-3. src/components/todo/TodoList.vue   에 추가
+        step 9-3-1. src/components/todo/TodoList.vue   에 추가
         < script>
           export default {
             /* pdtmc^2w */
@@ -522,6 +522,110 @@
             }
           };
         </script>
+        
+        step 9-3-2. src/views/TodoView.vue  에 doneToggle 완성
+        < script>
+          import TodoHeader from "@/components/todo/TodoHeader.vue";
+          import TodoInput from "@/components/todo/TodoInput.vue";
+          import TodoList from "@/components/todo/TodoList.vue";
+          import TodoFooter from "@/components/todo/TodoFooter.vue";
+
+          export default {
+            /* pdtmc^2w */
+            props: [],
+            data() {
+              return {
+                todoItems: [
+                  { id: 1, todo: "영화보기", done: false },
+                  { id: 2, todo: "주말 산책", done: true },
+                  { id: 3, todo: "ES6 학습", done: false },
+                  { id: 4, todo: "잠실 야구장", done: false }
+                ]
+              };
+            },
+            //template: ``,
+            methods: {
+              clearAll() {
+                // delete
+                this.$data.todoItems = [];
+              },
+              doneToggle(id) {
+                // update
+                const newTodos = this.$data.todoItems.map((item) => {
+                  if (item.id === id) {
+                    item.done = !item.done;
+                  }
+                  return item;
+                });
+                this.$data.todoItems = newTodos;
+              },
+              removeTodo(id) {
+                // delete: ;
+                const newTodos = this.$data.todoItems.filter((item) => {
+                  if (item.id === id) {
+                    return false;
+                  }
+                  return true;
+                });
+                this.$data.todoItems = newTodos;
+
+                // 이벤트 취소
+                window.event.stopPropagation();
+                window.event.preventDefault();
+              },
+              addTodo(newTodoItem) {
+
+                // newTodoItem 값이 없으면 종료한다. 빈값 호출 방지.
+                // 입력된 값 초기화
+
+                // max id 구하기 ==> map과 reduce 를 사용하여
+                //    1. id 값 만 있는 새로운 배열을 만든다. ==> map() 메서드 사용.
+                //    2. map() 메서드로 만들어진 새로운 배열에서 최대값을 찾는다. ===> reduce() 메서드 사용
+                //    3. 추가될 새로운 id = max id + 1
+
+                // todoItems 추가할 객체 만들기
+
+                // todoItems 배열에 객체 추가
+
+                // newTodoItem 값이 없으면 종료한다. 빈값 호출 방지.
+                if (newTodoItem && newTodoItem.trim() === "") {
+                  return;
+                }
+
+                const maxid = this.$data.todoItems
+                  .map((item) => {
+                    return item.id;
+                  }) // [1,2,3,4], []
+                  .reduce((pvaule, cvalue) => {
+                    return pvaule > cvalue ? pvalue : cvalue;
+                  }, 0);
+
+                const newid = maxid + 1;
+
+
+                // 추가할 객체 생성:
+                // input에 입력된 값 ==> newTodoItem ;
+                const newTodo = {
+                  id: newid,
+                  todo: newTodoItem,
+                  done: false
+                };
+
+                // this.$data.todoItems 에 newTodo를 추가하시오.
+                // this.$data.todoItems.push(newTodo);
+                // this.$data.todoItems[this.$data.todoItems.length] = newTodo;
+                this.$set(this.$data.todoItems, this.$data.todoItems.length, newTodo);
+              },
+            },
+            components: {
+              TodoHeader: TodoHeader,
+              TodoInput: TodoInput,
+              TodoList: TodoList,
+              TodoFooter: TodoFooter
+            }
+          };
+        </script>
+
 
 
         step 9-4. rc/components/todo/TodoInput.vue  에 추가
