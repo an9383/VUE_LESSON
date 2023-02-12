@@ -252,7 +252,7 @@
       "import axios from 'axios';",
       "",
       "const store = {",
-      "  namespaced: true /* 모듈 store 여부 설정 */,",
+      "  namespaced: true /* store 의 모듈 여부 설정 */,",
       "  actions: {",
       "    /* 왜 actions를 사용하나? 비동기로 외부 함수 호출하기 위해서",
       "     * actions 에는 메서드만 등록 가능하다.",

@@ -113,7 +113,7 @@
   },
   "React Functional Component At plugin": {
     // "scope": "javascript,typescript",
-    "prefix": "rfchtml",
+    "prefix": "rfc",
     "body": [
       "function ${1:${TM_FILENAME_BASE}}({",
       "  ...props",
@@ -166,7 +166,7 @@
   },
   "React Functional Component": {
     // "scope": "javascript,typescript",
-    "prefix": "rfc",
+    "prefix": "rfc2",
     "body": [
       "import React, { useState, useEffect, useRef, useCallback, useMemo, useReducer, Fragment, forwardRef, useImperativeHandle } from 'react';",
       "import PropTypes from 'prop-types';",

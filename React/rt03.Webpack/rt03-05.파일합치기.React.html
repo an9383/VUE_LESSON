@@ -75,9 +75,50 @@
       # ./src/App.css 수정
       "rt03-03.파일합치기.jquery.html" 에서 css 복사하여 ./src/App.css 에 추가
 
+        header {
+          text-align: center;
+          height: 60px;
+        }
+
+        section {
+          text-align: center;
+          height: 150px;
+        }
+
+        footer {
+          text-align: center;
+          height: 60px;
+        }
+
+        /* step2. 배경색 지정*/
+        header {
+          background-color: #efb14e;
+        }
+
+        section {
+          background-color: #95db5e;
+        }
+
+        footer {
+          background-color: #78d0d1;
+        }
+
+        /* step3. 여백 주기 - margin , padding */
+        header {
+          margin: 0 0 20px 0;
+        }
+
+        section {
+          margin: 40px 20px;
+        }
+
+        div {
+          margin: 40px 20px;
+        }
+
       # ./src/App.js 수정
 
-        import './App.css';
+        ... 중략
         function App() {
           return (
             <div>
@@ -99,11 +140,14 @@
             </div>
           );
         }
-        export default App;
+        ... 중략
 
-      # ./src/Header.js 수정
+      # ./src/Header.js 수정하여 컴포넌트 만들기
+      ==> 단축키: rfc
 
-      # ./src/Footer.js 수정
+
+      # ./src/Footer.js 수정하여 컴포넌트 만들기
+      ==> 단축키: rfc
 
 
     </pre>
