@@ -393,16 +393,16 @@
                 props: ["todoItems"],
                 methods: {
                   checked(done) {
-                    console.log(e.target);
                     debugger;
+                    console.log(done);
                   },
                   doneToggle(id) {
-                    console.log(e.target);
                     debugger;
+                    console.log(id);
                   },
                   removeTodo(id) {
-                    console.log(e.target);
                     debugger;
+                    console.log(id);
                   }
                 }
               };
@@ -451,20 +451,20 @@
                 methods: {
                   /* 이벤트 핸들러 등록 + 일반 함수 */
                   clearAll(e) {
-                    console.log(e.target);
                     debugger;
+                    console.log(e.target);
                   },
                   addTodo(e) {
-                    console.log(e.target);
                     debugger;
+                    console.log(e.target);
                   },
                   doneToggle(e) {
-                    console.log(e.target);
                     debugger;
+                    console.log(e.target);
                   },
                   removeTodo(e) {
-                    console.log(e.target);
                     debugger;
+                    console.log(e.target);
                   },
                 },
                 components: {
@@ -499,7 +499,6 @@
             }
           };
         </script>
-
 
         step 9-3. src/components/todo/TodoList.vue   에 추가
         < script>

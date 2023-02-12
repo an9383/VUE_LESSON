@@ -282,7 +282,16 @@
         $ touch .eslintrc.js
 
         $ cat .eslintrc.js
+
         module.exports = {
+            /*
+              https://feynubrick.github.io/2019/05/20/eslint-prettier.html
+              ESLint 규칙:
+                https://eslint.org/docs/rules/
+                https://eslint.org/docs/user-guide/configuring/
+              Prettier 옵션:
+                https://prettier.io/docs/en/options.html
+            */
             root: true,
             env: {
               node: true,
@@ -302,6 +311,7 @@
               parser: '@babel/eslint-parser',
             },
             plugins: ['prettier'],
+            ignorePatterns: ['node_modules/'],
             rules: {
               'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
               'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
@@ -358,8 +368,7 @@
         prettier 의 룰에 맞게 코드를 수정 할 수 있습니다.
         $ ls                            # package.json 이 있는지 확인
         $ npx prettier --check ./src    # ESLint 룰 체크. src 폴더 이하만 검사
-        $ npx prettier --write ./src    # ESLint 룰에 맞게 코드 수정. src 폴더 이하만 변경
-                                        # npm run lint # 와 동일
+        $ npx prettier --write ./src    # ESLint 룰에 맞게 코드 수정. src 폴더 이하만 변경. npm run lint 와 동일
 
 
     step 4-04. 프로젝트 전체 소스에 새로운 lint 설정 적용하기
@@ -578,7 +587,6 @@
         $ touch src/components/vue31ex/Vue31exAside.vue
         $ touch src/components/vue31ex/Vue31exContent.vue
         $ touch src/components/vue31ex/Vue31exContentList.vue
-
 
     페이지 링크 만들기  ==> src/App.vue 수정
 
@@ -950,7 +958,7 @@
     ##################################
 
     # 작업 폴더 및 파일 만들기
-        $ ls  # package.json 이 있는지 확인
+        $ ls      # package.json 이 있는지 확인
         $ touch src/components/vue3701/CompChild11.vue
 
     # src/components/vue3701/CompChild11.vue 추가
