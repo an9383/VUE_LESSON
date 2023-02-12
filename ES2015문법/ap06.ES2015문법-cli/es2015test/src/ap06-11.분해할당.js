@@ -39,5 +39,21 @@ console.log(type1, color1, model1);
 
 // 객체 분해 할당 을 이용해서 type ,color ,model 을 만드시오
 // 객체 분해 할당은 객체의 프로터티 명을 이용해서 매핑한다.
-const { type, color, model, gear } = car; // { type: 't', color: 'S', model: 2017 }
+const { type, color, model, gear } = car; // car === { type: 't', color: 'S', model: 2017 }
 console.log(type, color, model, gear); // 't', 'S', 2017, undefined
+
+const { type: type2, color: color2, model: model2, gear: gear2 } = car; // car === { type: 't', color: 'S', model: 2017 }
+
+// { type, color } = car;
+const func1 = ({ type, color }) => {
+  console.log(type); // t
+  console.log(color); // S
+};
+func1(car); // car === { type: 't', color: 'S', model: 2017 }
+
+const func2 = (car) => {
+  const { type, color } = car;
+  console.log(type); // t
+  console.log(color); // S
+};
+func2(car); // car === { type: 't', color: 'S', model: 2017 }
