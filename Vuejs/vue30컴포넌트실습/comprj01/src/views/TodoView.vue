@@ -135,8 +135,6 @@ export default {
 
       // 2. 할당
       this.$data.todoItems = newTodos;
-
-
     },
   },
   components: {

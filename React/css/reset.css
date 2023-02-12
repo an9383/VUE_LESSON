@@ -4,7 +4,6 @@
   box-sizing: border-box;
 }
 
-
 /* CSS 초기화 : 모든 요소 공간 0, 서체 크기 100%, 세로정렬 baseline, 배경색 투명 */
 html,
 body,
@@ -369,4 +368,4 @@ xmp[class*='langjs'] {
 .boldred {
   font-weight: bold;
   color: red;
-}
+}
