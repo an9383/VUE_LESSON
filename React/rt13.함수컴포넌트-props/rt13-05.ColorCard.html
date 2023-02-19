@@ -46,62 +46,45 @@
     <xmp>
         CSS로 만든 카드를 컴포넌트로 만들어 본다.
         작업 순서
-        1. 컴포넌트 3개 만들기. Label, Square, Card, CardContainer
-        1-1. Label 컴포넌트 JSX
+
+        1. 컴포넌트 3개 만들기.
+          CardContainer
+          Card,
+          Square,
+          Label,
+
+
+        2. ReactDOM 을 사용하여 화면에 붙인다.
+          예시) ReactDOM.render( <CardContainer /> , document.getElementById("app") )
+
+        3. Label 컴포넌트 JSX
             return (
                 <div className="label">
-                    {props.color}
+                    {color}
                 </div>
             )
-        1-2. Square 컴포넌트 JSX
+        4. Square 컴포넌트 JSX
             let style = { backgroundColor: props.color }
             return (
                 <div className="square" style={style}>
                 </div>
             )
-        1-3. Card 컴포넌트 JSX ==> 한번에 모든 속성을 넘기는 방법.
+        5. Card 컴포넌트 JSX ==> 한번에 모든 속성을 넘기는 방법.
             ... (중략)
             return (
                 <div className="card">
-                    <Square color={props.color}></Square>
-                    <Label color={props.color}></Label>
-                </div>
-            )
-            또는
-            return (
-                <div className="card">
-                    <Square {...props}></Square>
-                    <Label {...props}></Label>
+                    <Square color={color}></Square>
+                    <Label color={color}></Label>
                 </div>
             )
 
-            props 가 아래와 같다고 했을 때
-            {
-                a:"1",
-                b:"2",
-                c:"3"
-            }
-            ...props을 사용하면 props 있는 값들이 풀려서 들어가게 된다.
-
-            <Square {...props}></Square> 라고 했을 때
-            ...props을 사용하면
-            <Square a="1" b="2" c="3"></Square> 처럼 변환되어 실행된다.
-
-        1-4. CardContainer 컴포넌트 JSX
+        6. CardContainer 컴포넌트 JSX
             return (
                 <div>
                     <Card color={"#ff6663"}></Card>
                     <Card color={"#ffa737"}></Card>
                 </div>
         )
-
-        2. ReactDOM 을 사용하여 화면에 붙인다.
-        예시)
-            ReactDOM.render(
-                <CardContainer />
-                ,
-                document.getElementById("app")
-            )
     </xmp>
     <hr>
 
@@ -137,3 +120,114 @@
     </div>
   </body>
 </html>
+
+
+<script src="https://unpkg.com/@babel/standalone/babel.js"
+  crossorigin="anonymous">
+    /* 자바스크립트로 컴파일러. ES6-->ES5, JSX-- > ES5 * /
+  </script>
+<script src="http://unpkg.com/react@17/umd/react.development.js"
+  crossorigin="anonymous">
+    /* import React, { Component, PureComponent } from 'react' */
+  </script>
+<script src="http://unpkg.com/react-dom@17/umd/react-dom.development.js"
+  crossorigin="anonymous">
+    /* import ReactDOM from 'react-dom' */
+  </script>
+<script type="text/babel">
+
+  const { useState, useEffect, useRef, useCallback, useMemo, useReducer, Fragment } = React;
+
+  // id="app" 인 태그 에 컴포넌트를 화면에 붙이시오
+  // ReactDOM.render( 인자1, 인자2 )
+  ReactDOM.render(<CardContainer />, document.getElementById('app'));
+
+  // 단축키 rfc
+  function CardContainer({ }) {
+    // useState 를 사용한 컴포넌트의 상태값 설정
+    const [color, setColor] = useState('#ff6663'); // 상태값이 기본타입인 경우
+
+    return (
+      <div className="card">
+        <Square color={color}></Square>
+        <Label color={color}></Label>
+      </div>
+    )
+  }
+  CardContainer.propTypes = {
+    // props의 프로퍼티 타입 설정. https://ko.reactjs.org/docs/typechecking-with-proptypes.html
+    // 인자명: PropTypes.func.isRequired,
+    // 인자명: PropTypes.arrayOf(PropTypes.object),
+  };
+  CardContainer.defaultProps = {
+    // props의 디폴트 값 설정. https://ko.reactjs.org/docs/typechecking-with-proptypes.html
+    // 인자명: () => {},
+    // 인자명: [],
+  };
+
+  function Card({
+    ...props
+  }) {
+    // useState 를 사용한 컴포넌트의 상태값 설정
+    const [변수명, set변수명] = useState('기본값'); // 상태값이 기본타입인 경우
+
+    return (
+      <div>
+        Card
+        <Square></Square>
+        <Label></Label>
+      </div>
+    )
+  }
+  Card.propTypes = {
+    // props의 프로퍼티 타입 설정. https://ko.reactjs.org/docs/typechecking-with-proptypes.html
+    // 인자명: PropTypes.func.isRequired,
+    // 인자명: PropTypes.arrayOf(PropTypes.object),
+  };
+  Card.defaultProps = {
+    // props의 디폴트 값 설정. https://ko.reactjs.org/docs/typechecking-with-proptypes.html
+    // 인자명: () => {},
+    // 인자명: [],
+  };
+
+  function Square({ color }) {
+    let style = { backgroundColor: color }
+    return (
+      <div className='square' style={style}>
+      </div>
+    )
+  }
+  Square.propTypes = {
+    // props의 프로퍼티 타입 설정. https://ko.reactjs.org/docs/typechecking-with-proptypes.html
+    // 인자명: PropTypes.func.isRequired,
+    // 인자명: PropTypes.arrayOf(PropTypes.object),
+    color: PropTypes.string.isRequired /* isRequired: 필수 입력인 경우 */
+  };
+  Square.defaultProps = {
+    // props의 디폴트 값 설정. https://ko.reactjs.org/docs/typechecking-with-proptypes.html
+    // 인자명: () => {},
+    // 인자명: [],
+    color: '#ffffff'
+  };
+
+  function Label({ color }) {
+    return (
+      <div className="label">
+        {color}
+      </div>
+    )
+  }
+  Label.propTypes = {
+    // props의 프로퍼티 타입 설정. https://ko.reactjs.org/docs/typechecking-with-proptypes.html
+    // 인자명: PropTypes.func.isRequired,
+    // 인자명: PropTypes.arrayOf(PropTypes.object),
+    color: PropTypes.string.isRequired /* isRequired: 필수 입력인 경우 */
+  };
+  Label.defaultProps = {
+    // props의 디폴트 값 설정. https://ko.reactjs.org/docs/typechecking-with-proptypes.html
+    // 인자명: () => {},
+    // 인자명: [],
+    color: '#ffffff'
+  };
+
+</script>

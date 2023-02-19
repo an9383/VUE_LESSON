@@ -16,10 +16,10 @@
     <xmp>
         아래의 코드를 JSX로 작성하고 실행하여 본다.
         만들 컴포넌트
-            Jsx
-            JsxContainer
+          JsxContainer
+          Jsx
 
-        <div className="my-div">
+        <div class="my-div">
             <div style="border: 2px solid red; background-color:red;">
                 &nbsp;
             </div>
@@ -27,7 +27,6 @@
         --------------------------
         1. 태그의 class 속성은 className 으로
         2. 태그의 style 속성은 직접 작성이 불가하다.
-        3. props를 이용하여 "Hello, React" 가 출력되게 하시오.
     </xmp>
     <hr />
 
@@ -36,120 +35,46 @@
 </html>
 
 
-
-<script src="https://unpkg.com/@babel/standalone/babel.js"  crossorigin="anonymous">
-    /* 자바스크립트로 컴파일러. ES6-->ES5, JSX-->ES5 */
-</script>
-<script src="http://unpkg.com/react@17/umd/react.development.js" crossorigin="anonymous">
+<script src="https://unpkg.com/@babel/standalone/babel.js"
+  crossorigin="anonymous">
+    /* 자바스크립트로 컴파일러. ES6-->ES5, JSX-- > ES5 * /
+  </script>
+<script src="http://unpkg.com/react@17/umd/react.development.js"
+  crossorigin="anonymous">
     /* import React, { Component, PureComponent } from 'react' */
-</script>
-<script src="http://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin="anonymous">
+  </script>
+<script src="http://unpkg.com/react-dom@17/umd/react-dom.development.js"
+  crossorigin="anonymous">
     /* import ReactDOM from 'react-dom' */
-</script>
+  </script>
 <script type="text/babel">
 
-    const { useState, useEffect, useRef, useCallback, useMemo, useReducer, Fragment } = React;
+  const { useState, useEffect, useRef, useCallback, useMemo, useReducer, Fragment } = React;
 
-    // id="app" 인 태그 에 컴포넌트를 화면에 붙이시오
-    // ReactDOM.render( 인자1, 인자2 )
-    ReactDOM.render(<JsxContainer />, document.getElementById('app'));
+  // id="app" 인 태그 에 컴포넌트를 화면에 붙이시오
+  // ReactDOM.render( 인자1, 인자2 )
+  ReactDOM.render(<JsxContainer />, document.getElementById('app'));
 
-   // 단축키 rfc
-   function JsxContainer({
-     ...props
-   }) {
-     // useState 를 사용한 컴포넌트의 상태값 설정
-     const [변수명, set변수명] = useState('기본값'); // 상태값이 기본타입인 경우
-
-     // ref 만들기.
-     // const refInput = useRef();
-
-     // refIsMounted는 생명주기의 마운트와 업데이트를 구분하기 위한 ref
-     const refIsMounted = useRef(false);
-     useEffect( () => {
-       if (refIsMounted.current){
-         // 업데이트 될 때마다 실행됨. 여러번. state 가 변경될 때마다
-         // console.log('JsxContainer >> componentDidUpdate');
-       }
-       else {
-         // 마운트 완료 후에 실행됨. 한번만. focus 줄때
-         // console.log('JsxContainer >> componentDidMount');
-         refIsMounted.current = true;
-       }
-       return () => {
-         // 언마운트 직전에 한번만 실행됨.
-         // console.log('JsxContainer >> componentWillUmount');
-       };
-     }, [/* 연관배열: 메서드와 연관되는 상태(변수)명들을 기술 */]);
-
-     // callback 메서드 작성. callback 메서드는 부모의 공유 상태값을 변경하기 위해서 사용된다.
-     const callback = useCallback( (param)=>{
-       // state 변경
-     }, [/* 연관배열: 콜백 메서드에서 변경하고자 하는 연관되는 상태(변수)명들을 기술  */]);
-
-     // 이벤트 핸들러 작성.
-     const handler = (e)=>{
-       // 이벤트 핸들러는 화살표 함수로 만든다
-       console.log(e.target);
-     };
-
-     // JSX로 화면 만들기. 조건부 렌더링: https://ko.reactjs.org/docs/conditional-rendering.html
-     return (
-       <div>
-         JsxContainer
-         <Jsx></Jsx>
-       </div>
-     )
-   }
-
-   function Jsx({
-     ...props
-   }) {
-     // useState 를 사용한 컴포넌트의 상태값 설정
-     const [변수명, set변수명] = useState('기본값'); // 상태값이 기본타입인 경우
-
-     // ref 만들기.
-     // const refInput = useRef();
-
-     // refIsMounted는 생명주기의 마운트와 업데이트를 구분하기 위한 ref
-     const refIsMounted = useRef(false);
-     useEffect( () => {
-       if (refIsMounted.current){
-         // 업데이트 될 때마다 실행됨. 여러번. state 가 변경될 때마다
-         // console.log('Jsx >> componentDidUpdate');
-       }
-       else {
-         // 마운트 완료 후에 실행됨. 한번만. focus 줄때
-         // console.log('Jsx >> componentDidMount');
-         refIsMounted.current = true;
-       }
-       return () => {
-         // 언마운트 직전에 한번만 실행됨.
-         // console.log('Jsx >> componentWillUmount');
-       };
-     }, [/* 연관배열: 메서드와 연관되는 상태(변수)명들을 기술 */]);
-
-     // callback 메서드 작성. callback 메서드는 부모의 공유 상태값을 변경하기 위해서 사용된다.
-     const callback = useCallback( (param)=>{
-       // state 변경
-     }, [/* 연관배열: 콜백 메서드에서 변경하고자 하는 연관되는 상태(변수)명들을 기술  */]);
-
-     // 이벤트 핸들러 작성.
-     const handler = (e)=>{
-       // 이벤트 핸들러는 화살표 함수로 만든다
-       console.log(e.target);
-     };
-
-     // JSX로 화면 만들기. 조건부 렌더링: https://ko.reactjs.org/docs/conditional-rendering.html
-     return (
-      <div className="my-div">
-            <div style={
-              {border: '2px solid red', backgroundColr: 'red',}
-            }>
-            </div>
+  // 단축키 rfc
+  function JsxContainer({ ...props }) {
+    return (
+      <div>
+        JsxContainer
+        <Jsx></Jsx>
+      </div>
+    )
+  }
+  function Jsx({ ...props }) {
+    return (
+      <div class="my-div">
+        <div style={
+          { border: '2px solid red', backgroundColor: 'red' }
+        }>
+          &nbsp;
         </div>
-     )
-   }
+      </div >
+    )
+  }
 
 
 </script>
