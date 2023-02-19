@@ -49,10 +49,65 @@
             HelloWorldContainer 컴포넌트 만들기
             HelloWorld 컴포넌트 만들기
         2. HelloWorld 컴포넌트 JSX 만들기
-        . props 설정
+        3. HelloWorldContainer 컴포넌트 JSX 만들기
+        4. props 설정
     </xmp>
     <hr />
 
     <div id="app">요기에</div>
   </body>
 </html>
+
+
+<script src="https://unpkg.com/@babel/standalone/babel.js"
+  crossorigin="anonymous">
+    /* 자바스크립트로 컴파일러. ES6-->ES5, JSX-- > ES5 * /
+  </script>
+<script src="http://unpkg.com/react@17/umd/react.development.js"
+  crossorigin="anonymous">
+    /* import React, { Component, PureComponent } from 'react' */
+  </script>
+<script src="http://unpkg.com/react-dom@17/umd/react-dom.development.js"
+  crossorigin="anonymous">
+    /* import ReactDOM from 'react-dom' */
+  </script>
+<script type="text/babel">
+
+  const { useState, useEffect, useRef, useCallback, useMemo, useReducer, Fragment } = React;
+
+  // id="app" 인 태그 에 컴포넌트를 화면에 붙이시오
+  // ReactDOM.render( 인자1, 인자2 )
+  ReactDOM.render(<HelloWorldContainer />, document.getElementById('app'));
+
+  // 단축키 rfc
+  function HelloWorldContainer({
+    ...props
+  }) {
+    // useState 를 사용한 컴포넌트의 상태값 설정
+    const [변수명, set변수명] = useState('기본값'); // 상태값이 기본타입인 경우
+
+    // JSX로 화면 만들기. 조건부 렌더링: https://ko.reactjs.org/docs/conditional-rendering.html
+    return (
+      <div>
+        HelloWorldContainer
+        <HelloWorld index={1}></HelloWorld>
+        <HelloWorld index={2}></HelloWorld>
+        <HelloWorld index={3}></HelloWorld>
+        <HelloWorld index={4}></HelloWorld>
+      </div>
+    )
+  }
+
+  function HelloWorld({
+    index
+  }) {
+    // JSX로 화면 만들기. 조건부 렌더링: https://ko.reactjs.org/docs/conditional-rendering.html
+    return (
+      <div>
+        Hello, react world!!! {index} - component
+      </div>
+    )
+  }
+
+
+</script>
