@@ -113,9 +113,6 @@
   function TextInputWithFocusButton({
     ...props
   }) {
-    // useState 를 사용한 컴포넌트의 상태값 설정
-    const [변수명, set변수명] = useState('기본값'); // 상태값이 기본타입인 경우
-
     // ref 만들기.
     const inputEl1 = useRef();
     const inputEl2 = useRef();
@@ -123,10 +120,7 @@
     useEffect(() => {
       // mount 되면 첫번째 input 에 focus 주기
       inputEl1.current.focus();
-
-      return () => {
-        // umount
-      }
+      return () => { /* umount */ }
     }, []);
 
     // 이벤트 핸들러 작성.

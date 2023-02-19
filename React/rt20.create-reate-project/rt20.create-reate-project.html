@@ -42,10 +42,10 @@
         v16.18.1
 
         $ npm -v                           #  npm 버전 확인
-        8.19.2
+        9.4.2
 
         $ npx -v                           #  npx(=npm extension) 버전 확인
-        8.19.2
+        9.4.2
 
         $ npm install -g npm@latest        #  npm 최신 버전 설치
 
@@ -70,7 +70,7 @@
         Ok to proceed? (y) y
         ...
         5분 소요
-        책 읽기
+
         ...
 
         $ ls               # reactprj01 폴더가 보이는지 확인
@@ -127,7 +127,7 @@
 
     step 1-22. styled-components(필수)
         styled-components 는 CSS 표기법을 사용하여
-        인라인 스타일링을 만들 수 있게 해주는 CSS-IN-JS 라이브러리.
+        컴포넌트안에서 인라인 스타일링을 만들 수 있게 해주는 CSS-IN-JS 라이브러리.
         https://www.npmjs.com/package/styled-components
 
         $ npm install --save styled-components @types/styled-components
@@ -157,7 +157,7 @@
         $ npm install --save redux-saga
 
 
-    step 1-26. 비동기 처리(필수)
+    step 1-26. 비동기 api 처리(필수)
         axios : rest api  외부 api를 실행하는 라이브러리
         Promise based HTTP client for the browser and node.js
         https://www.npmjs.com/package/axios
@@ -167,6 +167,8 @@
 
     step 1-27. immer 설치(필수)
         immer : 리덕스 store state 를 불변 객체(읽기 전용)로 처리할 때 사용되는 라이브러리
+        ===> 복제 후 할당을 처리하는 라이브러리
+
         Create the next immutable state tree by simply modifying the current tree
         https://www.npmjs.com/package/immer
 
@@ -196,20 +198,20 @@
         $ npm install --save antd
 
 
-    step 1-34. install the Bootstrap 4
-        $ npm install --save bootstrap reactstrap
 
-
-
-    step 1-35. install react-icons
+    step 1-34. install react-icons
         Include popular icons in your React projects easily with react-icons,
         https://www.npmjs.com/package/react-icons
 
         $ npm install --save react-icons
 
 
-    41. package.json 에 있는 라이브러리 재설치
-    $ npm intall
+    step 1-35. install the Bootstrap 4
+        $ npm install --save bootstrap reactstrap
+
+
+    step 1-41. package.json 에 있는 라이브러리 재설치
+    $ npm install
 
 
 
