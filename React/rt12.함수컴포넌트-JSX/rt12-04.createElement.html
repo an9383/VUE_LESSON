@@ -69,3 +69,44 @@
     <div id="wrap3"></div>
   </body>
 </html>
+
+
+<script src="https://unpkg.com/@babel/standalone/babel.js"
+  crossorigin="anonymous">
+    /* 자바스크립트로 컴파일러. ES6-->ES5, JSX-- > ES5 * /
+  </script>
+<script src="http://unpkg.com/react@17/umd/react.development.js"
+  crossorigin="anonymous">
+    /* import React, { Component, PureComponent } from 'react' */
+  </script>
+<script src="http://unpkg.com/react-dom@17/umd/react-dom.development.js"
+  crossorigin="anonymous">
+    /* import ReactDOM from 'react-dom' */
+  </script>
+<script type="text/babel">
+
+  const { useState, useEffect, useRef, useCallback, useMemo, useReducer, Fragment } = React;
+
+  // id="app" 인 태그 에 컴포넌트를 화면에 붙이시오
+  // ReactDOM.render( 인자1, 인자2 )
+  ReactDOM.render(<MyDiv1 />, document.getElementById('wrap1'));
+  ReactDOM.render(<MyDiv2 />, document.getElementById('wrap2'));
+
+  function MyDiv1({ ...props }) {
+    return (
+      <h1 id="greeting">
+        Hello, React!!!
+      </h1>
+    )
+  }
+  function MyDiv2({ ...props }) {
+    return (
+      React.createElement(
+        "h1",
+        { id: "greeting" },
+        "    Hello, React!!!"
+      )
+    )
+  }
+
+</script>

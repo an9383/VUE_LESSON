@@ -50,7 +50,8 @@
             HelloWorld 컴포넌트 만들기
         2. HelloWorld 컴포넌트 JSX 만들기
         3. HelloWorldContainer 컴포넌트 JSX 만들기
-        4. props 설정
+        4. props 설정 변경
+        5. 도전. react 반복문 적용해 보기. map() 사용
     </xmp>
     <hr />
 
@@ -80,34 +81,21 @@
   ReactDOM.render(<HelloWorldContainer />, document.getElementById('app'));
 
   // 단축키 rfc
-  function HelloWorldContainer({
-    ...props
-  }) {
-    // useState 를 사용한 컴포넌트의 상태값 설정
-    const [변수명, set변수명] = useState('기본값'); // 상태값이 기본타입인 경우
-
-    // JSX로 화면 만들기. 조건부 렌더링: https://ko.reactjs.org/docs/conditional-rendering.html
+  function HelloWorldContainer({ ...props }) {
+    const [변수명, set변수명] = useState([1, 2, 3, 4]); // 상태값이 배열타입인 경우
     return (
-      <div>
-        HelloWorldContainer
-        <HelloWorld index={1}></HelloWorld>
-        <HelloWorld index={2}></HelloWorld>
-        <HelloWorld index={3}></HelloWorld>
-        <HelloWorld index={4}></HelloWorld>
-      </div>
+      <Fragment>
+        {변수명.map((value, index, array) => {
+          return (<HelloWorld index={value}></HelloWorld>);
+        })}
+      </Fragment>
     )
   }
-
-  function HelloWorld({
-    index
-  }) {
-    // JSX로 화면 만들기. 조건부 렌더링: https://ko.reactjs.org/docs/conditional-rendering.html
+  function HelloWorld({ index }) {
     return (
       <div>
         Hello, react world!!! {index} - component
       </div>
     )
   }
-
-
 </script>
