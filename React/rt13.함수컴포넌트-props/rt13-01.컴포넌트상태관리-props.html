@@ -63,19 +63,14 @@
     <hr>
 
     <xmp>
-
         1. ExampleContainer, Example 컴포넌를 만든다.
-        2. ExampleContainer 컴포넌트의 상태값 만들기
-            const [count, setCount] = useState(0); // "count"라는 새 상태 변수를 선언합니다
-        3.Example 컴포넌트의 상태값 만들기
-            const [age, setAge] = useState(42);
-            const [fruit, setFruit] = useState('banana');
-            const [todos, setTodos] = useState([{ text: 'Learn Hooks' }]);
-        4.ExampleContainer 컴포넌트의 JSX
+        2.ExampleContainer 컴포넌트의 JSX
             <div>
                 <Example count={count}></Example>
             </div>
-        5.Example 컴포넌트의 JSX
+        3. ExampleContainer 컴포넌트의 상태값 만들기
+            const [count, setCount] = useState(0); // "count"라는 새 상태 변수를 선언합니다
+        4.Example 컴포넌트의 JSX
             <div>
                 <p>
                     <span>You clicked {count} times</span>
@@ -87,6 +82,10 @@
                 <p> fruit: { /* fruit 상태값이 출력되게 하시오. */ }</p>
                 <p> { /* todos 상태값이 출력되게 하시오. */ }</p>
             </div>
+        5.Example 컴포넌트의 상태값 만들기
+            const [age, setAge] = useState(42);
+            const [fruit, setFruit] = useState('banana');
+            const [todos, setTodos] = useState([{ text: 'Learn Hooks' }]);
         6. Example 컴포넌트에 age, fruit, todos 상태값이 출력되게 하시오.
         7. 부모 컴포넌트, ExampleContainer 의 count 상태값을 바꾸는 코드를 작성한다.
     </xmp>

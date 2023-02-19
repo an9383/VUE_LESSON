@@ -37,35 +37,45 @@ const countries1 = [...east, ...west];
 console.log(countries1); // ["U", "K", "T", "N", "C", "G"]
 
 const car1 = {
-  type:'t1',
-  color:'S1',
+  type: 't1',
+  color: 'S1',
   model: 2017,
 };
 const car2 = {
-  type:'t2',
-  color:'S2',
+  type: 't2',
+  color: 'S2',
   model: 2019,
-}
-const {type } = car1;
-console.log(type);
-
-const func = ({type}) => {
-  console.log(type);
 };
-const newcar = { ...car1, ...car2};
-func(newcar);
-func({...car1, ...car2})
 
+const { type } = car1; // const type = car1.type;
+console.log(type); // t1
 
+const func = ({ type }) => {
+  console.log(type); // t2
+};
+const newcar = { ...car1, ...car2 }; // === car2
+func(newcar); // newcar === car2  ===> t2 출력
+func({ ...car1, ...car2 }); //  ===> t2 출력
+
+// spread 연산자를 이용하여 새로운 객체를 만드는 방법을 실습한다.
+// ===> 불변객체의 복제 후 할당
 const moring = {
   breacfast: '미역국',
-  lunuch: '삼치구이'
+  lunuch: '삼치구이',
 };
 const dinner = '스테이크';
-
- const meals = {
-...moring,
-dinner
+const meals = {
+  ...moring,
+  dinner, // dinner: dinner,
 };
-console.log(meals);
 
+console.log(meals); // meals 에 출력되는 값은 무엇인가?
+
+
+// props 에 출력되는 값은 무엇인가?
+function childComponent(...props) {
+  // callee
+  console.log(props); // props 에 출력되는 값은 무엇인가?
+}
+const message = 'passed from Parent Component';
+childComponent(...message); // caller
