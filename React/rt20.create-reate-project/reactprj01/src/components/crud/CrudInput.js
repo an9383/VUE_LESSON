@@ -37,6 +37,7 @@ function CrudInput({ callbackAdd }) {
     console.log(e.target);
     // 부모 콜백 메서드 호출
     // CrudContainer.callbackAdd();
+    
     debugger;
     // Name 입력 여부 유효성 검사
     //     포커스 주기

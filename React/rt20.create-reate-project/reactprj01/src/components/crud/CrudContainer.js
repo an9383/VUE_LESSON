@@ -113,11 +113,23 @@ function CrudContainer({ ...props }) {
 
   const callbackSave = useCallback(
     (newitem) => {
-      // newitem 으로 바뀐 새로운 배열 만들기. Array.map() 을 사용한다
-      // ...생략
+      // newitem 으로 바뀐 새로운 배열 만들기.
+      // Array.map() 을 사용
+      debugger;
+      const newItems =
+        items &&
+        items.length > 0 &&
+        items.map((item) => {
+          if (item.id === newitem.id) {
+            return newitem;
+          }
+          return item;
+        });
+      setItems(newItems); // items = newItems;
     },
     [
       /* 메서드와 연관되는 상태(변수)명들을 기술 */
+      items,
     ],
   );
 

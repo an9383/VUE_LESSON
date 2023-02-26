@@ -97,9 +97,50 @@ function CrudListItem({
   const handlerSave = (e) => {
     // 이벤트 핸들러는 화살표 함수로 만든다
     console.log(e.target);
+
+    debugger;
+    // Name 입력 여부 유효성 검사
+    //     포커스 주기
+    //     이벤트 취소
+    const name = refInputName.current.value;
+    if (!name || !name.trim()) {
+      alert('이름에 값을 입력하세요.');
+      refInputName.current.focus(); // 포커스 주기
+      e.stopPropagation(); // 이벤트 취소
+      return false;
+    }
+
+    // Power 입력 여부 유효성 검사
+    //     포커스 주기
+    //     이벤트 취소
+    const power = refInputPower.current.value;
+    if (!power || !power.trim()) {
+      alert('파워에 값을 입력하세요.');
+      refInputPower.current.focus(); // 포커스 주기
+      e.stopPropagation(); // 이벤트 취소
+      return false;
+    }
+
+    // Power의 입력값이 숫자인지 유효성 검사.
+    if (isNaN(Number(refInputPower.current.value))) {
+      alert('파워에 숫자를 입력하세요.');
+      refInputPower.current.focus(); // 포커스 주기
+      e.stopPropagation(); // 이벤트 취소
+      return false;
+    }
+
+    // Power의 입력값을 숫자로 바꾸시오.(문자열를 숫자로)
+    const newitem = {
+      id: item.id,
+      name: name,
+      power: Number(refInputPower.current.value),
+    };
+
+    // 부모 메서드 CrudContainer.callbackSave() 호출
+    callbackSave(newitem);
+
     setIsEditMode(!isEditMode); // true ==> false, false ==> true,
   };
-
 
   // JSX로 화면 만들기. 조건부 렌더링: https://ko.reactjs.org/docs/conditional-rendering.html
   let strong = '';
