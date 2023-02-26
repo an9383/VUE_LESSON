@@ -485,35 +485,46 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   13-5. HomeContainer 컴포넌트 파일 생성
       $ mkdir -p ./src/containers/home
       $ touch src/containers/home/HomeContainer.js
-
-  13-6. 라우팅 폴더 및 PageHome 컴포넌트 만들기
+      
+  13-6. HomeContainer 컴포넌트 만들기
+     단축키: rfc
+  
+  13-7. 라우팅 폴더 및 PageHome 컴포넌트 만들기
       $ mkdir -p ./src/pages
       $ touch src/pages/PageHome.js
 
-  13-7. PageHome 에 라우팅 설정
+  13-8. PageHome 에 라우팅 설정
       작업파일: src/pages/PageHome.js
 
       import { Routes, Route, NavLink } from 'react-router-dom';
 
+      import CompStyle from '../containers/styled/CompStyle';
+      import CrudContainer from '../components/crud/CrudContainer';
       import HomeContainer from '../containers/home/HomeContainer';
-      import TodoContainer from '../containers/todo/TodoContainer';
 
       <div>
           <Routes>
+              <Route path="/style" element={<CompStyle />} />
+              <Route path="/crud" element={<CrudContainer />} />
               <Route path="/" element={<HomeContainer />} />
-              <Route path="/todo" element={<TodoContainer />} />
               <Route path="*" to="/" />
           </Routes>
       </div>
+      
+  13-9.브라우저에서 아래의 url 을 직접 입력하여 라우팅을 테스트 한다.
+    http://localhost:15109/
+    http://localhost:15109/style
+    http://localhost:15109/crud
 
-  13-8. PageHome 에 링크 설정
+  13-10. PageHome 에 링크 설정
       작업파일: src/pages/PageHome.js
 
       변경 전
       <div>
           <Routes>
+              <Route path="/style" element={<CompStyle />} />
+              <Route path="/crud" element={<CrudContainer />} />
               <Route path="/" element={<HomeContainer />} />
-              <Route path="/todo" element={<TodoContainer />} />
               <Route path="*" to="/" />
           </Routes>
       </div>
@@ -523,19 +534,21 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <div>
               <ul>
                   <li><NavLink to="/">Home</NavLink></li>
-                  <li><NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/todo">Todo</NavLink></li>
+                  <li><NavLink to="/style">Style</NavLink></li>
+                  <li><NavLink to="/crud">Crud</NavLink></li>
               </ul>
           </div>
 
           <Routes>
+              <Route path="/style" element={<CompStyle />} />
+              <Route path="/crud" element={<CrudContainer />} />
               <Route path="/" element={<HomeContainer />} />
-              <Route path="/todo" element={<TodoContainer />} />
               <Route path="*" to="/" />
           </Routes>
       </div>
 
 
-  13-9. PageHome 에 스타일링 설정
+  13-11. PageHome 에 스타일링 설정
       작업파일: src/pages/PageHome.js
 
       변경 전

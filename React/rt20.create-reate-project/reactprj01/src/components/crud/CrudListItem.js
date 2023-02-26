@@ -70,7 +70,8 @@ function CrudListItem({
     // 부모의 콜백 메서드 호출.
     // CrudContainer.callbackDel();
     debugger;
-    callbackDel();
+    // item = {id, name, power}
+    callbackDel(item);
   };
   const handlerUp = (e) => {
     // 이벤트 핸들러는 화살표 함수로 만든다
@@ -78,7 +79,8 @@ function CrudListItem({
     // 부모의 콜백 메서드 호출.
     // CrudContainer.callbackUp();
     debugger;
-    callbackUp();
+    // item = {id, name, power}
+    callbackUp(item);
   };
   const handlerDown = (e) => {
     // 이벤트 핸들러는 화살표 함수로 만든다
@@ -87,7 +89,8 @@ function CrudListItem({
     // 부모의 콜백 메서드 호출.
     // CrudContainer.callbackDown();
     debugger;
-    callbackDown();
+    // item = {id, name, power}
+    callbackDown(item);
   };
   const handlerEdit = (e) => {
     // 이벤트 핸들러는 화살표 함수로 만든다
