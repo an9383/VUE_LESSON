@@ -743,7 +743,7 @@
 
     ##################################
     step 27. TodoList 의 removeTodo 기능 완성한다.
-        이벤트 핸들러로 인자를 넘길 때 인라인 이벤트 핸들러를 사용하는 방법을 적용하여 본다.
+        이벤트 핸들러로 인자를 넘길 때 이벤트 핸들러의 매개변수로 넘기는 방법을 적용하여 본다.
         소요시간: 10분
     ##################################
 
@@ -754,7 +754,7 @@
                 onClick={(e) => {
                     e.stopPropagation(); // 이벤트 취소. 버블링 방지
                     
-                    // 부모 컴포넌트의 콜백 메서드 callbackDoneToggle 호출
+                    // 부모 컴포넌트의 콜백 메서드 handlerRemoveTodo 호출
                     handlerRemoveTodo(e, item.id);
                 }}
             >
@@ -765,6 +765,9 @@
         ==> ap03-11.객체배열.html 참조
 
         const handlerRemoveTodo = (e, id) => {
+            // 이벤트 핸들러는 화살표 함수로 만든다
+            console.log(e.target);
+            
             // 부모 컴포넌트의 콜백 메서드 callbackRemoveTodo 호출
             callbackRemoveTodo(id);
         };
@@ -847,6 +850,7 @@
         import TodoInput from './components/TodoInput';
 
     step 28-05 TodoInput 컴포넌트 스타일링 작성하기
+        TodoContainer 에서 TodoInput 로 스타일 옮기기
 
         const StyledTodoInput = styled.div`
           ... 중략
@@ -953,6 +957,7 @@
             // class 속성값 가져오기: ref이름.current.className
             const value = refInputTodo.current.value;
 
+            // input 태그 입력값 유효성 검사
             // input 태그에 빈 문자열이나 공백이 입력 되는 경우는 modal 창이 출력되게
             if (!value || !value.trim()) {
               // isShowModal = true;

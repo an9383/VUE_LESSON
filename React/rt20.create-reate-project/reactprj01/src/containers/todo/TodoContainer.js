@@ -1,134 +1,14 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-  useMemo,
-  useReducer,
-  Fragment,
-  forwardRef,
-  useImperativeHandle,
-} from 'react';
-import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  NavLink,
-  useParams,
-  useLocation,
-  useHistory,
-  useNavigate,
-} from 'react-router-dom';
+import React, { useState, useCallback } from 'react';
+import styled from 'styled-components';
 
 const StyledTodoContainer = styled.div`
   /* styled 설정. https://styled-components.com/docs/basics#adapting-based-on-props */
-  button {
-    border-style: groove;
-  }
-
-  input {
-    border-style: groove;
-    width: 200px;
-  }
-
-  .shadow {
-    box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
-  }
-
-  input:focus {
-    outline: none;
-  }
-
-  .inputBox {
-    background: white;
-    height: 50px;
-    line-height: 50px;
-    border-radius: 5px;
-  }
-
-  .inputBox input {
-    border-style: none;
-    font-size: 0.9rem;
-  }
-
-  .addContainer {
-    float: right;
-    background: linear-gradient(to right, #6478fb, #8763fb);
-    display: inline-block;
-    width: 3rem;
-    border-radius: 0 5px 5px 0;
-  }
-
-  .addBtn {
-    color: white;
-    vertical-align: middle;
-  }
-
-  .closeModalBtn {
-    color: #62acde;
-  }
-
-  .modal-mask {
-    position: fixed;
-    z-index: 9998;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: table;
-    transition: opacity 0.3s ease;
-  }
-
-  .modal-wrapper {
-    display: table-cell;
-    vertical-align: middle;
-  }
-
-  .modal-container {
-    width: 300px;
-    margin: 0px auto;
-    padding: 20px 30px;
-    background-color: #fff;
-    border-radius: 2px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
-    transition: all 0.3s ease;
-    font-family: Helvetica, Arial, sans-serif;
-  }
-
-  .modal-header h3 {
-    margin-top: 0;
-    color: #62acde;
-  }
-
-  .modal-body {
-    margin: 20px 0;
-  }
-
-  .modal-default-button {
-    float: right;
-  }
-
-  .modal-enter {
-    opacity: 0;
-  }
-
-  .modal-leave-active {
-    opacity: 0;
-  }
-
-  .modal-enter .modal-container,
-  .modal-leave-active .modal-container {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
-  }
 `;
 
 import TodoHeader from './components/TodoHeader';
 import TodoFooter from './components/TodoFooter';
 import TodoList from './components/TodoList';
+import TodoInput from './components/TodoInput';
 
 function TodoContainer({ ...props }) {
   // useState 를 사용한 컴포넌트의 상태값 설정
@@ -179,6 +59,62 @@ function TodoContainer({ ...props }) {
     ],
   );
 
+  const callbackRemoveTodo = useCallback(
+    (id) => {
+      // state 변경 코드를 완성하시오.
+      // filter 메서드를 이용한 삭제 방법 실습.
+
+      // 배열 복제
+      const newitems =
+        todoItems &&
+        todoItems.length > 0 &&
+        todoItems.filter((item) => {
+          if (item.id === id) return false; // 삭제 == 뺀다
+          return true; // 나둔다.
+        });
+
+      // 배열 할당
+      setTodoItems(newitems);
+    },
+    [
+      /* 연관배열: 콜백 메서드에서 변경하고자 하는 연관되는 상태(변수)명들을 기술 */
+      todoItems,
+    ],
+  );
+
+  const callbackAddTodo = useCallback(
+    (value) => {
+      // state 변경 코드를 완성하시오.
+      // map과 reduce 를 사용하여 max id 구하기 ==> newid 만들기
+      const maxid =
+        todoItems &&
+        todoItems.length > 0 &&
+        todoItems
+          .map((item) => item.id) // [1,2,3,4]
+          .reduce((pvalue, cvalue) => {
+            // 큰값 반환하기
+            if (pvalue > cvalue) return pvalue;
+            else return cvalue;
+          }, 0);
+
+      // todoItems 추가할 객체 만들기
+      const newtodo = {
+        id: maxid + 1,
+        todo: value,
+        done: false,
+      };
+
+      // 배열에 추가.
+      // todoItems.push(newItem);
+      // todoItems = [...todoItems, newTodo];
+      setTodoItems([...todoItems, newTodo]);
+    },
+    [
+      /* 연관배열: 콜백 메서드에서 변경하고자 하는 연관되는 상태(변수)명들을 기술 */
+      todoItems,
+    ],
+  );
+
   // 이벤트 핸들러 작성.
   const handler = (e) => {
     // 이벤트 핸들러는 화살표 함수로 만든다
@@ -193,37 +129,13 @@ function TodoContainer({ ...props }) {
         <TodoHeader></TodoHeader>
 
         {/* <!-- TodoInput --> */}
-        <div className="inputBox shadow">
-          <input type="text" placeholder="Type what you have to do" />
-          <span className="addContainer">
-            <i aria-hidden="true" className="addBtn fas fa-plus"></i>
-          </span>
-
-          <div className="modal-mask" style={{ display: 'none' }}>
-            <div className="modal-wrapper">
-              <div className="modal-container">
-                <div className="modal-header">
-                  <h3 slot="header">경고</h3>
-                </div>
-
-                <div className="modal-footer">
-                  <span>
-                    할 일을 입력하세요.
-                    <i
-                      className="closeModalBtn fas fa-times"
-                      aria-hidden="true"
-                    ></i>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <TodoInput callbackAddTodo={callbackAddTodo}></TodoInput>
 
         {/* <!-- TodoList --> */}
         <TodoList
           todoItems={todoItems}
           callbackDoneToggle={callbackDoneToggle}
+          callbackRemoveTodo={callbackRemoveTodo}
         ></TodoList>
 
         {/* <!-- TodoFooter --> */}
