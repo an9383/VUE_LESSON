@@ -401,8 +401,15 @@
         import TodoHeader from './components/TodoHeader';
 
     step 23-05. StyledTodoHeader 컴포넌트 스타일링하기
+        TodoContainer 에서 TodoHeader 로 스타일 옮기기
 
+        수정 전
         const StyledTodoHeader = styled.div`
+          ... 중략
+        `;
+        
+        수정 후
+        const StyledTodoHeader = styled.header`
           ... 중략
         `;
 
