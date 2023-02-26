@@ -255,7 +255,7 @@
         </StyledPageHome>
 
     13-8. PageHome 에 라우팅 설정
-    
+
     13-8. PageHome 에 링크 설정
         작업파일: src/pages/PageHome.js
 
@@ -407,7 +407,7 @@
         const StyledTodoHeader = styled.div`
           ... 중략
         `;
-        
+
         수정 후
         const StyledTodoHeader = styled.header`
           ... 중략
@@ -489,7 +489,7 @@
         const handlerClearAll = () => {
             console.log(e.target);
             debugger;
-            
+
             // 부모 컴포넌트의 콜백 메서드 callbackClearAll 호출.
             callbackClearAll();
         };
@@ -497,7 +497,7 @@
     step 24-09. TodoFooter 에 props 설정
         TodoFooter.propTypes 수정
         TodoFooter.defaultProps 수정
-        
+
         function TodoFooter({
           callbackClearAll
         }) {
@@ -614,7 +614,7 @@
     step 25-08. TodoList 에 props 설정
         TodoList.propTypes 수정
         TodoList.defaultProps 수정
-        
+
         function TodoList({
           todoItems
         }) {
@@ -692,7 +692,7 @@
     step 26-03. TodoList 컴포넌트에 props 설정
         TodoList.propTypes 수정
         TodoList.defaultProps 수정
-        
+
         function TodoList({
           todoItems,
           callbackDoneToggle
@@ -745,7 +745,7 @@
                 className="removeBtn"
                 onClick={(e) => {
                     e.stopPropagation(); // 이벤트 취소. 버블링 방지
-                    
+
                     // 부모 컴포넌트의 콜백 메서드 callbackDoneToggle 호출
                     handlerRemoveTodo(e, item.id);
                 }}
@@ -764,7 +764,7 @@
     step 27-03. TodoList 컴포넌트에 props 설정
         TodoList.propTypes 수정
         TodoList.defaultProps 수정
-        
+
         function TodoList({
           todoItems,
           callbackDoneToggle,
@@ -772,7 +772,7 @@
         }) {
           ... 이하 중략
         }
-        
+
         TodoList.propTypes = {
           todoItems: PropTypes.arrayOf(PropTypes.object),
           callbackDoneToggle: PropTypes.func.isRequired,
@@ -964,7 +964,7 @@
     step 28-15. TodoInput 컴포넌트에 props 설정
         TodoInput.propTypes 수정
         TodoInput.defaultProps 수정
-        
+
         function TodoInput({
           callbackAddTodo
         }) {
