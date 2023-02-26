@@ -135,18 +135,21 @@
     1-04. index.html 파일에 reset.css link 설정하기
         <link rel="stylesheet" href="%PUBLIC_URL%/reset.css">
 
-    1-05. CrudContainer 컴포넌트 만들기
+    1-05. CrudContainer 컴포넌트의 JSX 만들기
+      1차 폴더에 있는 JSX.html 파일을 참고하여 CrudContainer 컴포넌트의 JSX 를 만드시오
 
-            // JSX로 화면 만들기
-            return (
-                <div id="app">
-                    <h1>Creat Read Update Delete</h1>
-                    ... 이하 생략
-                </div>
-            );
-        }
+        // JSX로 화면 만들기
+        return (
+          <div id="app">
+            <h1>Creat Read Update Delete</h1>
+            ... 이하 생략
+          </div>
+        );
 
     1-06. CrudInput 컴포넌트 만들기
+        CrudContainer 컴포넌트의 JSX 에서 입력 부분을 CrudInput 컴포넌트로 만들어 본다.
+        이때 input 태그에는 ref 와 defaultValue 설정하도록 한다. 
+        * 왜 ref 설정을 하는가? ==> REAL DOM 에 입력된 값을 직접 가져올 때 사용하게 된다.
 
         function CrudInput({}) {
             // JSX로 화면 만들기
@@ -175,73 +178,7 @@
             );
         }
 
-    1-07. CrudContainer 에 CrudInput 컴포넌트 추가하기
-        function CrudContainer({}) {
-
-            // JSX로 화면 만들기
-            return (
-                <div id="app">
-                    <h1>Creat Read Update Delete</h1>
-                    <CrudInput></CrudInput>
-                    <hr/>
-                    <table>
-                        <thead>
-                            ... 중략
-                        <tbody>
-                            ... 중략
-                        </tbody>
-                    </table>
-                </div>
-            )
-        }
-
-    1-08. CrudList 컴포넌트 만들기
-
-        function CrudList({}) {
-
-            // JSX로 화면 만들기
-            return (
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>NAME</th>
-                            <th>POWER</th>
-                            <th>CRUD</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="strong">
-                            <td>2</td>
-                            <td>아쿠아맨</td>
-                            <td>300</td>
-                            <td>
-                                <button type="button">Del</button>
-                                <button type="button">Power Up</button>
-                                <button type="button">Power Down</button>
-                                <button type="button">Edit</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            )
-        }
-
-    1-09. CrudContainer 에 CrudList 컴포넌트 추가하기
-        function CrudContainer({}) {
-
-            // JSX로 화면 만들기
-            return (
-                <div>
-                    <h1>Creat Read Update Delete</h1>
-                    <CrudInput></CrudInput>
-                    <hr/>
-                    <CrudList></CrudList>
-                </div>
-            )
-        }
-
-    1-10. CrudInput 컴포넌트 수정
+    1-07. CrudInput 컴포넌트 수정
 
         function CrudInput({}) {
 
@@ -277,6 +214,74 @@
                 </div>
             );
         }
+
+    1-08. CrudContainer 에 CrudInput 컴포넌트 추가하기
+        function CrudContainer({}) {
+
+            // JSX로 화면 만들기
+            return (
+                <div id="app">
+                    <h1>Creat Read Update Delete</h1>
+                    <CrudInput></CrudInput>
+                    <hr/>
+                    <table>
+                        <thead>
+                            ... 중략
+                        <tbody>
+                            ... 중략
+                        </tbody>
+                    </table>
+                </div>
+            )
+        }
+
+    1-09. CrudList 컴포넌트 만들기
+        CrudContainer 컴포넌트의 JSX 목록 표시 부분을 CrudList 컴포넌트의 JSX로 만들어 본다.
+
+        function CrudList({}) {
+
+            // JSX로 화면 만들기
+            return (
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NAME</th>
+                            <th>POWER</th>
+                            <th>CRUD</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="strong">
+                            <td>2</td>
+                            <td>아쿠아맨</td>
+                            <td>300</td>
+                            <td>
+                                <button type="button">Del</button>
+                                <button type="button">Power Up</button>
+                                <button type="button">Power Down</button>
+                                <button type="button">Edit</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            )
+        }
+
+    1-10. CrudContainer 에 CrudList 컴포넌트 추가하기
+        function CrudContainer({}) {
+
+            // JSX로 화면 만들기
+            return (
+                <div>
+                    <h1>Creat Read Update Delete</h1>
+                    <CrudInput></CrudInput>
+                    <hr/>
+                    <CrudList></CrudList>
+                </div>
+            )
+        }
+
 
     ##################################
     작업 2. CrudList 에서 CrudListItem 분리하기

@@ -11,7 +11,16 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { BrowserRouter, Routes, Route, NavLink, useParams, useLocation, useHistory, useNavigate } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  NavLink,
+  useParams,
+  useLocation,
+  useHistory,
+  useNavigate,
+} from 'react-router-dom';
 import CrudInput from './CrudInput';
 import CrudList from './CrudList';
 
@@ -38,7 +47,10 @@ function CrudContainer({ ...props }) {
 
   // useReducer 를 사용한 컴포넌트의 상태값 설정.
   // 리듀서는 현재 상태를 받아서 새 상태를 반환하는 함수다
-  const [리듀서, set리듀서] = useReducer((oldvalue, newvalue) => ({ ...oldvalue, ...newvalue }), { id: 0, name: '', age: 0 }); // 리듀서(reducer) 방식의 상태값 설정
+  const [리듀서, set리듀서] = useReducer(
+    (oldvalue, newvalue) => ({ ...oldvalue, ...newvalue }),
+    { id: 0, name: '', age: 0 },
+  ); // 리듀서(reducer) 방식의 상태값 설정
 
   // ref 만들기.
   // const refInput = useRef();
@@ -88,62 +100,7 @@ function CrudContainer({ ...props }) {
         <h1>Creat Read Update Delete</h1>
         <CrudInput></CrudInput>
         <hr />
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>NAME</th>
-              <th>POWER</th>
-              <th>CRUD</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="">
-              <td>1</td>
-              <td>슈퍼맨</td>
-              <td>100</td>
-              <td>
-                <button type="button">Del</button>
-                <button type="button">Power Up</button>
-                <button type="button">Power Down</button>
-                <button type="button">Edit</button>
-              </td>
-            </tr>
-            <tr className="strong">
-              <td>2</td>
-              <td>아쿠아맨</td>
-              <td>300</td>
-              <td>
-                <button type="button">Del</button>
-                <button type="button">Power Up</button>
-                <button type="button">Power Down</button>
-                <button type="button">Edit</button>
-              </td>
-            </tr>
-            <tr className="strong">
-              <td>3</td>
-              <td>스파이더맨</td>
-              <td>500</td>
-              <td>
-                <button type="button">Del</button>
-                <button type="button">Power Up</button>
-                <button type="button">Power Down</button>
-                <button type="button">Edit</button>
-              </td>
-            </tr>
-            <tr className="strong">
-              <td>4</td>
-              <td>배트맨</td>
-              <td>30</td>
-              <td>
-                <button type="button">Del</button>
-                <button type="button">Power Up</button>
-                <button type="button">Power Down</button>
-                <button type="button">Edit</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <CrudList></CrudList>
       </div>
     </StyledCrudContainer>
   );
