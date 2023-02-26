@@ -366,7 +366,7 @@
         $ cat .prettierrc.js
         module.exports = {
             /* https://prettier.io/docs/en/options.html */
-            printWidth: 130 /* 한 줄에 130컬럼까지 허용 */,
+            printWidth: 80 /* 한 줄에 80컬럼까지 허용 */,
             tabWidth: 2 /* tab을 누르면 2칸 들여쓰기 */,
             singleQuote: true /*문자열 리터럴로 " 대신 ' 을 사용 */,
             semi: true /* 문장 마지막에 ; 추가 */,
@@ -568,7 +568,7 @@
 
         lint-staged와 husky를 사용하여 git 이벤트에 Prettier 명령어를 연동 설정.
 
-        githook 플러그인 설치하기
+        githook 관련 플러그인 설치하기
         $ npm install --save-dev  husky  lint-staged
 
         packages.json 파일 맨 아래에 내용 추가
@@ -710,8 +710,8 @@
         To create a production build, use npm run build.
 
         webpack compiled successfully
-        
-        
+
+
 
     ##################################
     11. 기능 설명
