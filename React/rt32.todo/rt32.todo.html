@@ -255,7 +255,7 @@
         </StyledPageHome>
 
     13-8. PageHome 에 라우팅 설정
-
+    
     13-8. PageHome 에 링크 설정
         작업파일: src/pages/PageHome.js
 
@@ -407,7 +407,7 @@
         const StyledTodoHeader = styled.div`
           ... 중략
         `;
-
+        
         수정 후
         const StyledTodoHeader = styled.header`
           ... 중략
@@ -460,6 +460,8 @@
         import TodoFooter from './components/TodoFooter';
 
     step 24-05. TodoFooter 컴포넌트 스타일링하기
+        TodoContainer 에서 TodoFooter 로 스타일 옮기기
+        
         const StyledTodoFooter = styled.div`
           ... 중략
         `;
@@ -489,7 +491,7 @@
         const handlerClearAll = () => {
             console.log(e.target);
             debugger;
-
+            
             // 부모 컴포넌트의 콜백 메서드 callbackClearAll 호출.
             callbackClearAll();
         };
@@ -497,7 +499,7 @@
     step 24-09. TodoFooter 에 props 설정
         TodoFooter.propTypes 수정
         TodoFooter.defaultProps 수정
-
+        
         function TodoFooter({
           callbackClearAll
         }) {
@@ -546,7 +548,8 @@
     step 25. TodoList 컴포넌트 만들고 기능 완성한다.
         소요시간: 10분
     ##################################
-    step 25-01. TodoList 컴포넌트 만든다.
+    step 25-01. TodoList 컴포넌트를 만든다.
+        단축키: rfc
 
     step 25-02. TodoList 컴포넌트의 JSX 를 작성한다.
         . class 속성 ===> className
@@ -564,15 +567,15 @@
         return (
           <StyledTodoList>
             <section>
-                <ul>
-                    <li className="checked">
-                        <i aria-hidden="true" className="checkBtn fas fa-check"></i>
-                        주말 산책
-                        <span type="button" className="removeBtn">
-                            <i aria-hidden="true" className="far fa-trash-alt"></i>
-                        </span>
-                    </li>
-                </ul>
+              <ul>
+                <li className="checked">
+                  <i aria-hidden="true" className="checkBtn fas fa-check"></i>
+                  주말 산책
+                  <span type="button" className="removeBtn">
+                      <i aria-hidden="true" className="far fa-trash-alt"></i>
+                  </span>
+                </li>
+              </ul>
             </section>
           </StyledTodoList>
         );
@@ -593,13 +596,14 @@
         import TodoList from './components/TodoList';
 
     step 25-05. StyledTodoList 컴포넌트 스타일링하기
+        TodoContainer 에서 TodoList 로 스타일 옮기기
 
-        const StyledTodoList = styled.section`
+        const StyledTodoList = styled.div`
           ... 중략
         `;
 
     step 25-07. TodoContainer 컴포넌트에서
-        TodoList 컴포넌트에 상태값 todoItems props 내림 설정을 추가한다.
+        TodoList 컴포넌트로 상태값 todoItems 를 props 내림 설정 한다.
         // TodoContainer JSX 화면
         return (
             <StyledTodoContainer>
@@ -614,7 +618,7 @@
     step 25-08. TodoList 에 props 설정
         TodoList.propTypes 수정
         TodoList.defaultProps 수정
-
+        
         function TodoList({
           todoItems
         }) {
@@ -628,7 +632,9 @@
         };
 
     step 25-09. TodoList 컴포넌트 에서 map 을 사용하여 JSX 반복문 코드를 작성하시오.
-        const lis = todoItems && todoItems.map((item) => {
+        const lis = todoItems &&
+            todoItems.length > 0 && 
+            todoItems.map((item) => {
             return (
                 <li key={item.id} className={item.done ? 'checked' : null}>
                     <i aria-hidden="true" className="checkBtn fas fa-check"></i>
@@ -692,7 +698,7 @@
     step 26-03. TodoList 컴포넌트에 props 설정
         TodoList.propTypes 수정
         TodoList.defaultProps 수정
-
+        
         function TodoList({
           todoItems,
           callbackDoneToggle
@@ -745,7 +751,7 @@
                 className="removeBtn"
                 onClick={(e) => {
                     e.stopPropagation(); // 이벤트 취소. 버블링 방지
-
+                    
                     // 부모 컴포넌트의 콜백 메서드 callbackDoneToggle 호출
                     handlerRemoveTodo(e, item.id);
                 }}
@@ -764,7 +770,7 @@
     step 27-03. TodoList 컴포넌트에 props 설정
         TodoList.propTypes 수정
         TodoList.defaultProps 수정
-
+        
         function TodoList({
           todoItems,
           callbackDoneToggle,
@@ -772,7 +778,7 @@
         }) {
           ... 이하 중략
         }
-
+        
         TodoList.propTypes = {
           todoItems: PropTypes.arrayOf(PropTypes.object),
           callbackDoneToggle: PropTypes.func.isRequired,
@@ -964,7 +970,7 @@
     step 28-15. TodoInput 컴포넌트에 props 설정
         TodoInput.propTypes 수정
         TodoInput.defaultProps 수정
-
+        
         function TodoInput({
           callbackAddTodo
         }) {
