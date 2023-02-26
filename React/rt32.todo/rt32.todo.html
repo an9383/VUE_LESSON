@@ -118,7 +118,7 @@
             // 입력된 값 초기화
 
     ##################################
-    11. 프로젝트 초기 설정
+    11. 사이트 전체 설정
     ##################################
 
     프로젝트의 폴더 구조
@@ -145,7 +145,7 @@
 
 
     ##################################
-    12. 프로젝트에 todo 관련 컴포넌트 추가
+    12. todo 프로젝트에 관련된 폴더와 컴포넌트 파일 추가
     ##################################
 
     12-1. todo 컴포넌트 폴더 및 파일 생성
@@ -153,12 +153,14 @@
 
     $ mkdir -p ./src/containers/todo
     $ touch ./src/containers/todo/TodoContainer.js
+    $ ls ./src/containers/todo/  # 생성된 파일 목록 확인
 
     $ mkdir ./src/containers/todo/components
     $ touch ./src/containers/todo/components/TodoHeader.js  \
             ./src/containers/todo/components/TodoInput.js  \
             ./src/containers/todo/components/TodoList.js  \
             ./src/containers/todo/components/TodoFooter.js
+    $ ls ./src/containers/todo/components/   # 생성된 파일 목록 확인
 
 
     12-2. 사용하지 않는 파일 삭제
@@ -215,9 +217,9 @@
 
         function App() {
             return (
-                <div>
+                <StyledPageHome>
                     <PageHome />
-                </div>
+                </StyledPageHome>
             );
         }
 
@@ -237,46 +239,64 @@
 
         import { Routes, Route, NavLink } from 'react-router-dom';
 
-        import HomeContainer from '../containers/home/HomeContainer';
         import CompStyle from '../containers/styled/CompStyle';
+        import CrudContainer from '../components/crud/CrudContainer';
+        import HomeContainer from '../containers/home/HomeContainer';
         import TodoContainer from '../containers/todo/TodoContainer';
 
-        <div>
+        <StyledPageHome>
             <Routes>
-                <Route path="/" element={<HomeContainer />} />
-                <Route path="/styled" element={<CompStyle />} />
-                <Route path="/todo" element={<TodoContainer />} />
+              <Route path={'/style'} element={<CompStyle />}></Route>
+              <Route path={'/crud'} element={<CrudContainer />}></Route>
+              <Route path={'/todo'} element={<TodoContainer />}></Route>
+              <Route path={'/'} element={<HomeContainer />}></Route>
+              <Route path={'*'} to={'/'}></Route>
             </Routes>
-        </div>
+        </StyledPageHome>
 
+    13-8. PageHome 에 라우팅 설정
+    
     13-8. PageHome 에 링크 설정
         작업파일: src/pages/PageHome.js
 
         변경 전
-        <div>
+        <StyledPageHome>
             <Routes>
-                <Route path="/" element={<HomeContainer />} />
-                <Route path="/styled" element={<CompStyle />} />
-                <Route path="/todo" element={<TodoContainer />} />
+              <Route path={'/style'} element={<CompStyle />}></Route>
+              <Route path={'/crud'} element={<CrudContainer />}></Route>
+              <Route path={'/todo'} element={<TodoContainer />}></Route>
+              <Route path={'/'} element={<HomeContainer />}></Route>
+              <Route path={'*'} to={'/'}></Route>
             </Routes>
-        </div>
+        </StyledPageHome>
 
         변경 후
-        <div>
+        <StyledPageHome>
             <div>
-                <ul>
-                    <li><NavLink to="/">Home</NavLink></li>
-                    <li><NavLink to="/styled">Styled</NavLink></li>
-                    <li><NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/todo">Todo</NavLink></li>
-                </ul>
+              <ul>
+                <li>
+                  <NavLink to={''}>Home</NavLink>
+                </li>
+                <li>
+                  <NavLink to={'/style'}>Style</NavLink>
+                </li>
+                <li>
+                  <NavLink to={'/crud'}>Crud</NavLink>
+                </li>
+                <li>
+                  <NavLink to={'/todo'}>Todo</NavLink>
+                </li>
+              </ul>
             </div>
 
             <Routes>
-                <Route path="/" element={<HomeContainer />} />
-                <Route path="/styled" element={<CompStyle />} />
-                <Route path="/todo" element={<TodoContainer />} />
+              <Route path={'/style'} element={<CompStyle />}></Route>
+              <Route path={'/crud'} element={<CrudContainer />}></Route>
+              <Route path={'/todo'} element={<TodoContainer />}></Route>
+              <Route path={'/'} element={<HomeContainer />}></Route>
+              <Route path={'*'} to={'/'}></Route>
             </Routes>
-        </div>
+        </StyledPageHome>
 
 
     13-9. PageHome 에 스타일링 설정
@@ -291,6 +311,7 @@
         변경 후
         const StyledPageHome = styled.div`
           /* styled 설정. https://styled-components.com/docs/basics#adapting-based-on-props */
+          /* NavLink 컴포넌트에서 사용되는 CSS */
           .active {
             background-color: aqua;
           }
