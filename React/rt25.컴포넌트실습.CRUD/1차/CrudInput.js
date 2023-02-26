@@ -1,93 +1,129 @@
-import React, { useEffect, useRef } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+  useReducer,
+  Fragment,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import PropTypes from 'prop-types';
-// import ReactRedux, { Provider, useDispatch, useSelector } from 'react-redux';
-// import ReactRouterDOM, { BrowserRouter, Routes, Route, NavLink, useParams, useLocation, useHistory, useRouteMatch } from 'react-router-dom';
-// import { takeEvery, put, call, all, fork, spawn } from 'redux-saga/effects';
+import styled, { css } from 'styled-components';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  NavLink,
+  useParams,
+  useLocation,
+  useHistory,
+  useNavigate,
+} from 'react-router-dom';
 
-function CrudInput({ doIns }) {
-  const refUserName = useRef(false);
-  const refUserPower = useRef(false);
+const StyledCrudInput = styled.div`
+  /* styled 설정. https://styled-components.com/docs/basics#adapting-based-on-props */
+`;
 
-  // refIsMounted는 생명주기의 마운트와 업데이트를 구분하기 위한 ref
-  const refIsMounted = useRef(false);
-  useEffect(() => {
-    if (refIsMounted.current) {
-      // 업데이트 될 때마다 실행됨. 여러번. state 가 변경될 때마다
-      console.log('componentDidUpdate');
-    } else {
-      // 마운트 완료 후에 실행됨. 한번만. focus 줄때
-      console.log('componentDidMount');
-      refIsMounted.current = true;
-    }
-  });
+function CrudInput({ callbackAdd }) {
+  // ref 만들기.
+  const refInputName = useRef();
+  const refInputPower = useRef();
 
   // 이벤트 핸들러 작성.
-  const handlerAdd = (event) => {
-    // 이벤트 핸들러는 화살표 함수로 만들면 this bind()를 생략해도 된다
-    console.log(event.target);
-
-    // 유효성 검사
-    if (refUserName.current.value.trim() === '') {
-      alert('이름을 입력하세요');
-      refUserName.current.focus();
-      event.preventDefault();
-      return false;
-    }
-    if (refUserName.current.value.trim() === '') {
-      alert('파워를 입력하세요');
-      refUserPower.current.focus();
-      event.preventDefault();
-      return false;
-    }
-    if (isNaN(Number(refUserPower.current.value))) {
-      alert('파워에 숫자를 입력하세요');
-      refUserPower.current.value = '';
-      refUserPower.current.focus();
-      event.preventDefault();
+  const handlerAdd = (e) => {
+    // 이벤트 핸들러는 화살표 함수로 만든다
+    console.log(e.target);
+    // 부모 콜백 메서드 호출
+    // CrudContainer.callbackAdd();
+    debugger;
+    // Name 입력 여부 유효성 검사
+    //     포커스 주기
+    //     이벤트 취소
+    const name = refInputName.current.value;
+    if (!name || !name.trim()) {
+      alert('이름에 값을 입력하세요.');
+      refInputName.current.focus(); // 포커스 주기
+      e.stopPropagation(); // 이벤트 취소
       return false;
     }
 
-    // ref 를 사용하여 현재 입력된 값을 가져온다.
-    //const name = refUserName.current.value
-    //const power = Number(refUserPower.current.value)
+    // Power 입력 여부 유효성 검사
+    //     포커스 주기
+    //     이벤트 취소
+    const power = refInputPower.current.value;
+    if (!power || !power.trim()) {
+      alert('파워에 값을 입력하세요.');
+      refInputPower.current.focus(); // 포커스 주기
+      e.stopPropagation(); // 이벤트 취소
+      return false;
+    }
+
+    // Power의 입력값이 숫자인지 유효성 검사.
+    if (isNaN(Number(refInputPower.current.value))) {
+      alert('파워에 숫자를 입력하세요.');
+      refInputPower.current.focus(); // 포커스 주기
+      e.stopPropagation(); // 이벤트 취소
+      return false;
+    }
+
+    // Power의 입력값을 숫자로 바꾸시오.(문자열를 숫자로)
     const newitem = {
       id: null,
-      name: refUserName.current.value,
-      power: Number(refUserPower.current.value),
+      name: name,
+      power: Number(refInputPower.current.value),
     };
 
-    // 부모(CrudApp)에게 값을 넘긴다.
-    doIns(newitem); // CrudApp.func.doIns(newitem) 호출
+    // 부모 메서드 CrudContainer.callbackAdd() 호출
+    callbackAdd(newitem);
 
-    // 초기화 방법1
-    refUserName.current.value = '';
-    refUserPower.current.value = 0;
+    // input 태그에 남아있는 입력값 지우기
+    refInputName.current.value = '';
+    refInputPower.current.value = 0;
   };
 
-  // JSX로 화면 만들기
+  // JSX로 화면 만들기. 조건부 렌더링: https://ko.reactjs.org/docs/conditional-rendering.html
   return (
-    <div>
-      <h1>Creat Read Update Delete</h1>
+    <StyledCrudInput>
       <div>
-        <label htmlFor="">Name : </label>
-        <input type="text" name="name" ref={refUserName} defaultValue={''} placeholder="이름을 입력하세요" />
+        <div>
+          <label htmlFor="">Name : </label>
+          <input
+            type="text"
+            name="name"
+            placeholder="이름을 입력하세요"
+            defaultValue={''}
+            ref={refInputName}
+          />
+        </div>
+        <div>
+          <label htmlFor="">Power : </label>
+          <input
+            type="number"
+            name="power"
+            placeholder="숫자를 입력하세요"
+            defaultValue={0}
+            ref={refInputPower}
+          />
+        </div>
+        <button type="button" onClick={handlerAdd}>
+          Add
+        </button>
       </div>
-      <div>
-        <label htmlFor="">Power : </label>
-        <input type="number" name="power" ref={refUserPower} defaultValue={0} placeholder="숫자만 입력하세요" />
-      </div>
-      <button onClick={handlerAdd}>Add</button>
-    </div>
+    </StyledCrudInput>
   );
 }
 
-CrudInput.propsTypes = {
-  /* props의 프로퍼티 타입 설정 */
-  doIns: PropTypes.func.isRequired,
+CrudInput.propTypes = {
+  // props의 프로퍼티 타입 설정. https://ko.reactjs.org/docs/typechecking-with-proptypes.html
+  // 인자명: PropTypes.arrayOf(PropTypes.object),
+  callbackAdd: PropTypes.func.isRequired,
 };
 CrudInput.defaultProps = {
-  /* props의 디폴트 값 설정 */
-  doIns: () => {},
+  // props의 디폴트 값 설정. https://ko.reactjs.org/docs/typechecking-with-proptypes.html
+  // 인자명: [],
+  callbackAdd: () => {},
 };
 
-export default CrudInput;
+export default React.memo(CrudInput); // React.memo()는 props 미변경시 컴포넌트 리렌더링 방지 설정
