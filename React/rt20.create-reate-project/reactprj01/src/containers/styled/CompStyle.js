@@ -1,0 +1,71 @@
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+  useReducer,
+  Fragment,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
+import styled, { css } from 'styled-components';
+
+const StyledCompStyle = styled.div`
+  /* styled 설정. https://styled-components.com/docs/basics#adapting-based-on-props */
+  .App {
+    display: inline-block;
+    background-color: gray;
+    border: 10px solid black;
+    height: 63px;
+    width: 300px;
+  }
+`;
+
+const StyledCircle = styled.div`
+  /* https://styled-components.com/docs/basics#adapting-based-on-props */
+  width: 5rem;
+  height: 5rem;
+  background: ${(props) => props.color || 'black'};
+  border-radius: 50%;
+  margin: auto;
+
+  ${(props) =>
+    props.huge &&
+    css`
+      width: 10rem;
+      height: 10rem;
+    `}
+`;
+function CompStyle({ ...props }) {
+  // JSX로 화면 만들기. 조건부 렌더링: https://ko.reactjs.org/docs/conditional-rendering.html
+  return (
+    <StyledCompStyle>
+      <h2>styled-componets 로 만든 </h2>
+      <div className="App">styled-componets 로 만든</div>
+      <hr />
+
+      <StyledCircle></StyledCircle>
+      <hr />
+
+      <StyledCircle color={'blue'}></StyledCircle>
+      <hr />
+
+      <StyledCircle huge={true} color={'red'}></StyledCircle>
+      <hr />
+    </StyledCompStyle>
+  );
+}
+
+CompStyle.propTypes = {
+  // props의 프로퍼티 타입 설정. https://ko.reactjs.org/docs/typechecking-with-proptypes.html
+  // 인자명: PropTypes.func.isRequired,
+  // 인자명: PropTypes.arrayOf(PropTypes.object),
+};
+CompStyle.defaultProps = {
+  // props의 디폴트 값 설정. https://ko.reactjs.org/docs/typechecking-with-proptypes.html
+  // 인자명: () => {},
+  // 인자명: [],
+};
+
+export default React.memo(CompStyle); // React.memo()는 props 미변경시 컴포넌트 리렌더링 방지 설정
