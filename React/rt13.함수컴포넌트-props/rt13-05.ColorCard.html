@@ -120,7 +120,6 @@
   </body>
 </html>
 
-
 <script src="https://unpkg.com/@babel/standalone/babel.js"
   crossorigin="anonymous">
     /* 자바스크립트로 컴파일러. ES6 ==> ES5, JSX ==> ES5 */
@@ -154,16 +153,8 @@
       </div>
     )
   }
-  CardContainer.propTypes = {
-    // props의 프로퍼티 타입 설정. https://ko.reactjs.org/docs/typechecking-with-proptypes.html
-    // 인자명: PropTypes.func.isRequired,
-    // 인자명: PropTypes.arrayOf(PropTypes.object),
-  };
-  CardContainer.defaultProps = {
-    // props의 디폴트 값 설정. https://ko.reactjs.org/docs/typechecking-with-proptypes.html
-    // 인자명: () => {},
-    // 인자명: [],
-  };
+  CardContainer.propTypes = { };
+  CardContainer.defaultProps = { };
 
   function Card({ color }) {
     return (

@@ -19,6 +19,7 @@
         왜냐하면 Virtual DOM 이 변경된 노드를 찾기 쉽게 하기 위해서.
         렌더링 속도를 빠르게 하기 위해서는 key 프로퍼티 설정이 필요
         key 프로퍼티는 Unique 해야 한다.
+        
         const todoList = [
             { id:'001', taskName: "빨래하기", finished: false },
             { id:'002', taskName: "공부하기", finished: true },
@@ -50,17 +51,21 @@
 
   // id="app" 인 태그 에 컴포넌트를 화면에 붙이시오
   // ReactDOM.render( 인자1, 인자2 )
-  ReactDOM.render(<Loop />, document.getElementById('app'));
+  ReactDOM.render(<TodoList />, document.getElementById('app'));
 
-  function Loop({ ...props }) {
-    // useState 를 사용한 컴포넌트의 상태값 설정
+  // 단축키 rfc
+  function TodoList({ ...props }) {
+    // 컴포넌트의 상태값 설정
     const [todoList, setTodoList] = useState([
       { id: '001', taskName: "빨래하기", finished: false },
       { id: '002', taskName: "공부하기", finished: true },
       { id: '003', taskName: "게임하기", finished: true },
     ]); // 상태값이 배열 타입인 경우
 
-    const lis = todoList.map((todo, index, array) => {
+    const lis = 
+      todoList &&
+      todoList.length > 0 &&
+      todoList.map((todo, index, array) => {
       // todo == { id, taskName, finished }
       return (<li key={todo.id}>{todo.taskName}</li>);
     });

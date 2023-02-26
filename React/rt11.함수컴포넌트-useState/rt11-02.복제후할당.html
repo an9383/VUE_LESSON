@@ -51,10 +51,15 @@
 
 const [arr, setArr] = useState([1, 2, 3, 4, 5]);
 
+0. 배열 요소 직접 변경시 현상 확인 
+    console.log('변경 전:', arr);
+    arr[0] = 100;
+    console.log('변경 후:', arr);
+
 1. setter 메서드를 사용하는 방식.
     set변수명([100, 2, 3, 4, 5]);
 
-2. map() 메서드를 사용하여 복제한다.
+2. map() 메서드를 사용하여 복제한다.
     arr.map((value,index,array)=>( index === findIndex ? 200: value));
 
 3. filter() 메서드를 사용하여 삭제한다.
@@ -109,52 +114,26 @@ const [arr, setArr] = useState([1, 2, 3, 4, 5]);
     ...props
   }) {
     // useState 를 사용한 컴포넌트의 상태값 설정
-    const [arr, setArr] = useState([1, 2, 3, 4, 5]); // 상태값이 기본타입인 경우
-
-    // ref 만들기.
-    // const refInput = useRef();
-
-    // refIsMounted는 생명주기의 마운트와 업데이트를 구분하기 위한 ref
-    const refIsMounted = useRef(false);
-    useEffect(() => {
-      if (refIsMounted.current) {
-        // 업데이트 될 때마다 실행됨. 여러번. state 가 변경될 때마다
-        // console.log('Comp >> componentDidUpdate');
-      }
-      else {
-        // 마운트 완료 후에 실행됨. 한번만. focus 줄때
-        // console.log('Comp >> componentDidMount');
-        refIsMounted.current = true;
-      }
-      return () => {
-        // 언마운트 직전에 한번만 실행됨.
-        // console.log('Comp >> componentWillUmount');
-      };
-    }, [/* 연관배열: 메서드와 연관되는 상태(변수)명들을 기술 */]);
-
-    // callback 메서드 작성. callback 메서드는 부모의 공유 상태값을 변경하기 위해서 사용된다.
-    const callback = useCallback((param) => {
-      // state 변경
-    }, [/* 연관배열: 콜백 메서드에서 변경하고자 하는 연관되는 상태(변수)명들을 기술  */]);
+    const [arr, setArr] = useState([1, 2, 3, 4, 5]); // 상태값이 배열타입인 경우
 
     // 이벤트 핸들러 작성.
     const handlerChange1 = (e) => {
       // 이벤트 핸들러는 화살표 함수로 만든다
       console.log(e.target);
+      // arr[0] = 100;
+      // console.log(arr); // [100,2,3,4,5]
       setArr([100, 2, 3, 4, 5]);
+      console.log(arr); // [1,2,3,4,5]
     };
     const handlerChange2 = (e) => {
       // 이벤트 핸들러는 화살표 함수로 만든다
       console.log(e.target);
-      // 복제 ==> 새로운 배열 만들기
-      const newArr = arr.map((value, index, array) => {
-        // index === 1 이면 값을 300 으로 변경
-        if (index === 1) {
-          return 300;
-        }
-        return value;
-      });
-      // 할당(대입)
+      const findIndex = arr.indexOf(2);
+
+      // 복제
+      const newArr = arr.map((value, index) => (index === findIndex ? 300 : value));
+
+      // 대입(할당)
       setArr(newArr);
     };
     const handlerChange3 = (e) => {
@@ -177,7 +156,7 @@ const [arr, setArr] = useState([1, 2, 3, 4, 5]);
       console.log(e.target);
 
       // 복제 ==> 새로운 배열 만들기
-      // arr= [3,4,5];
+      //  arr = [3,4,5] 라고 가정.
       const newArr = [500, ...arr, 70]; // ...arr === 3,4,5
       // 할당(대입)
       setArr(newArr);
@@ -187,7 +166,7 @@ const [arr, setArr] = useState([1, 2, 3, 4, 5]);
     return (
       <div id="app">
         <div>
-          {arr.map((value, index) => (<span key={index}> {value} </span>))}
+          {arr && arr.length> 0 && arr.map((value, index) => (<span key={index}> {value} </span>))}
           <br />
           <button onClick={handlerChange1}>방법1로 변경</button>
           <button onClick={handlerChange2}>방법2로 변경</button>
@@ -195,7 +174,7 @@ const [arr, setArr] = useState([1, 2, 3, 4, 5]);
           <button onClick={handlerChange4}>방법4로 변경</button>
         </div>
       </div>
-    )
+    );
   }
 
 </script>

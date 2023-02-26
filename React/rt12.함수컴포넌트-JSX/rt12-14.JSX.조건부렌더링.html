@@ -57,11 +57,14 @@
 
   // 단축키 rfc
   function Greeting({ isLogedIn }) {
+    //isLoggedIn 의 값에 따라 리턴하는 컴포넌트 분기한다.
+    //isLoggedIn 은 부모로 부터 받는 값이다.
+
     return (
       <div>
-        {isLogedIn === true && (<div>Welcome back! </div>)}
+        {isLogedIn && (<div>Welcome back! </div>)}
         
-        {isLogedIn !== true && (<div>Please Sign up.</div>)}
+        {!isLogedIn && (<div>Please Sign up.</div>)}
       </div>
     )
   }

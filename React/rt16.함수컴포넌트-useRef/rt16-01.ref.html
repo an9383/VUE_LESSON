@@ -35,7 +35,7 @@
             1. inline ref 방식
                 ref={ (el) => this.refInput = el }
             2. useRef() 방식
-                const inputEl1 = useRef(null);
+                const refInputEl1 = useRef(null);
 
         const 로 선언한 변수 / useState() hook 으로 생성한 변수 / useRef() hook 으로 생성한 변수 의 차이점을 알아보자.
 
@@ -56,19 +56,19 @@
 
         콜백 ref
             function TextInputWithFocusButton() {
-                const inputEl1 = React.useRef(null);
-                const inputEl2 = React.useRef(null);
+                const refInputEl1 = React.useRef(null);
+                const refInputEl2 = React.useRef(null);
 
-                React.useEffect( () => inputEl1.current.focus() );
-                const handlerClick = () => inputEl2.current.focus();
+                React.useEffect( () => refInputEl1.current.focus() );
+                const handlerClick = () => refInputEl2.current.focus();
 
                 return (
                     <div>
-                        <input type="text" ref={inputEl1} />
+                        <input type="text" ref={refInputEl1} />
                         <br />
                         <button onClick={handlerClick}>Focus 2nd input</button>
                         <br />
-                        <input type="text" ref={inputEl2} />
+                        <input type="text" ref={refInputEl2} />
                     </div>
                 );
             }
@@ -84,7 +84,6 @@
     <div id="app"></div>
   </body>
 </html>
-
 
 <script src="https://unpkg.com/@babel/standalone/babel.js"
   crossorigin="anonymous">
@@ -114,12 +113,12 @@
     ...props
   }) {
     // ref 만들기.
-    const inputEl1 = useRef();
-    const inputEl2 = useRef();
+    const refInputEl1 = useRef();
+    const refInputEl2 = useRef();
 
     useEffect(() => {
       // mount 되면 첫번째 input 에 focus 주기
-      inputEl1.current.focus();
+      refInputEl1.current.focus();
       return () => { /* umount */ }
     }, []);
 
@@ -127,29 +126,21 @@
     const handlerClick = (e) => {
       // 이벤트 핸들러는 화살표 함수로 만든다
       console.log(e.target);
-      inputEl2.current.focus();
+      refInputEl2.current.focus();
     };
 
     // JSX로 화면 만들기. 조건부 렌더링: https://ko.reactjs.org/docs/conditional-rendering.html
     return (
       <div>
-        <input type="text" ref={inputEl1} />
+        <input type="text" ref={refInputEl1} />
         <br />
         <button onClick={handlerClick}>Focus 2nd input</button>
         <br />
-        <input type="text" ref={inputEl2} />
+        <input type="text" ref={refInputEl2} />
       </div>
-    )
+    );
   }
 
-  TextInputWithFocusButton.propTypes = {
-    // props의 프로퍼티 타입 설정. https://ko.reactjs.org/docs/typechecking-with-proptypes.html
-    // 인자명: PropTypes.func.isRequired,
-    // 인자명: PropTypes.arrayOf(PropTypes.object),
-  };
-  TextInputWithFocusButton.defaultProps = {
-    // props의 디폴트 값 설정. https://ko.reactjs.org/docs/typechecking-with-proptypes.html
-    // 인자명: () => {},
-    // 인자명: [],
-  };
+  TextInputWithFocusButton.propTypes = { };
+  TextInputWithFocusButton.defaultProps = { };
 </script>
