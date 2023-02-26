@@ -120,6 +120,7 @@
         $ touch src/components/crud/CrudContainer.js
         $ touch src/components/crud/CrudInput.js
         $ touch src/components/crud/CrudList.js
+        $ touch src/components/crud/CrudListItem.js
 
 
     1-02. crud 컴포넌트 트리 만들기
@@ -456,7 +457,6 @@
             const arrs = items.map( (item)=>{
                 return (
                     <CrudListItem
-                        {...props}
                         item={item}
                         key={item.id}
                     >
@@ -658,6 +658,7 @@
             // 이벤트 핸들러 작성.
             const handlerAdd = (event)=>{
                 // 부모 콜백 메서드 호출
+                // CrudContainer.callbackAdd();
                 callbackAdd();
             };
             ...중략
@@ -669,10 +670,10 @@
 
 
     ##################################
-    작업 5. CrudInput 컴포넌트 기능 추가
+    작업 4. CrudInput 컴포넌트 기능 추가
     ##############################
 
-        5-1. CrudInput 컴포넌트의 input 태그에 ref 설정.
+        4-1. CrudInput 컴포넌트의 input 태그에 ref 설정.
             ref 는 input 태그에 입력된 값을 가져오기 위해서 사용된다
             refInputName
             refInputPower
@@ -709,7 +710,7 @@
                 );
             }
 
-        5-2. CrudInput 컴포넌트의 "Add" 버튼에 클릭 이벤트 핸들러 설정. handlerAdd
+        4-2. CrudInput 컴포넌트의 "Add" 버튼에 클릭 이벤트 핸들러 설정. handlerAdd
             Name 입력 여부 유효성 검사
                 포커스 주기
                 이벤트 취소
@@ -721,7 +722,7 @@
             부모 메서드 CrudContainer.callbackAdd() 호출
             input 태그에 남아있는 입력값 지우기.
 
-        5-3. CrudContainer 컴포넌트에 콜백 메서드 callbackAdd 만들기
+        4-3. CrudContainer 컴포넌트에 콜백 메서드 callbackAdd 기능 완성하기
 
             items에서 최대 id 값을 구하는 방법.
             items.push(param);
@@ -742,41 +743,41 @@
                 // param 에  id값 추가
                 newitem.id = newid ;
 
-                /// items.push(param);
-                setItems( [...items, param] );
+                /// items.push(newitem);
+                setItems( [...items, newitem] );
             }, [/* 메서드와 연관되는 상태(변수)명들을 기술 */items]);
 
 
 
     ##################################
-    작업 6. CrudListItem 컴포넌트 만들기
+    작업 5. CrudListItem 컴포넌트 만들기
     ##############################
 
-        6-1. power가 300 이상인 사람은 글자색을 red, bold 로 출력되게 css를 적용하시오.
+        5-1. power가 300 이상인 사람은 글자색을 red, bold 로 출력되게 css를 적용하시오.
             let strong = "";
             if( item.power >=300 ) strong = "strong";
 
-        6-2. 편집여부를 확인하기 위한 상태값(state) isEditMode 만들기
+        5-2. 편집여부를 확인하기 위한 상태값(state) isEditMode 만들기
             const [isEditMode, setIsEditMode] = useState(false);
 
-        6-3. 데이터 표시용 JSX 만들기: formView:
+        5-3. 데이터 표시용 JSX 만들기: formView:
             const formView = (
-                <tr className={strong}>
-                        <td>{item.id}</td>
-                        <td>{item.name}</td>
-                        <td>{item.power}</td>
-                        <td>
-                            <button type="button" onClick={handlerDel}>Del</button>
-                            <button type="button" onClick={handlerUp}>Power Up</button>
-                            <button type="button" onClick={handlerDown}>Power Down</button>
-                            <button type="button" onClick={handlerEdit}>Edit</button>
-                        </td>
-                </tr>
+                <StyledCrudListItem className={strong}>
+                    <td>{item.id}</td>
+                    <td>{item.name}</td>
+                    <td>{item.power}</td>
+                    <td>
+                        <button type="button" onClick={handlerDel}>Del</button>
+                        <button type="button" onClick={handlerUp}>Power Up</button>
+                        <button type="button" onClick={handlerDown}>Power Down</button>
+                        <button type="button" onClick={handlerEdit}>Edit</button>
+                    </td>
+                </StyledCrudListItem>
             );
 
-        6-4. formEdit:  데이터 편집용 JSX 만들기
+        5-4. formEdit:  데이터 편집용 JSX 만들기
             const formEdit = (
-                <tr className={strong}>
+                <StyledCrudListItem className={strong}>
                     <td>{item.id}</td>
                     <td>
                         <input
@@ -805,7 +806,7 @@
             );
 
 
-        6-5. CrudListItem.isEditMode  === true 이면 formEdit 리턴하고 아니면 formView 리턴한다.
+        5-5. CrudListItem.isEditMode  === true 이면 formEdit 리턴하고 아니면 formView 리턴한다.
 
             const formView = (
                 ...중략
@@ -820,7 +821,7 @@
                 return formView;
 
 
-        6-6. CrudListItem 의 handlerEdit 수정한다.
+        5-6. CrudListItem 의 handlerEdit 수정한다.
 
                 const handlerEdit = (event)=>{
                     // 이벤트 핸들러는 화살표 함수로 만든다
@@ -830,7 +831,7 @@
                 ...중략
             }
 
-        6-7. CrudListItem에 handlerSave 이벤트 핸들러 만들기.
+        5-7. CrudListItem에 handlerSave 이벤트 핸들러 만들기.
             유효성 검사. CrudInput 참조하여 코드를 완성하시오
                 Name 입력 여부 유효성 검사
                     포커스 주기
@@ -884,7 +885,7 @@
             };
 
 
-        6-8. CrudContainer 의 callbackSave 완성한다.
+        5-8. CrudContainer 의 callbackSave 완성한다.
           const callbackSave = useCallback(
             (newitem) => {
               // newitem 으로 바뀐 새로운 배열 만들기.
@@ -905,11 +906,11 @@
 
 
     ##################################
-    작업 7. CrudInput 과 CrudListItem 에서 중복되는
+    작업 6. CrudInput 과 CrudListItem 에서 중복되는
         입력되는 부분을 공통 컴포넌트로 분리하기.
     ##############################
 
-        7-1. CrudInputPower
+        6-1. CrudInputPower
             <input
               type="number"
               name="power"
@@ -918,7 +919,7 @@
               ref={refInputPower}
             />
 
-        7-2. CrudInputPower
+        6-2. CrudInputPower
             <input
               type="text"
               name="name"

@@ -42,15 +42,12 @@ const StyledCrudContainer = styled.div`
 
 function CrudContainer({ ...props }) {
   // useState 를 사용한 컴포넌트의 상태값 설정
-  const [변수명, set변수명] = useState('기본값'); // 기본타입인 경우
-  const [state, setState] = useState({ id: 0, name: '', age: 0 }); // 참조타입 경우
-
-  // useReducer 를 사용한 컴포넌트의 상태값 설정.
-  // 리듀서는 현재 상태를 받아서 새 상태를 반환하는 함수다
-  const [리듀서, set리듀서] = useReducer(
-    (oldvalue, newvalue) => ({ ...oldvalue, ...newvalue }),
-    { id: 0, name: '', age: 0 },
-  ); // 리듀서(reducer) 방식의 상태값 설정
+  const [items, setItems] = useState([
+    { id: 1, name: '슈퍼맨', power: 100 },
+    { id: 2, name: '아쿠아맨', power: 300 },
+    { id: 3, name: '스파이더맨', power: 500 },
+    { id: 4, name: '배트맨', power: 30 },
+  ]); // 배열타입인 경우
 
   // ref 만들기.
   // const refInput = useRef();
@@ -77,30 +74,91 @@ function CrudContainer({ ...props }) {
     ],
   );
 
-  // callback 메서드 작성. callback 메서드는 부모의 공유 상태값을 변경하기 위해서 사용된다.
-  const callback = useCallback(
-    (param) => {
-      // state 변경
+  const callbackDel = useCallback(
+    (item) => {
+      // items 배열에서 삭제. Array.filter() 를 사용한다
+      // ...생략
+
+      debugger;
     },
     [
-      /* 연관배열: 콜백 메서드에서 변경하고자 하는 연관되는 상태(변수)명들을 기술 */
+      /* 메서드와 연관되는 상태(변수)명들을 기술 */
     ],
   );
 
-  // 이벤트 핸들러 작성.
-  const handler = (e) => {
-    // 이벤트 핸들러는 화살표 함수로 만든다
-    console.log(e.target);
-  };
+  const callbackUp = useCallback(
+    (item) => {
+      //100씩 증가. Array.map() 을 사용한다
+      // item.power = item.power + 100;
+      // ...생략
+
+      debugger;
+    },
+    [
+      /* 메서드와 연관되는 상태(변수)명들을 기술 */
+    ],
+  );
+
+  const callbackDown = useCallback(
+    (item) => {
+      // 50씩 감소.  Array.map() 을 사용한다
+      // item.power = item.power - 50;
+      // ...생략
+      debugger;
+    },
+    [
+      /* 메서드와 연관되는 상태(변수)명들을 기술 */
+    ],
+  );
+
+  const callbackSave = useCallback(
+    (newitem) => {
+      // newitem 으로 바뀐 새로운 배열 만들기. Array.map() 을 사용한다
+      // ...생략
+    },
+    [
+      /* 메서드와 연관되는 상태(변수)명들을 기술 */
+    ],
+  );
+
+  const callbackAdd = useCallback(
+    (newitem) => {
+      // items에서 최대 id 값을 구하는 방법.
+      // 방법1. items.map()과 items.reduce()를 사용하여 max id를 찾는 방법
+      debugger;
+      let maxid = 0;
+      if (items.length > 0) {
+        maxid = items
+          .map((item) => item.id)
+          .reduce((pvalue, cvalue) => (pvalue >= cvalue ? pvalue : cvalue), -1);
+      } else {
+        maxid = 0;
+      }
+      const newid = maxid + 1;
+
+      // param 에  id값 추가
+      newitem.id = newid;
+
+      /// items.push(newitem);
+      setItems([...items, newitem]);
+    },
+    [/* 메서드와 연관되는 상태(변수)명들을 기술 */ items],
+  );
 
   // JSX로 화면 만들기. 조건부 렌더링: https://ko.reactjs.org/docs/conditional-rendering.html
   return (
     <StyledCrudContainer>
       <div id="app">
         <h1>Creat Read Update Delete</h1>
-        <CrudInput></CrudInput>
+        <CrudInput callbackAdd={callbackAdd}></CrudInput>
         <hr />
-        <CrudList></CrudList>
+        <CrudList
+          items={items}
+          callbackDel={callbackDel}
+          callbackUp={callbackUp}
+          callbackDown={callbackDown}
+          callbackSave={callbackSave}
+        ></CrudList>
       </div>
     </StyledCrudContainer>
   );
