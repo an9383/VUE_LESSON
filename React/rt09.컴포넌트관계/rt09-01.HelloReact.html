@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible"
+      content="ie=edge" />
+    <title>Document</title>
+
+    <link rel="stylesheet"
+      href="../css/reset.css" />
+
+  </head>
+
+  <body>
+    <xmp>
+        함수형 컴포넌트를 만드는 방법을 복습한다.
+
+        컴포넌트 이름을 HelloReact로 만들고 "Hello, React!!!"를 출력하시오.
+
+        만들 Component
+            HelloContainer  ==> 공유 데이터 ==> 컨테이너 컴포넌트
+            HelloReact      ==> 데이터 표시 ==> 프리젠테이션 컴포넌트
+
+        HelloContainer JSX
+            <HelloReact mesgOfProps={"Hello, Props!!!"}>
+
+            </HelloReact>
+
+        HelloReact JSX 화면
+            <div>
+                도전1. Hello, React!!!
+                <br />
+                도전2. {mesgOfState}
+                <br />
+                도전3. {mesgOfProps}
+            </div>
+
+        실행 화면
+            <div>
+                도전1. Hello, React!!!
+                <br>
+                도전2. Hello, State!!!
+                <br>
+                도전3. Hello, Props!!!
+                <hr />
+            </div>
+
+        도전. 부모의 callback 메서드 호출 기능을 추가한다.
+            <hr />
+            <button onClick={????}> 부모의 callback 메서드 호출</button>
+
+
+        작성  순서
+        단계1: React 스크립트 플러그인 추가. 단축키: reactplugin
+              Component 를 화면에 붙이기. ReactDOM.render( , );
+        단계2. HelloContainer 만들기. 단축키: rfc
+              HelloContainer JSX 추가
+        단계3. HelloReact 만들기. 단축키: rfc
+              HelloReact JSX 추가
+    </xmp>
+    <hr>
+
+    <div id="app">
+      요기에
+    </div>
+  </body>
+
+</html>
+
+<script src="https://unpkg.com/@babel/standalone/babel.js"
+  crossorigin="anonymous">
+    /* 자바스크립트로 컴파일러. ES6-->ES5, JSX-- > ES5 * /
+  </script>
+<script src="http://unpkg.com/react@17/umd/react.development.js"
+  crossorigin="anonymous">
+    /* import React, { Component, PureComponent } from 'react' */
+  </script>
+<script src="http://unpkg.com/react-dom@17/umd/react-dom.development.js"
+  crossorigin="anonymous">
+    /* import ReactDOM from 'react-dom' */
+  </script>
+<script type="text/babel">
+
+  const { useState, useEffect, useRef, useCallback, useMemo, useReducer, Fragment } = React;
+
+  // id="app" 인 태그 에 컴포넌트를 화면에 붙이시오
+  // ReactDOM.render( 인자1, 인자2 )
+  ReactDOM.render(<HelloContainer />, document.getElementById('app'));
+
+  // 단축키 rfc
+  function HelloContainer({
+    ...props
+  }) {
+    // useState 를 사용한 컴포넌트의 상태값 설정
+    const [mesgOfProps, setMesgOfProps] = useState('Hello, HelloContainer State!!!'); // 상태값이 기본타입인 경우
+
+    // callback 메서드 작성. callback 메서드는 부모의 공유 상태값을 변경하기 위해서 사용된다.
+    const callback = useCallback((param) => {
+      // state 변경
+      debugger;
+      setMesgOfProps(new Date().toLocaleTimeString());
+    }, [
+      /* 연관배열: 콜백 메서드에서 변경하고자 하는 연관되는 상태(변수)명들을 기술  */
+      mesgOfProps
+    ]
+    );
+
+    return (
+      <HelloReact mesgOfProps={mesgOfProps} callback={callback} >
+      </HelloReact >
+    )
+  }
+  function HelloReact({
+    //...props
+    mesgOfProps,
+    callback,
+  }) {
+    // useState 를 사용한 컴포넌트의 상태값 설정
+    const [mesgOfState, setMesgOfState] = useState('Hello, State !!!'); // 상태값이 기본타입인 경우
+
+    // 이벤트 핸들러 작성.
+    const handlerClick = (e) => {
+      // 이벤트 핸들러는 화살표 함수로 만든다
+      console.log(e.target);
+      debugger;
+      callback();
+    };
+    return (
+      <div>
+        도전1. Hello, React!!!
+        <br />
+        도전2. {mesgOfState}
+        <br />
+        도전3. {mesgOfProps}
+        <hr />
+        <button onClick={handlerClick}> 부모의 callback 메서드 호출</button>
+      </div>
+    )
+  }
+
+</script>

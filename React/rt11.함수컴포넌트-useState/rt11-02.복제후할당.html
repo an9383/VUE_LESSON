@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible"
+      content="ie=edge" />
+    <title>Document</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+    <!-- CSS import -->
+    <link rel="stylesheet"
+      href="../css/reset.css" />
+
+    <style>
+      span {
+        font-size: 3em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div style="margin: 40px 0 20px 15px">
+      <a href="#"
+        onClick="window.open('../rt01.docs/불변성.pdf','npm사용법','width=800,height=400,toolbar=no,menubar=no,scrollbars=no,resizable=yes');return false;"
+        rel="nofollow">5분 동안 교제 64~67, "3.3.1 불변성" 읽기</a>
+      <br />
+      <br />
+      <a href="#"
+        onClick="window.open('../rt01.docs/데이터변환-복제후할당.pdf','npm사용법','width=800,height=400,toolbar=no,menubar=no,scrollbars=no,resizable=yes');return false;"
+        rel="nofollow">5분 동안 교제 71~79, "3.3.3 데이터 변환" 읽기</a>
+    </div>
+
+    <xmp>
+
+컴포넌트의 상태(변수) 값을 변경하려면 복제 후 재할당으로 처리해야 한다.
+
+컴포넌트의 상태(변수) 값을 직접 바꾸면 화면 변수의 값은 바뀌지만 화면이 바뀌지 않는다.
+즉, state[0]=100; 과 같이 바꾸면 값은 바뀌지만 화면에 rendering 되지 않는 문제 발생.
+
+어떻게 컴포넌트의 상태의 값을 바꾸어야 하나? 반드시 복제 후 재할당으로 처리해야 한다.
+
+자바스크립트 타입
+    # value 타입에는 string, number, boolen, ...
+    # reference 타입에는 Object, Array, Function, ...
+
+
+const [arr, setArr] = useState([1, 2, 3, 4, 5]);
+
+0. 배열 요소 직접 변경시 현상 확인 
+    console.log('변경 전:', arr);
+    arr[0] = 100;
+    console.log('변경 후:', arr);
+
+1. setter 메서드를 사용하는 방식.
+    set변수명([100, 2, 3, 4, 5]);
+
+2. map() 메서드를 사용하여 복제한다.
+    arr.map((value,index,array)=>( index === findIndex ? 200: value));
+
+3. filter() 메서드를 사용하여 삭제한다.
+
+4. spread 연산자 방식 ==> 배열을 새로 만든 뒤 할당. ES6 에서만 가능.
+    var arr_copy = [500, ...arr, 70]; // [500, 3, 4, 5, 70]
+
+실행 순서와 결과 예시
+    (0) [1, 2, 3, 4, 5]
+    (1) [100, 2, 3, 4, 5]       <== 방법1을 적용
+    (2) [100, 300, 3, 4, 5]     <== 방법2을 적용
+    (3) [3, 4, 5]               <== 방법3을 적용
+    (4) [500, 3, 4, 5, 70]      <== 방법4을 적용
+
+    </xmp>
+    <hr />
+    <div id="app">
+      <div>
+        {arr.map( (value,index)=>(<span key={index}> {value} </span>))}
+        <br />
+        <button onClick={handlerChange1}>방법1로 변경</button>
+        <button onClick={handlerChange2}>방법2로 변경</button>
+        <button onClick={handlerChange3}>방법3로 변경</button>
+        <button onClick={handlerChange4}>방법4로 변경</button>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script src="https://unpkg.com/@babel/standalone/babel.js"
+  crossorigin="anonymous">
+    /* 자바스크립트로 컴파일러. ES6-->ES5, JSX-- > ES5 * /
+  </script>
+<script src="http://unpkg.com/react@17/umd/react.development.js"
+  crossorigin="anonymous">
+    /* import React, { Component, PureComponent } from 'react' */
+  </script>
+<script src="http://unpkg.com/react-dom@17/umd/react-dom.development.js"
+  crossorigin="anonymous">
+    /* import ReactDOM from 'react-dom' */
+  </script>
+<script type="text/babel">
+
+  const { useState, useEffect, useRef, useCallback, useMemo, useReducer, Fragment } = React;
+
+  // id="app" 인 태그 에 컴포넌트를 화면에 붙이시오
+  // ReactDOM.render( 인자1, 인자2 )
+  ReactDOM.render(<Comp />, document.getElementById('app'));
+
+  // 단축키 rfc
+  function Comp({
+    ...props
+  }) {
+    // useState 를 사용한 컴포넌트의 상태값 설정
+    const [arr, setArr] = useState([1, 2, 3, 4, 5]); // 상태값이 배열타입인 경우
+
+    // 이벤트 핸들러 작성.
+    const handlerChange1 = (e) => {
+      // 이벤트 핸들러는 화살표 함수로 만든다
+      console.log(e.target);
+      // arr[0] = 100;
+      // console.log(arr); // [100,2,3,4,5]
+      setArr([100, 2, 3, 4, 5]);
+      console.log(arr); // [1,2,3,4,5]
+    };
+    const handlerChange2 = (e) => {
+      // 이벤트 핸들러는 화살표 함수로 만든다
+      console.log(e.target);
+      const findIndex = arr.indexOf(2);
+
+      // 복제
+      const newArr = arr.map((value, index) => (index === findIndex ? 300 : value));
+
+      // 대입(할당)
+      setArr(newArr);
+    };
+    const handlerChange3 = (e) => {
+      // 이벤트 핸들러는 화살표 함수로 만든다
+      console.log(e.target);
+      // 복제 ==> 새로운 배열 만들기
+      const newArr = arr.filter((value, index, array) => {
+        // index === 0 || index === 1 이면 false 반환
+        // 아니면 true 반환
+        if (index <= 1)
+          return false;
+
+        return true;
+      });
+      // 할당(대입)
+      setArr(newArr);
+    };
+    const handlerChange4 = (e) => {
+      // 이벤트 핸들러는 화살표 함수로 만든다
+      console.log(e.target);
+
+      // 복제 ==> 새로운 배열 만들기
+      //  arr = [3,4,5] 라고 가정.
+      const newArr = [500, ...arr, 70]; // ...arr === 3,4,5
+      // 할당(대입)
+      setArr(newArr);
+    };
+
+    // JSX로 화면 만들기. 조건부 렌더링: https://ko.reactjs.org/docs/conditional-rendering.html
+    return (
+      <div id="app">
+        <div>
+          {arr && arr.length> 0 && arr.map((value, index) => (<span key={index}> {value} </span>))}
+          <br />
+          <button onClick={handlerChange1}>방법1로 변경</button>
+          <button onClick={handlerChange2}>방법2로 변경</button>
+          <button onClick={handlerChange3}>방법3로 변경</button>
+          <button onClick={handlerChange4}>방법4로 변경</button>
+        </div>
+      </div>
+    );
+  }
+
+</script>

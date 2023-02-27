@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible"
+      content="ie=edge">
+    <title>컴포넌트 실습용 Vue Project</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- CSS import -->
+    <link rel="stylesheet"
+      href="../css/reset.css">
+
+  </head>
+  <body>
+    <div style="margin: 40px 0 0 30px;">
+      ※ 실행 전에 서버를 실행하세요. <a href="#"
+        onClick="window.open('../../ES2015문법/ap09.서버통신/ap09-01.Node서버실행.html','Node서버실행','width=900,height=850,toolbar=no,menubar=no,scrollbars=no,resizable=yes');return false;"
+        rel="nofollow">Node서버실행</a>
+      <br>
+      <br>
+      <a href="#"
+        onClick="window.open('https://vuejstodo-aa185.firebaseapp.com/','Todo앱확인','width=800,height=700,toolbar=no,menubar=no,scrollbars=no,resizable=yes');return false;"
+        rel="nofollow">TODO 애플리케이션 구현 확인 링크</a>
+    </div>
+    <xmp>
+    Vue-CLI 을 사용하여 실습용 Vue 프로젝트를 만들어 본다.
+
+    ##################################
+    # Vue-CLI 학습하기
+    ##################################
+
+    Vue-CLI 구성요소
+        CLI코어: @vue/cli
+        CLI서비스: @vue/cli-service
+            웹팩
+            웹팩개발서버
+        CLI플러그인: @vue/cli
+            router
+            vuex
+            @vue/cli-plugin-babel
+            @vue/cli-plugin-eslint
+            @vue/cli-plugin-unit-jest
+
+    Vue-CLI 의 버전
+        2.x : <== 교재
+        3.x :
+        4.x :
+        5.x : <== 최신 버전
+
+    Vue-CLI 설치:
+        npm install --global @vue/cli  <== global 설치
+        npm install          @vue/cli  <== local 설치
+
+    Vue-CLI 버전 확인 :
+        vue -V      <== global 설치인경우
+        또는
+        npx vue -V   <== local 로컬설치인경우
+
+    Vue-CLI 플러그인 추가
+        vue add 플러그인명.             예시) npx vue add vuex
+        npm install --save 플러그인명.  예시) npm install --save vuex
+
+
+    ##################################
+    2. Vue-CLI 프로젝트 생성 및 설정 작업
+    ##################################
+
+    step 2-01. Vue-CLI 전역 설치 삭제
+        --global 는 전역을 의미한다.
+        $ npm uninstall --global @vue/cli
+
+    step 2-02.node, npm, vue 버전 확인
+        $ node -v                          #  node 버전 확인
+        v16.18.1
+
+        $ npm -v                           #  npm 버전 확인
+        9.3.0
+
+        $ npm install -g npm@latest        #  npm 최신 버전 설치. -g: 전역 설치
+
+        $ npm -v                           #  npm 버전 재확인
+        9.3.0
+
+        $ npx -v                           #  npx(=npm extension) 버전 재확인
+        9.3.0
+
+
+    step 2-03. Vue-CLI 설치
+        # 설치된 Vue-CLI 버전 확인
+        $ vue -V
+        bash: vue: command not found
+
+        # vue/cli 를 전역(--global)으로 설치한다. -g: 전역 설치
+        # * cli: command line interface 의 약자
+        $ npm install --global @vue/cli
+        $ npm install -g  @vue/cli
+
+        # global 설치인 경우 Vue-CLI 버전 확인 :
+        $ vue -V
+        @vue/cli 5.0.8
+
+        # local 설치인 경우 Vue-CLI 버전 확인 :
+        $ npx vue -V
+        @vue/cli 5.0.1
+
+    step 2-04. 현재 폴더의 파일 목록 조회
+        $ ls
+        vue30컴포넌트실습.html
+
+    step 2-05. comprj01 프로젝트 생성. package.json 생성.
+        $ npx vue create comprj01
+        Vue CLI v5.0.8
+        ** 선택에 주의 하세요
+        ? Please pick a preset: (Use arrow keys)
+          Default ([Vue 3] babel, eslint)
+          Default ([Vue 2] babel, eslint)
+        > Manually select features
+
+        ** 선택에 주의 하세요
+        ? Check the features needed for your project:
+        (*) Choose Vue version
+        (*) Babel
+        ( ) TypeScript
+        ( ) Progressive Web App (PWA) Support
+        (*) Router
+        (*) Vuex
+        ( ) CSS Pre-processors
+        (*) Linter / Formatter
+        (*) Unit Testing
+        ( ) E2E Testing
+
+        ? Choose a version of Vue.js that you want to start the project with (Use arrow keys)
+        > 3.x
+          2.x
+
+        ? Use history mode for router? (Requires proper server setup for index fallback in production) (Y/n) Yes
+
+        ** 선택에 주의 하세요
+        ? Pick a linter / formatter config:
+          ESLint with error prevention only
+          ESLint + Airbnb config
+          ESLint + Standard config
+        > ESLint + Prettier
+
+        ** 선택에 주의 하세요
+        ? Pick additional lint features:
+        > (*) Lint on save
+          (*) Lint and fix on commit
+
+        ? Pick a unit testing solution: (Use arrow keys)
+        > Jest
+          Mocha + Chai
+
+        ? Where do you prefer placing config for Babel, ESLint, etc.? (Use arrow keys)
+        > In dedicated config files
+          In package.json
+
+        ? Save this as a preset for future projects? (y/N) N
+
+        ...(중략)
+        $ cd comprj01
+        $ npm run serve
+
+
+    step 2-06. 현재 폴더의 파일 목록 조회.
+                프로젝터 폴더(comprj01) 존재 여부 확인.
+        $ ls
+        comprj01/  vue30컴포넌트실습.html
+
+
+    step 2-07. 생성된 프로젝트 폴더(comprj01)로 이동
+        $ cd comprj01
+
+
+    step 2-08. 현재 폴더의 파일 목록 조회. package.json 이 보이면 정상.
+        $ ls
+        babel.config.js  jsconfig.json  node_modules/  package-lock.json  README.md  tests/
+        jest.config.js   lint-staged.config.js  package.json   public/  src/  vue.config.js
+
+
+    step 02-09. router 라이브러리 추가
+        $ npx vue add router
+
+    step 02-10. vuex 라이브러리 추가
+        $ npx vue add vuex
+
+    step 2-11. 비동기 통신 axios 라이브러리 추가.
+        package.json 에 관련 정보가 추가 된다.
+        $ npm install --save axios
+
+    step 2-12.  프로젝트 실행 설정 comprj01/package.json 수정
+        a. 실행시 브라우저로 열기  ==>  --open
+        b. 실행 서버 포트 설정     ==>  --port 4000
+        c. 실행 호스트 설정        ==>  --host 127.0.0.1
+
+        "scripts": {
+            "serve": "vue-cli-service serve --open --port 4000 --host 127.0.0.1",
+            "build": "vue-cli-service build",
+            "lint": "vue-cli-service lint"
+        },
+
+    step 2-13. 현재 폴더의 파일 목록 조회. package.json 존재하는지 확인
+        $ ls
+
+    step 2-14. 서버 실행. package.json 이 있는 폴더에서 실행 해야 됨.
+        $ npm run serve
+
+        App running at:
+        - Local:   http://127.0.0.1:4000/
+        - Network: http://127.0.0.1:4000/
+
+        Note that the development build is not optimized.
+        To create a production build, run npm run build.
+
+        step 2-15. 배포할 파일을 생성.
+            빌드가 완료되면 dist/ 폴더가 생기고 배포용 관련 파일들이 생성됨.
+        $ npm run build
+
+        step 2-16. 코드 표준화 수행
+        프로젝트 전체에 들여써기, 줄맞춤 등의 설정을 적용하기
+        $ npm run lint
+
+
+
+    ##################################
+    3. 프로젝트 디폴트 폴더 구조
+    ##################################
+
+        프로젝트
+        |-- dist                     # 빌드된 결과물이 저장되는 폴더. 서버로 배포되는 파일들.
+        |-- node_modules             # npm 모듈(패키지) 저장 폴더
+        |-- public                   # 배포 버전을 빌드할 때 사용하는 파일.
+        |   |-- index.html
+        |   `-- favion.ico
+        |-- src                      # 소스 코드 폴더
+        |   |-- assets               # 이미지, CSS, 기타 자원 파일
+        |   |   `-- logo.png
+        |   |-- components           # 컴포넌트
+        |   |   `-- HelloWorld.vue
+        |   |-- router               # 라우터
+        |   |   `-- index.js
+        |   |-- views                # 라우터 페이지
+        |   |   |-- About.vue
+        |   |   `-- Home.vue
+        |   |-- App.vue
+        |   `-- main.js
+        |-- .browserslistrc
+        |-- .eslintrc.js
+        |-- .gitignore
+        |-- .prettierrc.js
+        |-- babel.config.js
+        |-- jsconfig.json
+        |-- package.json
+        |-- README.md
+        `-- package.json
+
+
+    ##################################
+    4. 프로젝트 환경 설정
+        소요시간: 15분
+    ##################################
+
+    step 4-01. eslint 설정
+
+        ESLint의 핵심 구성 정보는 env, globals, rules 세 가지 영역으로 나누어져 구성되어 있습니다.
+        . env는 실행 환경에 대한 설정, 사전 전역 변수 설정. 브라우저, node, es6 환경이 활성화
+        . globals는 사용자가 추가하는 전역 변수 설정.
+        . extends 설치한 플러그인들의 적용과 설정에 관한 것들.
+        . plugins 설치한 플러그인들의 적용과 설정에 관한 것들.
+        . rules 설치한 플러그인들의 적용, 활성화 규칙 및 오류 설정에 관한 것들.
+
+        # package.json 파일이 있는지 확인
+        $ ls -a
+
+        .eslintrc.js 파일을 프로젝트 루트에 만들고 아래 내용을 추가한다.
+        $ touch .eslintrc.js
+
+        $ cat .eslintrc.js
+
+        module.exports = {
+            /*
+              https://feynubrick.github.io/2019/05/20/eslint-prettier.html
+              ESLint 규칙:
+                https://eslint.org/docs/rules/
+                https://eslint.org/docs/user-guide/configuring/
+              Prettier 옵션:
+                https://prettier.io/docs/en/options.html
+            */
+            root: true,
+            env: {
+              node: true,
+
+              browser: true,
+              commonjs: true,
+              es6: true,
+              es2021: true,
+              jest: true,
+            },
+            extends: [
+                'plugin:vue/essential',
+                'eslint:recommended',
+                'plugin:prettier/recommended'
+            ],
+            parserOptions: {
+              parser: '@babel/eslint-parser',
+            },
+            plugins: ['prettier'],
+            ignorePatterns: ['node_modules/'],
+            rules: {
+              'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+              'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+
+              'prettier/prettier': ['error', { endOfLine: 'auto' }],
+              'linebreak-style': 'off',
+              'arrow-parens': ['error', 'always'],
+              'arrow-body-style': 'off',
+              'consistent-return': 'off',
+              'func-names': 'off',
+              'no-shadow': 'off',
+              'no-alert': 'off',
+              'no-var': 'error',
+              'no-unused-vars': 'off',
+              'no-param-reassign': ['error', { props: false }],
+            },
+            overrides: [
+              {
+                files: ['**/__tests__/*.{j,t}s?(x)', '**/tests/unit/**/*.spec.{j,t}s?(x)'],
+                env: {
+                  jest: true,
+                },
+              },
+            ],
+        };
+
+
+    step 4-02. Prettier 설정
+
+        https://prettier.io/docs/en/options.html
+
+        .prettierrc.js 파일을 프로젝트 루트에 만들고 아래 내용을 추가한다.
+        $ touch .prettierrc.js
+
+        $ cat .prettierrc.js
+        module.exports = {
+          /* https://prettier.io/docs/en/options.html */
+          printWidth: 80 /* 할 줄에 130컬럼까지 허용 */,
+          tabWidth: 2 /* tab을 누르면 2칸 들여쓰기 */,
+          singleQuote: true /*문자열 리터럴로 " 대신 ' 을 사용 */,
+          semi: true /* 문장 마지막에 ; 추가설정 */,
+          useTabs: false /* 탭 대신 spacebar 를 사용 설정 */,
+          trailingComma: 'all',
+          proseWrap: 'always',
+          bracketSpacing: true,
+          jsxSingleQuote: false /*JSX 안에서는 " 을 사용 */,
+          quoteProps: 'as-needed',
+          endOfLine: 'crlf',
+        };
+
+
+    step 4-03. 소스 전체에  eslint 규칙에 맞게 포맷팅 변경하기
+        정의한 ESLint 룰을 지키고 있지 않은 파일과 내용을 확인하고
+        prettier 의 룰에 맞게 코드를 수정 할 수 있습니다.
+        $ ls                            # package.json 이 있는지 확인
+        $ npx prettier --check ./src    # ESLint 룰 체크. src 폴더 이하만 검사
+        $ npx prettier --write ./src    # ESLint 룰에 맞게 코드 수정. src 폴더 이하만 변경. npm run lint 와 동일
+
+
+    step 4-04. 프로젝트 전체 소스에 새로운 lint 설정 적용하기
+    $ ls
+
+    $ npm run lint
+
+
+    step 4-05. 서버 재시작
+    $ npm run serve
+
+
+    ##################################
+    5. 프로젝트에 폴더 및 파일 추가
+    ##################################
+
+        프로젝트
+        |-- dist
+        |-- node_modules
+        |-- public
+        |   |-- favicon.ico
+        |   `-- index.html
+        |-- src
+        |   |-- assets
+        |   |   `-- logo.png
+        |   |-- components
+        |   |   |-- HelloWorld.vue
+        |   |   |-- vue3103
+        |   |   |   `-- Vue3103Comp.vue
+        |   |   |-- vue3104
+        |   |   |   `-- Vue3104Counter.vue
+        |   |   |-- vue31ex
+        |   |   |   |-- Vue31exAside.vue
+        |   |   |   |-- Vue31exContent.vue
+        |   |   |   |-- Vue31exContentList.vue
+        |   |   |   |-- Vue31exFooter.vue
+        |   |   |   `-- Vue31exHeader.vue
+        |   |   |-- vue3305
+        |   |   |   |-- Vue3305Top.vue
+        |   |   |   `-- Vue3305Bottom.vue
+        |   |   |-- vue3403
+        |   |   |   `-- Vue3403Comp.vue
+        |   |   |-- vue34ex
+        |   |   |   |-- Vue34exParent.vue
+        |   |   |   `-- Vue34exChild.vue
+        |   |   |-- vue3501
+        |   |   |   `-- Vue3501Comp.vue
+        |   |   `-- vue3701
+        |   |       |-- CompChild1.vue
+        |   |       |-- CompChild2.vue
+        |   |       |-- CompChild11.vue
+        |   |       `-- ModuleChild1.vue
+        |   |-- router
+        |   |   `-- index.js
+        |   |-- store
+        |   |   `-- index.js
+        |   |-- views
+        |   |   |-- AboutView.vue
+        |   |   |-- HomeView.vue
+        |   |   |-- Vue3103View.vue
+        |   |   |-- Vue3104View.vue
+        |   |   |-- Vue31exView.vue
+        |   |   |-- Vue3305View.vue
+        |   |   |-- Vue3403View.vue
+        |   |   |-- Vue34exView.vue
+        |   |   |-- Vue3501View.vue
+        |   |   `-- Vue3701View.vue
+        |   |-- App.vue
+        |   `-- main.js
+        |-- .browserslistrc
+        |-- .eslintrc.js
+        |-- .gitignore
+        |-- README.md
+        |-- babel.config.js
+        |-- jsconfig.json
+        |-- package.json
+        `-- vue.config.js
+
+        # package.json 존재 여부 확인
+        $ ls
+        babel.config.js  jsconfig.json  node_modules/  package.json  package-lock.json  public/  README.md  src/  vue.config.js
+
+
+        # 폴더 만들기
+        $ mkdir -p src/components/vue3103 \
+                   src/components/vue3104 \
+                   src/components/vue31ex \
+                   src/components/vue3305 \
+                   src/components/vue3403 \
+                   src/components/vue34ex \
+                   src/components/vue3501 \
+                   src/components/vue3701
+
+        # 페이지 컴포넌트 만들기
+        $ touch src/views/Vue3103View.vue \
+                src/views/Vue3104View.vue \
+                src/views/Vue31exView.vue \
+                src/views/Vue3305View.vue \
+                src/views/Vue3403View.vue \
+                src/views/Vue34exView.vue \
+                src/views/Vue3501View.vue \
+                src/views/Vue3701View.vue
+
+
+        # 프리젠테이션(화면) 컴포넌트 만들기
+        $ touch src/components/vue3103/Vue3103Comp.vue \
+                src/components/vue3104/Vue3104Counter.vue \
+                src/components/vue31ex/Vue31exAside.vue \
+                src/components/vue31ex/Vue31exContent.vue \
+                src/components/vue31ex/Vue31exContentList.vue \
+                src/components/vue31ex/Vue31exFooter.vue \
+                src/components/vue31ex/Vue31exHeader.vue \
+                src/components/vue3305/Vue3305Top.vue \
+                src/components/vue3305/Vue3305Bottom.vue \
+                src/components/vue3403/Vue3403Comp.vue \
+                src/components/vue34ex/Vue34exParent.vue \
+                src/components/vue34ex/Vue34exChild.vue \
+                src/components/vue3501/Vue3501Comp.vue \
+                src/components/vue3701/CompChild1.vue \
+                src/components/vue3701/CompChild2.vue \
+                src/components/vue3701/CompChild11.vue \
+                src/components/vue3701/ModuleChild1.vue
+
+
+
+
+    ##################################
+    Vue3103
+    ##################################
+
+    # 작업 폴더 및 파일 만들기
+        $ ls    # pacakage.json 파일이 있는지 확인
+        $ mkdir -p src/components/vue3103
+        $ touch src/components/vue3103/Vue3103Comp.vue   # 프리젠테이션 컴포넌트(화면표시용)
+        $ touch src/views/Vue3103View.vue                # 컨테이너 컴포넌트(데이터 저장)
+
+    페이지 링크 만들기  ==> src/App.vue 수정
+
+    라우팅 설정(url 과 컴포넌트 연결) ==> src/router/index.js  수정
+
+    src/views/Vue3103View.vue 생성
+        <template>
+        <div id="app">
+            <h2>컴포넌트 등록</h2>
+            <Vue3103Comp v-bind:localmsg="localmsg1"></Vue3103Comp>
+            <Vue3103Comp v-bind:localmsg="localmsg2"></Vue3103Comp>
+        </div>
+        </template>
+
+    src/components/Vue3103Comp.vue 생성
+        <style scoped>
+            span {
+                border: 1px dashed blue;
+                background-color:lightgray;
+                padding: 5px;
+            }
+        </style>
+
+        <template>
+            <div>
+                파일 컴포넌트가 등록되었습니다!
+                <span v-on:click="lclick">
+                    {{ localmsg }}
+                </span>
+            </div>
+        </template>
+
+
+
+
+
+    ##################################
+    Vue3104
+    ##################################
+    # 작업 폴더 및 파일 만들기
+        $ mkdir -p src/components/vue3104
+        $ touch src/views/Vue3104View.vue
+        $ touch src/components/vue3104/Vue3104Counter.vue
+
+    페이지 링크 만들기  ==> src/App.vue 수정
+
+    라우팅 설정(url 과 컴포넌트 연결) ==> src/router/index.js  수정
+
+    src/views/Vue3104View.vue 생성
+        <template>
+        <div id="app">
+            <p>
+                <button v-on:click="clickAddBox">박스 추가</button>
+            </p>
+            <p>
+                <b v-for="(val, i) in arr" v-bind:key="i">
+                    {{val}}
+                    <component-box v-bind:num="val"></component-box>
+                </b>
+            </p>
+        </div>
+        </template>
+
+    src/components/vue3104/Vue3104Counter.vue 생성
+        <template>
+            <span style="display:inline-block; font-size:3em; border:1px dashed blue; padding:10px 20px; margin:5px; text-align:center;">
+                {{ num }}
+            </span>
+        </template>
+
+
+
+
+
+    ##################################
+    Vue31ex 1차  작업
+    ##################################
+    # 작업 폴더 및 파일 만들기
+        $ mkdir -p src/components/vue31ex
+        $ touch src/views/Vue31exView.vue
+        $ touch src/components/vue31ex/Vue31exAside.vue
+        $ touch src/components/vue31ex/Vue31exContent.vue
+        $ touch src/components/vue31ex/Vue31exContentList.vue
+
+    페이지 링크 만들기  ==> src/App.vue 수정
+
+    라우팅 설정(url 과 컴포넌트 연결) ==> src/router/index.js  수정
+
+    src/views/Vue31exView.vue 생성
+        <style scoped>
+
+        </style>
+
+        <template>
+
+        </template>
+
+    src/components/Vue31exHeader.vue 생성
+        <template>
+        </template>
+
+    src/components/Vue31exContent.vue 생성
+        <template>
+        </template>
+
+    src/components/Vue31exFooter.vue 생성
+        <template>
+        </template>
+
+
+
+
+
+    ##################################
+    Vue31ex 2차 작업
+        Vue31exContent.vue 를 2개의 컴포넌트로 분리한다.
+        ==> Vue31exAside.vue
+        ==> Vue31exContentList.vue
+    ##################################
+    # 작업 폴더 및 파일 만들기
+        $ touch src/components/vue31ex/Vue31exFooter.vue
+        $ touch src/components/vue31ex/Vue31exHeader.vue
+
+    src/components/Vue31exAside.vue 생성
+        <template>
+        </template>
+
+    src/components/Vue31exContentList.vue 생성
+        <template>
+        </template>
+
+    src/components/Vue31exContent.vue 수정
+        <template>
+        </template>
+
+
+
+
+
+    ##################################
+    Vue3305 작업.
+    각자 실습.
+    ##################################
+
+    # 작업 폴더 및 파일 만들기
+        $ mkdir -p src/components/vue3305
+        $ touch src/views/Vue3305View.vue
+        $ touch src/components/vue3305/Vue3305Top.vue
+        $ touch src/components/vue3305/Vue3305Bottom.vue
+
+    페이지 링크 만들기  ==> src/App.vue 수정
+
+    라우팅 설정(url 과 컴포넌트 연결) ==> src/router/index.js  수정
+
+    src/views/Vue3305View.vue 생성(뷰 컴포넌트)
+
+    src/components/vue3305/Vue3305Parent.vue 생성(컴포넌트)
+
+    src/components/vue3305/Vue3305Child.vue 생성(컴포넌트)
+
+
+
+
+
+    ##################################
+    Vue3403 작업.
+    ----------------------------------
+    자식 컴포넌트에서 부모 컴포넌트로 데이터를 보내는 방법에 대해서 알아본다.
+    자식 컴포넌트 에서 사용할 화면은 <button v-on:click="showLog">show</button> 을 클릭하면
+    show-log 라는 사용자 이벤트를 발생시키고
+    "abc" 와 123  값을 부모로 전달되게 하시오
+    [참조]page 68
+    ##################################
+    # 작업 폴더 및 파일 만들기
+        $ ls          # package.json 파일이 있는 확인
+        $ mkdir -p src/components/vue3403               # 폴더 만들기
+        $ touch src/views/Vue3403View.vue               # 컨테이너 컴포넌트 만들기
+        $ touch src/components/vue3403/Vue3403Comp.vue  # 프리젠테이션 컴포넌트 만들기
+
+    페이지 링크 만들기  ==> src/App.vue 수정
+
+    라우팅 설정(url 과 컴포넌트 연결) ==> src/router/index.js  수정
+
+    src/views/Vue3403View.vue 생성(부모 컴포넌트)
+        <template>
+            <div id="app">
+                자식 컴포넌트에서 받은 값: {{mesg}}
+                <child-component v-on:show-log="printText"></child-component>
+            </div>
+        </template>
+
+    src/components/vue3103/Vue3403Comp.vue 생성(자식 컴포넌트)
+        <template>
+        <div>
+            <button v-on:click="showLog">show</button>
+        </div>
+        </template>
+
+
+
+
+
+    ##################################
+    Vue34ex 작업
+    ----------------------------------
+    이 앱의 특징은 다음과 같습니다.
+        Parent 컴포넌트에서  + 버튼을 클릭하면 +10씩 카운터가 올라가고
+        Parent 컴포넌트에서  - 버튼을 클릭하면 -10씩 카운터가 감소됩니다.
+        Child 컴포넌트에서  + 버튼을 클릭하면 +1씩 카운터가 올라가고
+        Child 컴포넌트에서  - 버튼을 클릭하면 -1씩 카운터가 감소됩니다.
+
+    상위 컴포넌트(Parent)와 자식 컴포넌트(Child)는 같은 counter 값을 갖습니다.
+    Parent 컴포넌트 에서 Child 컴포넌트 로 데이터를 전달할 때 props 속성을 사용하여 데이터를 전달합니다.
+    따라서, 부모 컴포넌트(Parent)와 자식 컴포넌트(Child)는 같은 값을 갖습니다.
+
+    Child 컴포넌트에서 버튼을 누르면 Parent 컴포넌트로 이벤트를 발생 시킵니다.
+        Child 컴포넌트에서  + 버튼을 클릭하면 addCounter 이벤트 발생
+        Child 컴포넌트에서  - 버튼을 클릭하면 subCounter 이벤트 발생
+
+    작업 순서
+        1. Parent 컴포넌트 부분만 작동되게 만든다.
+        2. 1번이 되면 Parent 컴포넌트가 정상 작동되면
+            Child 컴포넌트가 화면에 표시되도록 작성한다.
+        3. 2번이 되면 Child 컴포넌트에 props를 통해 값을 내려받게 작성 한다.
+            <component-child v-bind:num="counter" />
+            의미: 부모의 counter 변수를 자식에서는 num 변수로 받는다.
+        4. 사용자 이벤트를 사용하여 Child 컴포넌트에서
+            Parent 컴포넌트로 값을 전달되게 한다.
+            this.$emit( "이벤트명", 전달값)
+    ##################################
+    # 작업 폴더 및 파일 만들기
+        $ ls    # package.json 파일이 있는지 확인
+        $ mkdir -p src/components/vue34ex     # 폴더 생성
+        $ touch src/views/Vue34exView.vue     # 컨테이너 콤포넌트 만들기
+        $ touch src/components/vue34ex/Vue34exParent.vue  # 프리젠테이션 컴포넌트만들기
+        $ touch src/components/vue34ex/Vue34exChild.vue   # 프리젠테이션 컴포넌트만들기
+
+    페이지 링크 만들기  ==> src/App.vue 수정
+
+    라우팅 설정(url 과 컴포넌트 연결) ==> src/router/index.js  수정
+
+    src/views/Vue34exView.vue 생성(뷰 컴포넌트)
+    <template>
+        <div id="app">
+            <Vue34exParent></Vue34exParent>
+        </div>
+    </template>
+
+    src/components/vue34ex/Vue34exParent.vue 생성(부모 컴포넌트)
+    <style scoped>
+        .component-parent {
+            width: 50%;
+            background-color: lightblue;
+            padding: 5%;
+        }
+
+        .component-child {
+            width: 80%;
+            background-color: lightgray;
+            padding: 5% 5% 10% 0;
+        }
+    </style>
+    <template>
+        <div id="app" class="component-parent">
+            Parent counter : {{ counter }} <br>
+            <button name="parent" v-on:click="addCounter(+10)">+</button>
+            <button name="parent" v-on:click="subCounter(-10)">-</button>
+            <p></p>
+
+            <!-- Child 컴포넌트를 등록하고 counter 데이터 속성을 props로 전달한다. -->
+            <component-child
+                v-bind:num      ="counter"
+                v-on:addCounter="addCounter"
+                v-on:subCounter="subCounter">
+            </component-child>
+        </div>
+    </template>
+
+
+    src/components/vue3104/Vue34exChild.vue 생성(자식 컴포넌트)
+    <template>
+        <div class="component-child">
+            Child counter : {{ num }} <br>
+            <button name="child" v-on:click="addCounter">+</button>
+            <button name="child" v-on:click="subCounter">-</button>
+        </div>
+    </template>
+
+
+
+
+
+
+    ##################################
+    Vue3501 작업
+        ref 를 이용하는 상태관리 방법을 배운다.
+        [참조]page 62~75
+
+        페이지가 로딩되면 myinput1에 포커스를 주시오
+        버튼을 클릭하면 myinput2에 포커스를 주시오
+    ##################################
+
+    # 작업 폴더 및 파일 만들기
+        $ mkdir -p src/components/vue3501
+        $ touch src/views/Vue3501View.vue
+        $ touch src/components/vue3501/Vue3501Comp.vue
+
+    페이지 링크 만들기  ==> src/App.vue 수정
+
+    라우팅 설정(url 과 컴포넌트 연결) ==> src/router/index.js  수정
+
+    src/views/Vue3501View.vue 생성(뷰 컴포넌트)
+    <template>
+    <div>
+        Vue3501View
+        <Vue3501Comp></Vue3501Comp>
+    </div>
+    </template>
+
+    src/components/vue3501/Vue3501Comp.vue 생성(컴포넌트)
+    <style scoped>
+        input:focus {
+          background-color: lightskyblue;
+          border: 3px solid #555;
+        }
+    </style>
+
+    <template>
+    <div id="app">
+        <p>
+            ref 사용 예제<br />
+            페이지가 로딩되면 myinput1에 포커스를 주시오 <br />
+            버튼을 클릭하면 myinput2에 포커스를 주시오 <br />
+        </p>
+        <div>
+            <div>
+                <label>myinput1</label>
+                <input type="text" ref="myinput1" v-model="message" />
+            </div>
+            <div>
+                {{ message }}
+            </div>
+        </div>
+        <div>
+            <label>myinput2</label>
+            <input type="text" ref="myinput2" />
+        </div>
+        <button v-on:click="handlerMyinput1">포커스 이동</button>
+    </div>
+    </template>
+
+
+
+
+
+    ##################################
+    Vue3701 1차 작업
+    ----------------------------------
+    전역 CSS 사용시 스타일 충돌을 이해한다.
+    ##################################
+    # 작업 폴더 및 파일 만들기
+        $ ls # package.json 파일이 있는지 확인
+        $ mkdir -p src/components/vue3701
+        $ touch src/views/Vue3701View.vue
+        $ touch src/components/vue3701/CompChild1.vue
+        $ touch src/components/vue3701/CompChild2.vue
+
+    페이지 링크 만들기  ==> src/App.vue 수정
+
+    라우팅 설정(url 과 컴포넌트 연결) ==> src/router/index.js  수정
+
+    src/views/Vue3701View.vue 생성(뷰 컴포넌트)
+    <style>
+        #app {
+            font-family: Avenir, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-align: center;
+            color: #2c3e50;
+        }
+    </style>
+
+    <template>
+        <div id="app">
+            <h2>{{msg}}</h2>
+            <child1 />
+            <child2 />
+        </div>
+    </template>
+
+    src/components/vue3701/CompChild1.vue 생성(컴포넌트)
+    <style>
+        .main { border:1px solid black; background-color:yellow; }
+    </style>
+
+    <template>
+        <div class="main">
+            {{msg}}
+        </div>
+    </template>
+
+    src/components/vue3701/CompChild2.vue 생성(컴포넌트)
+    <style>
+        .main { border:1px solid black; background-color:aqua; }
+    </style>
+
+    <template>
+        <div class="main">
+            {{msg}}
+        </div>
+    </template>
+
+
+    ##################################
+    Vue3701 2차 작업
+    ----------------------------------
+    Child1 부분에는 yellow가, Child2 부분에는 aqua가 나오게 하려면 어떻게 하면 될까?
+    속성 선택자( data-v-????? )를 이용하는 Scoped CSS 의 원리를 이해한다.
+    ##################################
+
+    # src/components/vue3701/CompChild1.vue  수정
+        변경 전
+        <style>
+            .main { border:1px solid black; background-color:yellow; }
+        </style>
+
+        변경 후: style 에 scoped 키워드 추가
+        <style scoped>
+            .main { border:1px solid black; background-color:yellow; }
+        </style>
+
+
+    # src/components/vue3701/CompChild2.vue 수정
+        변경 전
+        <style>
+            .main { border:1px solid black; background-color:aqua; }
+        </style>
+
+        변경 후: style 에 scoped 키워드 추가
+        <style scoped>
+            .main { border:1px solid black; background-color:aqua; }
+        </style>
+
+
+
+    ##################################
+    Vue3701 3차 작업
+    ----------------------------------
+    Scoped CSS의 자식 컴포넌트 상속에 대해서 실습한다.
+    CompChild11.vue 를 추가하고
+    CompChild11.vue 를 CompChild1.vue의 자식으로 추가한다.
+    ##################################
+
+    # 작업 폴더 및 파일 만들기
+        $ ls      # package.json 이 있는지 확인
+        $ touch src/components/vue3701/CompChild11.vue
+
+    # src/components/vue3701/CompChild11.vue 추가
+        <style scoped>
+            .test { font-style: italic;}
+        </style>
+        <template>
+            <div class="test">
+                <h3>{{msg}}</h3>
+            </div>
+        </template>
+
+    # src/components/vue3701/CompChild1.vue  수정
+        <style scoped>
+            .main { border:solid 1px black; background-color:yellow; }
+        </style>
+        <template>
+            <div class="main">
+                {{msg}}
+                <child11 />
+                {{msg}}
+            </div>
+        </template>
+
+
+
+    ##################################
+    Vue3701 4차 작업
+    ----------------------------------
+    module CSS에 대해서 학습한다.
+    ModuleChild1.vue 를 추가하고
+    ModuleChild1.vue 를 Vue3701View.vue의 자식 컴포넌트로 추가한다.
+    ##################################
+
+    # 작업 폴더 및 파일 만들기
+        $ touch src/components/vue3701/ModuleChild1.vue
+
+    # src/components/vue3701/ModuleChild1.vue 생성(컴포넌트)
+        <style module>
+            .hand { cursor:pointer; background-color:purple; color:yellow; }
+            .box { width:100px; height:100px; background-color:aqua; }
+            .border { border:solid 1px orange; }
+        </style>
+
+        <template>
+            <div>
+                <button v-bind:class="$style.hand"> CSS Module을 적용한 버튼 </button>
+                <div :class="[$style.box, $style.border]">Hello World</div>
+            </div>
+        </template>
+
+    # src/views/Vue3701View 수정
+        <template>
+            <div id="app">
+                <h2>{{msg}}</h2>
+                <child1 />
+                <child2 />
+                <module1 />
+            </div>
+        </template>
+
+
+    </xmp>
+
+  </body>
+</html>

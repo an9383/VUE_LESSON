@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible"
+      content="ie=edge" />
+    <title>객체 배열 학습</title>
+    <link rel="stylesheet"
+      href="../css/reset.css" />
+  </head>
+
+  <body>
+    <div>
+      <h2>Object Arrary 대해서 학습한다.</h2>
+      <ol>
+        <li class="langjs">
+          <h3 class="langjs">Object Arrary 생성</h3>
+          <pre class="langjs">
+                    <code class="langjs">
+    const objarray = [
+        { text: 'One', value: 'A', id: 'dfad3r' },
+        { text: 'Two', value: 'B', id: '35ffete' },
+        { text: 'Three', value: 'C', id: 'e66reag' },
+
+    ];
+                    </code>
+                </pre>
+        </li>
+        <li class="langjs">
+          <h3 class="langjs">objarray 에 { text: 'Four', value: 'D' } 를 추가하시오.</h3>
+          <pre class="langjs">
+                    <code class="langjs">
+
+                    </code>
+                </pre>
+        </li>
+        <li class="langjs">
+          <h3 class="langjs">objarray 에서 filter 메서드를 사용하여 text의 값이 'One' 인 객체들을 찾고 찾은 결과를 console.log 로 출력하시오</h3>
+          <pre class="langjs">
+                    <code class="langjs">
+
+                    </code>
+                </pre>
+        </li>
+        <li class="langjs">
+          <h3 class="langjs">objarray 에서 filter 메서드를 사용하여 { text: 'Three', value: 'C' } 를 삭제하고 결과를 console.log 로 출력하시오</h3>
+          <pre class="langjs">
+                    <code class="langjs">
+
+                    </code>
+                </pre>
+        </li>
+        <li class="langjs">
+          <h3 class="langjs">objarray 에서 map 메서드를 사용하여 no 프로퍼티 추가하시오</h3>
+          <pre class="langjs">
+                    <code class="langjs">
+    [
+        { text: 'One', value: 'A', no:0 },
+        { text: 'Two', value: 'B', no:1  },
+        { text: 'Four', value: 'D', no:2  },
+    ]
+                    </code>
+                </pre>
+        </li>
+        <li class="langjs">
+          <h3 class="langjs">
+            objarray 에서 reduce 메서드를 사용하여 각 요소의 value 프로퍼티 를 합쳐서 하나의 문자열로 만드시오
+            <br>
+            map을 이용하여 value 값만 들어있는 배열을 만들고 reduce를 이용하여 하나의 문자열로 만든다.
+          </h3>
+          <pre class="langjs">
+                    <code class="langjs">
+    ABD 가 출력
+                    </code>
+                </pre>
+        </li>
+        <li class="langjs">
+          <h3 class="langjs">
+            objarray 에서 filter 메서드를 사용하여 value가 "D" 인 요소만 들어 있는 배열을 만들고 출력하시오
+          </h3>
+          <pre class="langjs">
+              <code class="langjs">
+
+              </code>
+          </pre>
+        </li>
+      </ol>
+    </div>
+  </body>
+
+</html>
+
+<script>
+  // Object Arrary 생성
+  let objarray = [
+    { text: 'One', value: 'A' },
+    { text: 'Two', value: 'B' },
+    { text: 'Three', value: 'C' }
+  ];
+
+  // objarray 에 { text: 'Four', value: 'D' } 를 추가하시오.
+  objarray.push({ text: 'Four', value: 'D' }); // objarray[objarray.length] = { text: 'Four', value: 'D' };
+  console.log(objarray);
+
+  // objarray 에서 filter 메서드를 사용하여 text의 값이 'One' 인 객체들을 찾고
+  // 찾은 결과를 console.log 로 출력하시오.
+  const arrFilter = objarray.filter((value, index, array) => {
+    // { text: 'Three', value: 'C' } === value
+    if (value.text === 'One') {
+      return true;
+    }
+    return false;
+  });
+  console.log(arrFilter);
+
+  // objarray 에서 filter 메서드를 사용하여 { text: 'Three', value: 'C' } 를 삭제하고
+  // 삭제된 결과를 console.log 로 출력하시오.
+  // 복제 후 대입(복제 후 할당)
+  objarray = objarray.filter((value, index, array) => {
+    if (value.text === 'Three' && value.value === "C") {
+      return false;
+    }
+    return true;
+  });
+  console.log(objarray);
+
+  // objarray 에서 map 메서드를 사용하여 no 프로퍼티 추가하시오
+  // [
+  //   { text: 'One', value: 'A', no:0 },
+  //   { text: 'Two', value: 'B', no:1  },
+  //   { text: 'Four', value: 'D', no:2  },
+  // ]
+  objarray = objarray.map((value, index, array) => {
+    // value === { text: 'One', value: 'A'}
+    value.no = index; // value['no'] = index;
+
+    return value;
+  });
+  console.log(objarray);
+
+  // objarray 에서 reduce 메서드를 사용하여 각 요소의 value 프로퍼티 를 합쳐서 하나의 문자열로 만드시오
+  // map을 이용하여 value 값만 들어있는 배열을 만들고 ['A', '2', 'D']
+  // reduce를 이용하여 하나의 문자열로 만든다.
+  // A2D 가 출력
+  const newarr = objarray.map((obj, index, array) => {
+    // obj === { text: 'One', value: 'A', no:0}
+    return obj.value;
+  });
+  console.log(newarr); // ['A', 'B', 'D']
+  const str = newarr.reduce((pvalue, cvalue, index, array) => {
+    // '' + 'A' = 'A'
+    // 'A' + 'B' = 'AB'
+    // 'AB' + 'D' = 'ABD'
+    return pvalue + cvalue;
+  }, '');
+  console.log(str); // ABD
+
+
+  const str2 = objarray.map((obj) => obj.value)
+    .reduce((pvalue, cvalue) => pvalue + cvalue, '');
+  console.log(str2); // ABD
+</script>

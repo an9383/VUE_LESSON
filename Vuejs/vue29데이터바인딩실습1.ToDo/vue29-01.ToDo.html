@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible"
+      content="IE=edge">
+    <meta name="viewport"
+      content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.0.12/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu"
+      rel="stylesheet">
+
+    <title>05-12</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        text-align: center;
+        background-color: #f6f6f8;
+      }
+
+      input {
+        border-style: groove;
+        width: 200px;
+      }
+
+      button {
+        border-style: groove;
+      }
+
+      .shadow {
+        box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
+      }
+
+      h1 {
+        color: #2f3b52;
+        font-weight: 900;
+        margin: 2.5rem 0 1.5rem;
+      }
+
+      input:focus {
+        outline: none;
+      }
+
+      .inputBox {
+        background: white;
+        height: 50px;
+        line-height: 50px;
+        border-radius: 5px;
+      }
+
+      .inputBox input {
+        border-style: none;
+        font-size: 0.9rem;
+      }
+
+      .addContainer {
+        float: right;
+        background: linear-gradient(to right, #6478fb, #8763fb);
+        display: inline-block;
+        width: 3rem;
+        border-radius: 0 5px 5px 0;
+      }
+
+      .addBtn {
+        color: white;
+        vertical-align: middle;
+      }
+
+      .closeModalBtn {
+        color: #62acde;
+      }
+
+      .modal-mask {
+        position: fixed;
+        z-index: 9998;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: table;
+        transition: opacity 0.3s ease;
+      }
+
+      .modal-wrapper {
+        display: table-cell;
+        vertical-align: middle;
+      }
+
+      .modal-container {
+        width: 300px;
+        margin: 0px auto;
+        padding: 20px 30px;
+        background-color: #fff;
+        border-radius: 2px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+        transition: all 0.3s ease;
+        font-family: Helvetica, Arial, sans-serif;
+      }
+
+      .modal-header h3 {
+        margin-top: 0;
+        color: #62acde;
+      }
+
+      .modal-body {
+        margin: 20px 0;
+      }
+
+      .modal-default-button {
+        float: right;
+      }
+
+      .modal-enter {
+        opacity: 0;
+      }
+
+      .modal-leave-active {
+        opacity: 0;
+      }
+
+      .modal-enter .modal-container,
+      .modal-leave-active .modal-container {
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+      }
+
+      ul {
+        list-style-type: none;
+        padding-left: 0px;
+        margin-top: 0;
+        text-align: left;
+      }
+
+      li {
+        display: flex;
+        min-height: 50px;
+        height: 50px;
+        line-height: 50px;
+        margin: 0.5rem 0;
+        padding: 0 0.9rem;
+        background: white;
+        border-radius: 5px;
+      }
+
+      li.checked {
+        background: #BBB;
+        color: #fff;
+        text-decoration: line-through;
+      }
+
+      .checkBtn {
+        line-height: 45px;
+        color: #62acde;
+        margin-right: 5px;
+      }
+
+      .removeBtn {
+        margin-left: auto;
+        color: #de4343;
+      }
+
+      .list-enter-active,
+      .list-leave-active {
+        transition: all 1s;
+      }
+
+      .list-enter,
+      .list-leave-to {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .clearAllContainer {
+        width: 8.5rem;
+        height: 50px;
+        line-height: 50px;
+        background-color: white;
+        border-radius: 5px;
+        margin: 0 auto;
+      }
+
+      .clearAllBtn {
+        color: #e20303;
+        display: block;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <pre style="text-align:left;">
+
+    선 학습 필요 사항:
+        array.map() 사용법
+        array.filter() 사용법
+        array.reduce() 사용법
+
+    todoItems 는 아래와 같다고 가정한다
+    todoItems = [
+        { id: 1, todo: "영화보기", done: false },
+        { id: 2, todo: "주말 산책", done: true },
+        { id: 3, todo: "ES6 학습", done: false },
+        { id: 4, todo: "잠실 야구장", done: false }
+    ]
+
+    동영상 시연
+
+
+    기능 설명
+        1. input 태그에 빈 문자열이 입력 되는 경우는 배열에 추가되지 않게.
+        2. add 후에 input 태그에 남아있는 입력값 지우기
+        3. add 할 때 this.$data.todoItems 가 빈 배열인 경우는
+           오류가 발생 할 수 있으므로 방어 코드 추가
+        4. 이벤트 핸들러 작성 후 버블링을 확인한다.
+            삭제 버튼을 클릭하면 click 이벤트가 bubbling 되는 것을 확인한다.
+            doneToggle 메서드 안에 debugger; 설정
+            removeTodo 메서드 안에 debugger; 설정
+
+
+    methods 작업 순서
+        clearAll() { }
+        checked(done) { }
+        doneToggle(id) { }  ==> vue22-01디렉티브v-if.html 참조
+        removeTodo(id) { }  ==> ap03-11.객체배열.html 참조
+        addTodo() { }       ==> ap03-11.객체배열.html 또는 vue23-03.지시자.html 참조
+
+    todoItems에서 최대 id 값을 구하는 방법.
+        방법1. todoItems.map()과 todoItems.reduce()를 사용하여 max id를 찾는 방법
+        "ap03-11.객체배열.html" 를 참조하여 작성하시오.
+            1. id 값 만 있는 새로운 배열을 만든다. ==> map() 메서드 사용.
+            2. map() 메서드로 만들어진 새로운 배열에서 최대값을 찾는다.
+            3. 추가될 새로운 new id = max id + 1
+
+
+    주의 사항.
+        1. checked 메서드에서 class에 빈 문자열로 설정하면 안됨.
+            null 로 설정하면 됨.
+        2.  "checked(todoItem.done)" 는 "todoItem.done ? 'checked': null " 와 같다. 
+        3. click 이벤트가 bubbling 안되게 이벤트 취소 기능을 추가해야 한다.
+            변경 전: v-on:click="removeTodo(todoItem.id)"
+            변경 후: v-on:click.stop="removeTodo(todoItem.id)"
+    </pre>
+    <hr>
+
+    <div id="app">
+
+      <!-- TodoHeader -->
+      <header>
+        <h1>TODO it!</h1>
+      </header>
+
+      <!-- TodoInput -->
+      <div class="inputBox shadow">
+        <input type="text"
+          placeholder="Type what you have to do"
+          v-model.trim:value="newTodoItem"
+          v-on:keyup.enter="addTodo" />
+        <span class="addContainer"
+          v-on:click="addTodo">
+          <i class="addBtn fas fa-plus"
+            aria-hidden="true"></i>
+        </span>
+
+        <div class="modal-mask"
+          v-on:keyup.esc="$emit('close')"
+          v-if="showModal"
+          v-on:close="showModal = false">
+          <div class="modal-wrapper">
+            <div class="modal-container">
+              <div class="modal-header">
+                <h3 slot="header">경고</h3>
+              </div>
+
+              <div class="modal-footer">
+                <span v-on:click="showModal = false">
+                  할 일을 입력하세요.
+                  <i class="closeModalBtn fas fa-times"
+                    aria-hidden="true"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TodoList -->
+      <!-- "checked(todoItem.done)"  <==> "todoItem.done ? 'checked': null "  -->
+      <section>
+        <transition-group name="list"
+          tag="ul">
+          <li v-for="(todoItem, index) in todoItems"
+            v-bind:key="todoItem.id"
+            v-bind:class="checked(todoItem.done)"
+            v-bind:data-id="todoItem.id"
+            v-on:click="doneToggle(todoItem.id)">
+            <i class="checkBtn fas fa-check"
+              aria-hidden="true"></i>
+            {{ todoItem.todo }}
+            <span class="removeBtn"
+              type="button"
+              v-on:click="removeTodo(todoItem.id)">
+              <i class="far fa-trash-alt"
+                aria-hidden="true"></i>
+            </span>
+          </li>
+        </transition-group>
+      </section>
+
+      <!-- TodoFooter -->
+      <div class="clearAllContainer">
+        <span class="clearAllBtn"
+          v-on:click="clearAll">Clear All</span>
+      </div>
+
+    </div>
+
+  </body>
+
+</html>
+
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.7.8/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+  new Vue({
+    /* edtmc^2w */
+    el: '#app',
+    data: {
+      /* 인스턴스 안에서 사용되는 변수 등록, 공유 변수 */
+      newTodoItem: null,
+      showModal: false,
+      todoItems: [
+        { id: 1, todo: "영화보기", done: false },
+        { id: 2, todo: "주말 산책", done: true },
+        { id: 3, todo: "ES6 학습", done: false },
+        { id: 4, todo: "잠실 야구장", done: false }
+      ],
+    },
+    //template: ``,
+    methods: {
+      /* 이벤트 핸들러 등록 + 일반 함수 */
+      clearAll(e) {
+        console.log(e.target);
+        // debugger;
+        this.$data.todoItems = [];
+      },
+      checked(done) {
+        if (done)
+          return "checked";
+        else
+          return null;
+      },
+      doneToggle(id) {
+        // 토글 기능 완성하기
+        // done true 이면 false 로
+        // done false 이면 true 로
+        // 복제 후 할당 ==> map 사용
+        // 1. 배열복제
+        const newTodos = this.$data.todoItems.map((item, index, array) => {
+          if (item.id === id) {
+            item.done = !item.done;
+          }
+          return item;
+        });
+
+        //2. 할당
+        this.$data.todoItems = newTodos;
+      },
+      removeTodo(id) {
+        // 삭제 ===> filter 사용
+        // 1. 복제
+        const newTodos = this.$data.todoItems.filter((item, index, array) => {
+          if (item.id === id)
+            return false;
+          else
+            return true;
+        });
+
+        //2. 할당
+        this.$data.todoItems = newTodos;
+      },
+      addTodo(e) {
+        // validation 추가
+        // input 태그에 빈 문자일이 입력 되는 경우는 배열에 추가되지 않게.
+        if( !this.$data.newTodoItem ) {
+            // 팝업창 실행되게 설정
+            this.$data.showModal = !this.$data.showModal;
+            return ;
+        }
+
+        // map() 와 reduce() 메서드 사용하여 max id 를 구한다.
+        // 1. id 값 만 있는 새로운 배열을 만든다. ==> map() 메서드 사용.
+        // 2. map() 메서드로 만들어진 새로운 배열에서 최대값을 찾는다.
+        // 3. 추가될 새로운 new id = max id + 1
+        const ids = this.$data.todoItems.map((item, index, array) => {
+          return item.id;
+        });
+        debugger;
+        const maxid = ids.reduce((pvalue, cvalue, index, array) => {
+          if (pvalue > cvalue)
+            return pvalue;
+          else
+            return cvalue;
+        }, -1);
+
+        // 배열에 추가할 객체 만들기
+        const newtodo = {
+          id: maxid + 1,
+          todo: this.$data.newTodoItem,
+          done: false,
+        };
+
+        // this.$data.todoItems 에 추가. 복제 후 할당
+        const newTodos = [...this.$data.todoItems, newtodo];
+        this.$data.todoItems = newTodos;
+
+        // add 후에 input 태그에 남아있는 입력값 지우기
+        this.$data.newTodoItem = null;
+      },
+    },
+    components: {
+      /* 전역 컴포넌트인 경우는 등록하지 않는다. 전역 컴포넌트는 프로토타입 체인으로 찾을 수 있기 때문에 */
+      /* 지역 컴포넌트나 파일 컴포넌트만 등록 한다. 예시) "태그명" : 컴포넌트명 */
+    },
+    computed: {
+      /* 자동처리 + 동기식. 변수명이 메서드 명이다. 메서드로 작성. return 필수.  data 와 공존 불가 */
+
+    },
+    watch: {
+      /* 자동처리 + 비동기식. data 에 등록된 프로퍼티(변수) 모니터링. 메서드로 작성. 매개변수 필수. 외부 api 호출을 위해서 사용 */
+
+    },
+    created() {
+      console.log("created");
+    },
+    mounted() {
+      console.log("mounted");
+    },
+    updated() {
+      console.log("updated");
+    },
+  });
+
+</script>

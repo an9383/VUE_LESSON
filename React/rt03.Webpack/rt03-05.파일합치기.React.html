@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible"
+      content="ie=edge" />
+    <title>import 를 이용한 파일 합치기 실습</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+    <!-- CSS import -->
+    <link rel="stylesheet"
+      href="../css/reset.css" />
+  </head>
+
+  <body>
+    <div style="margin: 40px 0 0 40px">
+      <a href="#"
+        onClick="window.open('../../ES2015문법/ap01.docs/npm사용법.html','npm사용법','width=800,height=400,toolbar=no,menubar=no,scrollbars=no,resizable=yes');return false;"
+        rel="nofollow">npm 사용법</a>
+    </div>
+    <pre>
+      React 에서 Webpack 실습을 위해서는 CRA(create-react-app) 를 사용해야 한다.
+
+      # CRA 는 create react app 의 약자.
+
+      # 버전 확인
+      $ node -v
+      v16.18.1
+
+      $ npm -v
+      9.4.2
+
+      $ npx -v
+      9.4.2
+
+
+      # npm 최신 버전 설치
+      $ npm install --location=global npm@latest
+
+
+      $ ls
+
+      $ npx create-react-app webpackprj01
+      5분 소요
+      pdf 읽기( rt01.docs/데이터변환-복제후할당.pdf )
+
+      # 파일 목록 조회. webpackprj01 폴더가 생성되었는지 확인.
+      $ ls
+
+      # webpackprj01 폴더로 이동하기
+      $ cd webpackprj01
+
+      # 파일 목록 조회. package.json 파일이 있는지 확인
+      $ ls
+
+      # package.json 파일이 있으면 서버 실행하기
+      $ npm run start
+
+
+      # 새로운 터미널을 열고 아래 4개의 파일을 만든다.
+      $ ls      # packages.json 파일이 있는지 확인한다.
+      node_modules/  package.json  package-lock.json  public/  README.md  src/
+
+      $ touch ./src/App.css
+      $ touch ./src/App.js
+      $ touch ./src/Header.js
+      $ touch ./src/Footer.js
+
+
+      # ./src/App.css 수정
+      "rt03-03.파일합치기.jquery.html" 에서 css 복사하여 ./src/App.css 에 추가
+
+        header {
+          text-align: center;
+          height: 60px;
+        }
+
+        section {
+          text-align: center;
+          height: 150px;
+        }
+
+        footer {
+          text-align: center;
+          height: 60px;
+        }
+
+        /* step2. 배경색 지정*/
+        header {
+          background-color: #efb14e;
+        }
+
+        section {
+          background-color: #95db5e;
+        }
+
+        footer {
+          background-color: #78d0d1;
+        }
+
+        /* step3. 여백 주기 - margin , padding */
+        header {
+          margin: 0 0 20px 0;
+        }
+
+        section {
+          margin: 40px 20px;
+        }
+
+        div {
+          margin: 40px 20px;
+        }
+
+      # ./src/App.js 수정
+
+        ... 중략
+        function App() {
+          return (
+            <div>
+              <div w3-include-header="header.html">
+                <header data-role="header">
+                  <h1>Header.html</h1>
+                </header>
+              </div>
+              <section id="page1" data-role="page">
+                <div class="content" data-role="content">
+                  컨텐츠
+                </div>
+              </section>
+              <div w3-include-footer="footer.html">
+                <footer data-role="footer">
+                  <h1>Footer.html</h1>
+                </footer>
+              </div>
+            </div>
+          );
+        }
+        ... 중략
+
+      # ./src/Header.js 수정하여 컴포넌트 만들기
+      ==> 단축키: rfc
+
+
+      # ./src/Footer.js 수정하여 컴포넌트 만들기
+      ==> 단축키: rfc
+
+
+    </pre>
+  </body>
+</html>

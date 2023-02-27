@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible"
+      content="ie=edge" />
+    <title>Document</title>
+
+    <link rel="stylesheet"
+      href="../css/reset.css" />
+  </head>
+
+  <body>
+    <xmp>
+        JSX 에서 반복문을 사용하여 아래의 객체 배열을 출력하시오.
+        반복문을 처리할 때 반드시  key 프러퍼티 설정을 해야한다.
+        왜냐하면 Virtual DOM 이 변경된 노드를 찾기 쉽게 하기 위해서.
+        렌더링 속도를 빠르게 하기 위해서는 key 프로퍼티 설정이 필요
+        key 프로퍼티는 Unique 해야 한다.
+        
+        const todoList = [
+            { id:'001', taskName: "빨래하기", finished: false },
+            { id:'002', taskName: "공부하기", finished: true },
+            { id:'003', taskName: "게임하기", finished: true },
+        ]
+        컴포넌트명: TodoList
+    </xmp>
+    <hr />
+
+    <div id="app"></div>
+  </body>
+</html>
+
+<script src="https://unpkg.com/@babel/standalone/babel.js"
+  crossorigin="anonymous">
+    /* 자바스크립트로 컴파일러. ES6-->ES5, JSX-- > ES5 * /
+  </script>
+<script src="http://unpkg.com/react@17/umd/react.development.js"
+  crossorigin="anonymous">
+    /* import React, { Component, PureComponent } from 'react' */
+  </script>
+<script src="http://unpkg.com/react-dom@17/umd/react-dom.development.js"
+  crossorigin="anonymous">
+    /* import ReactDOM from 'react-dom' */
+  </script>
+<script type="text/babel">
+
+  const { useState, useEffect, useRef, useCallback, useMemo, useReducer, Fragment } = React;
+
+  // id="app" 인 태그 에 컴포넌트를 화면에 붙이시오
+  // ReactDOM.render( 인자1, 인자2 )
+  ReactDOM.render(<TodoList />, document.getElementById('app'));
+
+  // 단축키 rfc
+  function TodoList({ ...props }) {
+    // 컴포넌트의 상태값 설정
+    const [todoList, setTodoList] = useState([
+      { id: '001', taskName: "빨래하기", finished: false },
+      { id: '002', taskName: "공부하기", finished: true },
+      { id: '003', taskName: "게임하기", finished: true },
+    ]); // 상태값이 배열 타입인 경우
+
+    const lis = 
+      todoList &&
+      todoList.length > 0 &&
+      todoList.map((todo, index, array) => {
+      // todo == { id, taskName, finished }
+      return (<li key={todo.id}>{todo.taskName}</li>);
+    });
+
+    return (
+      <div>
+        {lis}
+      </div>
+    )
+  }
+
+</script>

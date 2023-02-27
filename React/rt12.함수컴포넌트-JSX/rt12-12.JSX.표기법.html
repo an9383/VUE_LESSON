@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible"
+      content="ie=edge" />
+    <title>Document</title>
+
+    <link rel="stylesheet"
+      href="../css/reset.css" />
+  </head>
+
+  <body>
+    <xmp>
+        아래의 코드를 JSX로 작성하고 실행하여 본다.
+        만들 컴포넌트
+          JsxContainer
+          Jsx
+
+        <div class="my-div">
+            <div style="border: 2px solid red; background-color:red;">
+                &nbsp;
+            </div>
+        </div>
+        --------------------------
+        1. 태그의 class 속성은 className 으로
+        2. 태그의 style 속성은 직접 작성이 불가하다.
+    </xmp>
+    <hr />
+
+    <div id="app"></div>
+  </body>
+</html>
+
+<script src="https://unpkg.com/@babel/standalone/babel.js"
+  crossorigin="anonymous">
+    /* 자바스크립트로 컴파일러. ES6-->ES5, JSX-- > ES5 * /
+  </script>
+<script src="http://unpkg.com/react@17/umd/react.development.js"
+  crossorigin="anonymous">
+    /* import React, { Component, PureComponent } from 'react' */
+  </script>
+<script src="http://unpkg.com/react-dom@17/umd/react-dom.development.js"
+  crossorigin="anonymous">
+    /* import ReactDOM from 'react-dom' */
+  </script>
+<script type="text/babel">
+
+  const { useState, useEffect, useRef, useCallback, useMemo, useReducer, Fragment } = React;
+
+  // id="app" 인 태그 에 컴포넌트를 화면에 붙이시오
+  // ReactDOM.render( 인자1, 인자2 )
+  ReactDOM.render(<JsxContainer />, document.getElementById('app'));
+
+  // 단축키 rfc
+  function JsxContainer({ ...props }) {
+    return (
+      <div>
+        JsxContainer
+        <Jsx></Jsx>
+      </div>
+    )
+  }
+  function Jsx({ ...props }) {
+    return (
+      <div class="my-div">
+        <div style={
+          { border: '2px solid red', backgroundColor: 'red' }
+        }>
+          &nbsp;
+        </div>
+      </div >
+    )
+  }
+</script>

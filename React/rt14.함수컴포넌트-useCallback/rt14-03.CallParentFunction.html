@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible"
+      content="ie=edge" />
+    <title>Document</title>
+
+    <link rel="stylesheet"
+      href="../css/reset.css" />
+
+    <style>
+      #parent {
+        background-color: lightblue;
+        padding: 50px;
+      }
+
+      #child {
+        background-color: lightcoral;
+        margin: 50px;
+        padding: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <pre>
+
+    자식 -> 부모 데이터 전달하는 예제를 작성한다.
+
+    자식 컴포넌트에서 부모 컴포넌트의 상태값을 변경하고 싶은 경우에는 상태값 올림(state up)을 이용한다.
+    상태값 올림(state up)은 부모 메서드 콜백이다.
+    부모 컴포넌트에서 자식 컴포넌트로 부모의 메서드를 props 를 이용하여 자식에게 전달하고
+    자식 컴포넌트에서 부모 컴포넌트의 콜백 메서드를 호출하는 식으로 데이터를 넘기면 된다.
+
+    컴포넌트 2개 만들기: Child, Parent
+
+    기능 추가
+    1. '+' 버튼 클릭하면 1씩 증가하는 기능은 각자 구현한다.
+    ==> onClick 이벤트를 사용하여 처리
+    2. "shift 키 와 '+' 버튼 클릭하면 10씩 증가" 같이 구현한다.
+
+    구글 검색: React pass parameter to parent component or call parent function on ES6
+    https://osc131.tistory.com/137
+    https://maxlibin.com/react-call-parent-function-on-es6/
+
+    </pre>
+    <hr />
+
+    <div id="app">
+      <div id="parent">
+        I am a parent
+
+        <div id="child">
+          4
+          <br />
+          I am a child
+          <br />
+          <button onClick="handlerParentToggleFromChild">toggle</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script src="https://unpkg.com/@babel/standalone/babel.js"
+  crossorigin="anonymous">
+    /* 자바스크립트로 컴파일러. ES6 ==> ES5, JSX ==> ES5  */
+  </script>
+<script src="http://unpkg.com/react@17/umd/react.development.js"
+  crossorigin="anonymous">
+    /* import React, { Component, PureComponent } from 'react' */
+  </script>
+<script src="http://unpkg.com/react-dom@17/umd/react-dom.development.js"
+  crossorigin="anonymous">
+    /* import ReactDOM from 'react-dom' */
+  </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.8.1/prop-types.js"
+  crossorigin="anonymous">
+  </script>
+<script type="text/babel">
+
+  const { useState, useEffect, useRef, useCallback, useMemo, useReducer, Fragment } = React;
+
+  // id="app" 인 태그 에 컴포넌트를 화면에 붙이시오
+  // ReactDOM.render( 인자1, 인자2 )
+  ReactDOM.render(<Parent />, document.getElementById('app'));
+
+  // 단축키 rfc
+  function Parent({
+    ...props
+  }) {
+    // useState 를 사용한 컴포넌트의 상태값 설정
+    const [counter, setCounter] = useState(10); // 상태값이 기본타입인 경우
+
+    // callback 메서드 작성. callback 메서드는 부모의 공유 상태값을 변경하기 위해서 사용된다.
+    const callbackCounter = useCallback((param) => {
+      // state 변경
+      setCounter(counter + param);
+    }, [/* 연관배열: 콜백 메서드에서 변경하고자 하는 연관되는 상태(변수)명들을 기술  */ counter]);
+
+    return (
+      <div id="parent">
+        I am a parent
+
+        <Child
+          counter={counter}
+          callbackCounter={callbackCounter}>
+        </Child>
+      </div>
+    )
+  }
+
+  Parent.propTypes = {
+    // props의 프로퍼티 타입 설정. https://ko.reactjs.org/docs/typechecking-with-proptypes.html
+    // 인자명: PropTypes.func.isRequired,
+    // 인자명: PropTypes.arrayOf(PropTypes.object),
+  };
+  Parent.defaultProps = {
+    // props의 디폴트 값 설정. https://ko.reactjs.org/docs/typechecking-with-proptypes.html
+    // 인자명: () => {},
+    // 인자명: [],
+  };
+
+  function Child({ counter, callbackCounter }) {
+    // 이벤트 핸들러 작성.
+    const handlerParentToggleFromChild = (e) => {
+      // 이벤트 핸들러는 화살표 함수로 만든다
+      console.log(e.target);
+
+      // 부모의 상태값(state) counter 를 +1 또는 +10 하시오. ==> 부모의 콜백 메서드 를 호출.
+      if (e.shiftKey)
+        callbackCounter(+10);
+      else
+        callbackCounter(+1);
+
+    };
+
+    // JSX로 화면 만들기. 조건부 렌더링: https://ko.reactjs.org/docs/conditional-rendering.html
+    return (
+      <div id="child">
+        {counter}
+        <br />
+        I am a child
+        <br />
+        <button onClick={handlerParentToggleFromChild}>toggle</button>
+      </div>
+    )
+  }
+
+  Child.propTypes = {
+    // props의 프로퍼티 타입 설정. https://ko.reactjs.org/docs/typechecking-with-proptypes.html
+    callbackCounter: PropTypes.func.isRequired,
+    counter: propTypes.number.isRequired,
+  };
+  Child.defaultProps = {
+    // props의 디폴트 값 설정. https://ko.reactjs.org/docs/typechecking-with-proptypes.html
+    callbackCounter: () => { },
+    counter: 0,
+  };
+
+</script>

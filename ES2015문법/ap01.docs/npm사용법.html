@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- CSS import -->
+    <link rel="stylesheet"
+      href="../css/reset.css">
+  </head>
+  <body>
+    <div>
+      <li class="langjs">
+        <h3 class="langjs">버전 확인 </h3>
+        <table>
+          <colgroup>
+            <col width="150px;">
+            </col>
+            <col>
+            </col>
+          </colgroup>
+          <thead>
+            <tr>
+              <th>&nbsp;</th>
+              <th>버전확인</th>
+              <th>설명</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>node</td>
+              <td>node -v</td>
+              <td>
+
+              </td>
+            </tr>
+            <tr>
+              <td>npx</td>
+              <td>npx -v</td>
+              <td>
+                필요한 패키지를 설치하지 않고 해당 패키지를 찾아 실행 해주는 도구.
+              </td>
+            </tr>
+            <tr>
+              <td>npm</td>
+              <td>npm -v</td>
+              <td>
+                필요한 패키지를 설치 해주는 도구.
+              </td>
+            </tr>
+            <tr>
+              <td>yarn</td>
+              <td>yarn -v</td>
+              <td>
+                &nbsp;
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+
+      <li class="langjs">
+        <h3 class="langjs">npm과 yarn 사용법 </h3>
+        <a href="https://docs.npmjs.com/cli/v8/commands"
+          target="_blank"
+          rel="noopener noreferrer">https://docs.npmjs.com/cli/v8/commands</a>
+        <table>
+          <caption style="margin-bottom:10px;"><b>npm과 yarn 사용법</b></caption>
+          <colgroup>
+            <col />
+            <col />
+            <col />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>설명</th>
+              <th>npm 명령어</th>
+              <th>yarn 명령어</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>프로젝트 초기화</td>
+              <td>npm init</td>
+              <td>yarn init</td>
+            </tr>
+            <tr>
+              <td>프로젝트 운영 패키지 추가<br>dependencies에 추가</td>
+              <td>
+                <p>npm install --save 패키지명</p>
+                <p>npm install -S 패키지명</p>
+              </td>
+              <td>yarn add 패키지명</td>
+            </tr>
+            <tr>
+              <td>프로젝트 개발 패키지 추가<br>devDependencies에 추가</td>
+              <td>
+                <p>npm install --save-dev 패키지명</p>
+                <p>npm install -D 패키지명</p>
+              </td>
+              <td>yarn add --save-dev 패키지명</td>
+            </tr>
+            <tr>
+              <td>전역 패키지 추가</td>
+              <td>
+                <p>npm install --global 패키지명</p>
+                <p>npm install -g 패키지명</p>
+              </td>
+              <td>yarn add global 패키지명</td>
+            </tr>
+            <tr>
+              <td>패키지 전체 재설치<br>package.json에 등록된 모든 패키지를 재설치</td>
+              <td>npm install</td>
+              <td>yarn install</td>
+            </tr>
+            <tr>
+              <td>패키지 업데이트</td>
+              <td>npm update --save</td>
+              <td>yarn upgrade</td>
+            </tr>
+            <tr>
+              <td>패키지 삭제</td>
+              <td>npm uninstall 패키지명</td>
+              <td>yarn remove 패키지명</td>
+            </tr>
+            <tr>
+              <td>설치된 모듈 확인</td>
+              <td>
+                <p>npm list<span>: 로컬에 설치된 패키지 조회</span></p>
+                <p>npm list -g<span>: 전역으로 설치된 패키지 조회</span></p>
+              </td>
+              <td>
+                <p>yarn list<span>: 로컬에 설치된 패키지 조회</span></p>
+                <p>yarn list -g<span>: 전역으로 설치된 패키지 조회</span></p>
+              </td>
+            </tr>
+            <tr>
+              <td>설치된 모듈 확인</td>
+              <td>
+                <p>npm list<span>: 로컬에 설치된 패키지 조회</span></p>
+                <p>npm list -g<span>: 전역으로 설치된 패키지 조회</span></p>
+              </td>
+              <td>
+                <p>yarn list<span>: 로컬에 설치된 패키지 조회</span></p>
+                <p>yarn list -g<span>: 전역으로 설치된 패키지 조회</span></p>
+              </td>
+            </tr>
+
+            <tr>
+              <td>명령어의 역할과 옵션 확인</td>
+              <td>
+                <p>npm help</p>
+                <p>npm help install</p>
+                <p>npm help ls</p>
+              </td>
+              <td>
+                <p>yarn help</p>
+                <p>yarn help install</p>
+                <p>yarn help ls</p>
+              </td>
+            </tr>
+
+            <tr>
+              <td>설치된 패키지를 조회한다.</td>
+              <td>
+                <p>npm help</p>
+                <p>npm help ls</p>
+                <p>
+                <pre class="langjs">
+                    <code class="langjs">
+  설치된 react 버전 확인
+
+  npm ls react
+  ├─┬ @testing-library/react@13.4.0
+  │ └── react@18.2.0 deduped
+  ├─┬ react-dom@18.2.0
+  │ └── react@18.2.0 deduped
+  ├─┬ react-scripts@5.0.1
+  │ └── react@18.2.0 deduped
+  └── react@18.2.0</code>
+                  </pre>
+                </p>
+              </td>
+              <td>
+                &nbsp;
+              </td>
+            </tr>
+
+
+
+            <tr>
+              <td>캐시 삭제</td>
+              <td>npm cache clean</td>
+              <td>yarn cache clean</td>
+            </tr>
+            <tr>
+              <td>package.json의 명령 스크립트 실행</td>
+              <td>npm run 스크립트명</td>
+              <td>yarn 스크립트명</td>
+            </tr>
+            <tr>
+              <td>react 프로젝트 만들기</td>
+              <td>npx create-react-app 프로젝트명</td>
+              <td>yarn create react-app 프로젝트명</td>
+            </tr>
+            <tr>
+              <td>vue 프로젝트 만들기</td>
+              <td>npx vue create 프로젝트명</td>
+              <td>X</td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+
+    </div>
+  </body>
+</html>

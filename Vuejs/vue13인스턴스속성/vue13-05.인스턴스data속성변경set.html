@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible"
+      content="ie=edge">
+    <title>Document</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- CSS import -->
+    <link rel="stylesheet"
+      href="../css/reset.css">
+
+    <style>
+      span {
+        font-size: 3em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <xmp>
+
+        data 프로퍼티의 값을 변경하려면 반드시 복제 후 재할당으로 처리해야 한다.
+
+        data 프로퍼티 주의 사항
+            인스턴스나 컴포넌트의 data 속성의 값을 직접 바꾸면 화면에 rendering 이 되지 않는 문제 발생
+            즉, this.$data.arr[0]=100; 과 같이 바꾸면 값은 바뀌지만 화면에 rendering 되지 않는 문제 발생.
+
+        어떻게 data 속성의 값을 바꾸어야 하나?
+            data 속성의 값을 변경하려면 반드시 복제 후 재할당으로 처리해야 한다.
+
+        자바스크립트 타입
+            # value 타입에는 string, number, boolen, ...
+            # reference 타입에는 Object, Array, Function, ...
+
+        new Vue({
+            el: "#",
+            data: {
+                msg1:  "aaa", /* string */
+                msg2: 123, /* number */
+                msg3: true, /* boolen */
+
+                msg4: [1,2,3] /* array */
+                msg5: { a:1, b: "2"}, /*I object */
+                msg6: [
+                    { a:11, b: "12"} ,
+                    { a:21, b: "22"} ,
+                    { a:31, b: "32"} ,
+                ]
+            }
+        })
+
+
+        value 타입인 경우의 해결방법
+            data: {
+                msg1:  "aaa", /* string */
+                msg2: 123, /* number */
+                msg3: true, /* boolen */
+            }
+            1. this.$set(this.$data, "msg1", "ccc");
+            2. Vue.set(this.$data,"msg1", "bbb");
+            3. this.$data["msg1"] = "ddd";
+            4. this.$data.msg1 = "ddd";
+
+        reference 타입인 경우의 해결방법
+            data: {
+                msg4: [1,2,3] /* array */
+                msg5: { a:1, b: "2"}, /*I object */
+                msg6: [
+                    { a:11, b: "12"} ,
+                    { a:21, b: "22"} ,
+                    { a:31, b: "32"} ,
+                ]
+            }
+
+            방법1. 배열의 splice() 메서드를 이용해서 추가/수정한다.
+                this.$data.msg4 === [300,2,3]
+
+            방법2. 배열의 filter() 메서드를 사용하여 변경
+                this.$data.msg4.splice(0,2,500); // this.$data.msg4 === [500,3]
+
+            방법3. spread 연산자 방식 ==> 배열을 새로 만든 뒤 할당. ES6 에서만 가능.
+                var arr_copy=[...this.$data.msg4, 70]; // [ 500,3, 70]
+
+        실행 순서와 결과 예시
+            (0) [1, 2, 3, 4, 5]
+            (1) [100, 2, 3, 4, 5]       <== "방법1"을 사용하여 수정하시오
+            (2) [100, 300, 3, 4, 5]     <== "방법1"을 사용하여 추가하시오
+            (3) [3, 4, 5]               <== "방법2"을 사용하여 삭제하시오
+            (4) [500, 3, 4, 5, 70]      <== "방법3"을 사용하여 새로운 배열을 만드시오.
+
+    </xmp>
+    <hr>
+    <div id="app">
+      <span v-for="(val, i) in arr"
+        v-bind:key="i">
+        {{val}}
+      </span>
+      <br>
+      <button v-on:click="change1">방법1로 변경</button>
+      <button v-on:click="change2">방법2로 변경</button>
+      <button v-on:click="change3">방법3로 변경</button>
+      <button v-on:click="change4">방법4로 변경</button>
+    </div>
+  </body>
+
+</html>
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.7.8/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+  new Vue({
+    /* edtmc^2w */
+    el: '#app',
+    data: {
+      /* 인스턴스 안에서 사용되는 변수 등록, 공유 변수 */
+      arr: [1, 2, 3, 4, 5],
+    },
+    //template: ``,
+    methods: {
+      /* 이벤트 핸들러 등록 + 일반 함수 */
+      change1(e) {
+        console.log(e.target);
+        debugger;
+        // this.$data.arr[0] = 100;
+        this.$data.arr.splice(0, 1, 100);
+        console.log(this.$data.arr);
+      },
+      change2(e) {
+        console.log(e.target);
+        debugger;
+        // this.$data.arr[1] = 300;
+        this.$data.arr.splice(1, 1, 300);
+        console.log(this.$data.arr);
+      },
+      change3(e) {
+        console.log(e.target);
+        debugger;
+        // 배열 복제
+        const arrFiltered = this.$data.arr.filter((value, index, array) => {
+          if (index > 1) {
+            return true;
+          }
+          return false;
+        });
+
+        // 할당
+        this.$data.arr = arrFiltered;
+      },
+      change4(e) {
+        console.log(e.target);
+        debugger;
+        // 복제
+        const arrSpread = [500, ...this.$data.arr, 70];
+
+        // 할당(대입)
+        this.$data.arr = arrSpread;
+      },
+    },
+    components: {
+      /* 전역 컴포넌트인 경우는 등록하지 않는다. 전역 컴포넌트는 프로토타입 체인으로 찾을 수 있기 때문에 */
+      /* 지역 컴포넌트나 파일 컴포넌트만 등록 한다. 예시) "태그명" : 컴포넌트명 */
+
+    },
+    computed: {
+      /* 자동처리 + 동기식. 변수명이 메서드 명이다. 메서드로 작성. return 필수.  data 와 공존 불가 */
+
+    },
+    watch: {
+      /* 자동처리 + 비동기식. data 에 등록된 프로퍼티(변수) 모니터링. 메서드로 작성. 매개변수 필수. 외부 api 호출을 위해서 사용 */
+
+    },
+    created() {
+      console.log("created");
+    },
+    mounted() {
+      console.log("mounted");
+    },
+    updated() {
+      console.log("updated");
+    },
+  });
+
+</script>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible"
+      content="ie=edge" />
+    <title>Document</title>
+
+    <link rel="stylesheet"
+      href="../css/reset.css" />
+  </head>
+
+  <body>
+    <xmp>
+        JSX 에서 반복문을 사용하는 방법을 배운다.
+
+        참고: https://flaviocopes.com/react-how-to-loop/
+
+        컴포넌트명
+        wrap1 ==> Loop1. for ~ in 사용 예제.
+                  <Loop1 items={elements}></Loop1>
+        wrap2 ==> Loop2. for ~ of  사용 예제
+                  <Loop2 items={elements}></Loop2>
+        wrap3 ==> Loop3. map 사용 예제.
+                  <Loop3 items={elements}></Loop3>
+        wrap4 ==> Loop4. map 사용 예제.
+                  <Loop4 items={elements}></Loop4>
+
+        작성  순서
+            단계1: React 객체 스크립트 플러그인 추가 or 객체 import
+            단계2. Component 만들기
+            단계3. Component 화면에 컴포넌트 주입
+    </xmp>
+    <hr />
+
+    <div id="wrap1"></div>
+    <div id="wrap2"></div>
+    <div id="wrap3"></div>
+    <div id="wrap4"></div>
+  </body>
+</html>
+
+<script src="https://unpkg.com/@babel/standalone/babel.js"
+  crossorigin="anonymous">
+    /* 자바스크립트로 컴파일러. ES6-->ES5, JSX-- > ES5 * /
+  </script>
+<script src="http://unpkg.com/react@17/umd/react.development.js"
+  crossorigin="anonymous">
+    /* import React, { Component, PureComponent } from 'react' */
+  </script>
+<script src="http://unpkg.com/react-dom@17/umd/react-dom.development.js"
+  crossorigin="anonymous">
+    /* import ReactDOM from 'react-dom' */
+  </script>
+<script type="text/babel">
+
+  const { useState, useEffect, useRef, useCallback, useMemo, useReducer, Fragment } = React;
+
+  // id="app" 인 태그 에 컴포넌트를 화면에 붙이시오
+  // ReactDOM.render( 인자1, 인자2 )
+  ReactDOM.render(<Loop3 />, document.getElementById('wrap3'));
+
+  // 단축키 rfc
+  function Loop3({ ...props }) {
+    const [elements, setElements] = useState(['one', 'two', 'three']); // 상태값이 기본타입인 경우
+
+    return (
+      <div>
+        {
+          elements.map((value, index, array) => {
+            return (<li key={index}>{value}</li>)
+          })
+        }
+      </div>
+    )
+  }
+
+  ReactDOM.render(<Loop4 />, document.getElementById('wrap4'));
+  function Loop4({ ...props }) {
+    const [elements, setElements] = useState(['one', 'two', 'three']); // 상태값이 기본타입인 경우
+    
+    const lis = elements.map((value, index, array) => {
+      return (<li key={index}>{value}</li>)
+    });
+
+    return (
+      <div>
+        {lis}
+      </div>
+    );
+  }
+</script>

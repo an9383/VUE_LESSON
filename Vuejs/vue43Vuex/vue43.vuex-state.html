@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+    <title>Vuex Sample</title>
+
+    <!-- CSS import -->
+    <link rel="stylesheet"
+      href="../css/reset.css">
+
+  </head>
+
+  <body>
+    <xmp>
+
+    "vue30컴포넌트실습" 폴더의 comprj01 프로젝트에 아래 기능을 추가한다.
+
+    ##################################
+    프로젝트에 폴더 및 파일 추가
+    ##################################
+
+        프로젝트
+        |-- dist
+        |-- node_modules
+        |-- public
+        |   |-- favicon.ico
+        |   `-- index.html
+        |-- src
+        |   |-- assets
+        |   |   `-- logo.png
+        |   |-- components
+        |   |   |-- HelloWorld.vue
+        |   |   |-- vue4301
+        |   |   |   `-- Vue4301Comp.vue
+        |   |   |-- vue4305
+        |   |   |   |-- Vue4305Parent.vue
+        |   |   |   `-- Vue4305Child.vue
+        |   |   `-- vue4501
+        |   |       `-- Vue4501Comp.vue
+        |   |-- router
+        |   |   `-- index.js
+        |   |-- store
+        |   |   `-- index.js
+        |   |-- views
+        |   |   |-- AboutView.vue
+        |   |   |-- HomeView.vue
+        |   |   |-- Page4301View.vue
+        |   |   |-- Page4305View.vue
+        |   |   `-- Page4501View.vue
+        |   |-- App.vue
+        |   `-- main.js
+        |-- .browserslistrc
+        |-- .eslintrc.js
+        |-- .gitignore
+        |-- README.md
+        |-- babel.config.js
+        |-- jsconfig.json
+        |-- package.json
+        `-- vue.config.js
+
+        # package.json 존재 여부 확인
+        $ ls
+        babel.config.js  jsconfig.json  node_modules/  package.json  package-lock.json  public/  README.md  src/  vue.config.js
+
+
+        # 폴더 만들기
+        $ mkdir -p src/components/vue4301 \
+                   src/components/vue4305 \
+                   src/components/vue4501
+
+        # 페이지 컴포넌트 만들기
+        $ touch src/views/Page4301View.vue \
+                src/views/Page4305View.vue \
+                src/views/Page4501View.vue
+
+
+        # 프리젠테이션(화면) 컴포넌트 만들기
+        $ touch src/components/vue4301/Vue4301Comp.vue \
+                src/components/vue4305/Vue4305Parent.vue \
+                src/components/vue4305/Vue4305Child.vue \
+                src/components/vue4501/Vue4501Comp.vue
+
+
+    ##################################
+    vue4301 작업1. data 를 이용한 기본 기능 완성하기
+    ##################################
+
+    # package.json 파일 존재 여부 확인.
+    $ ls
+
+    작업1-1. 작업 폴더 및 파일 만들기
+    $ mkdir -p src/components/vue4301
+    $ touch src/views/Page4301View.vue
+    $ touch src/components/vue4301/Vue4301Comp.vue
+
+    페이지 링크 만들기  ==> src/App.vue 수정
+
+    라우팅 설정(url 과 컴포넌트 연결) ==> src/router/index.js  수정
+
+    src/views/Page4301View.vue 생성
+        <template>
+            <div id="app">
+                <h2>vuex 를 사용하는 프로그램을 만들어 본다.</h2>
+                <Vue4301Comp></Vue4301Comp>
+            </div>
+        </template>
+
+    src/components/vue4301/Vue4301Comp.vue 생성
+        <template>
+            <div id="app">
+                <h1>{{header}}</h1>
+                <h2>{{welcome}}</h2>
+                <h3>{{counter}}</h3>
+                <div>
+                    <input type="checkbox" v-model="callapi" />외부 api 호출
+                </div>
+                <button v-on:click="handlerIncrement">더해줘</button>
+                <button v-on:click="handlerDecrement">빼줘</button>
+            </div>
+        </template>
+
+    작업1-2. 컴포넌트 기능 완성. data 프로퍼티 추가. <== 각자
+        {{header}} 에는  "Vuex 사용 앱" 가 나오게
+        {{welcome}} 에는 "HELLO WORLD" 가 나오게
+        {{counter}} 에는 0 이 나오게
+
+        data() {
+            /* 컴포넌트 안에서 사용되는 변수 등록. 개별 변수 */
+            return {
+              header: 'Vuex 사용 앱',
+              welcome: 'HELLO WORLD',
+              counter: 0,
+              callapi: false,
+            };
+          },
+
+    작업1-3. 버튼 기능 완성. <== 각자
+        <button v-on:click="handlerIncrement">더해줘</button>
+        <button v-on:click="handlerDecrement">빼줘</button>
+
+        methods: {
+            /* 이벤트 핸들러 등록 + 일반 함수 */
+            handlerIncrement(e) {
+              console.log(e.target);
+              this.$data.counter = this.$data.counter + 1;
+            },
+            handlerDecrement(e) {
+              console.log(e.target);
+              this.$data.counter = this.$data.counter - 1;
+            },
+          },
+
+
+
+
+    ##################################
+    vue4301 작업2. Vuex 의 store 사용 설정하기
+    ##################################
+    작업2-1. store 디렉토리 생성
+        # package.json 파일이 있는지 확인.
+        $ ls
+        babel.config.js  jsconfig.json  node_modules/  package.json  package-lock.json  public/  README.md  src/  vue.config.js
+
+        # modules 디렉토리 생성
+        # 기능별로 vuex의 상태를 분리하기 위해서 modules
+        $ mkdir -p ./src/store/modules
+
+    작업2-2. store 파일 생성
+        $ touch ./src/store/index.js   # 있을 수도 있음.
+        $ touch ./src/store/modules/counterStore.js
+
+    작업2-3. counterStore.js
+        // 파일 위치: /src/store/modules/counterStore.js
+        vuex 단축키 사용하여 코드 생성
+
+        const store = {
+            namespaced: true /* store 의 모듈 여부 설정 */,
+            actions: {
+                /* 왜 actions를 사용하나? 비동기로 외부 함수 호출하기 위해서
+                 * actions 에는 메서드만 등록 가능하다.
+                 * 첫번째인자: 무조건 mutations로 고정.
+                 * 두번째인자: 값. store.dispatch()호출시 넘겨지는 값.
+                 */
+                set: function( mutations/* 고정 */, param ){
+                    mutations.commit("set", param );
+                },
+            },
+            mutations: {
+                /* 왜 mutations 를 사용하나? state 를 바꾸기 위해서
+                 * mutations 에는 메서드만 등록 가능하다.
+                 * 첫번째인자: 무조건 state 로 고정.
+                 * 두번째인자: 값. mutations.commit() 호출시 넘겨지는 값.
+                 * */
+                set: function(state/* 고정 */, param/* mutations.commit 호출시 넘겨지는 값 */){
+                    state.인자 = param;
+                },
+            },
+            state: {
+                /* vue인스턴스나 컴포넌트의 data 프로퍼티에 해당 */
+                인자: "STORE STATE",,
+            },
+            getters: {
+                /* state 변경 정보를 컴포넌트에 전달하는 역활.
+                 * 메서드로 만들어야 하며 메서드명은 state 의 이름을 그대로 사용
+                 * 첫번째인자: 무조건 state
+                 * 컴포넌트에서는 computed를 사용하여 store의 state 변경 정보를 자동으로 가져오게 된다.
+                 * 예시) message()=> store.getters.인자;
+                 */
+                인자: function(state/* 고정 */){
+                    return state.인자;
+                },
+            },
+        }
+
+        export default store;
+
+
+    작업2-4. 작성 모듈 등록
+        // 파일 위치: /src/store/index.js
+
+        import { createStore } from 'vuex';
+
+        // 작성한 모듈을 가져옵니다.
+        import counterStore from './modules/counterStore.js'
+
+        export default createStore({
+            // actions: {},
+            // mutations: {},
+            // state: {},
+            // getters: {},
+            modules: {
+              // "모듈명: store명", 형태로 저장됩니다.
+              counterStore: counterStore,
+            },
+        });
+
+
+    작업2-5. main.js
+        // 파일 위치: /src/main.js
+
+        import { createApp } from 'vue';
+        import App from './App.vue';
+        import router from './router';
+        import store from './store';
+
+        createApp(App)
+        .use(store) // 있는지 확인
+        .use(router)
+        .mount('#app');
+
+
+
+    ##################################
+    vue4301 작업3. Vuex 의 store 에서 데이터 가져오는 get 기능 구현하기
+    ----------------------------------
+    vuex로 store 를 만들고 store 의 state에 상태(변수) 등록 한 후
+    store에서 state을 가져오는 get 기능을 구현 한다. <== 같이
+
+    Vuex 헬퍼 메서드들.
+        mapActions(*)   ==> methods 에서 주로 사용
+        mapMutations
+        mapState
+        mapGetters(*)   ==> computed에서 주로 사용
+
+    mapActions는 store의 actions를 가져오는 헬퍼 메서드로
+    컴포넌트의 methods 에서 사용된다.
+
+    mapGetters는 store의 getters를 가져오는 헬퍼 메서드로
+    컴포넌트의 computed 에서 사용된다.
+
+    mapMutations는 store의 muations 를 가져오는 헬퍼 메서드로
+    컴포넌트의 methods 에서 사용된다.
+    mapMutations 보다는 mapActions 를 사용하는 것을 추천.
+
+    중요하게 봐야할 부분은 mapActions, mapGetters 입니다.
+    ##################################
+
+    3-1. store.counterStore.state 작성
+        파일명: src/store/modules/counterStore.js
+
+        컴포넌트 data 의 welcome과 counter를 vuex store 로 옮기기.
+        state: {
+            /* vue인스턴스나 컴포넌트의 data 프로퍼티에 해당 */
+            welcome: 'HELLO WORLD VUEX',
+            counter: 10,
+        },
+
+    3-2. store.counterStore.getters 작성
+        getters: {
+            /* state 변경 정보를 컴포넌트에 전달하는 역활.
+            * 메서드로 만들어야 하며 메서드명은 state 의 이름을 그대로 사용
+            * 첫번째인자: 무조건 state
+            * 컴포넌트에서는 computed를 사용하여 store의 state 변경 정보를 자동으로 가져오게 된다.
+            * 예시) message()=> store.getters.인자;
+            */
+            welcome(state /* 고정 */) {
+                return state.welcome;
+            },
+            counter(state /* 고정 */) {
+                return state.counter;
+            },
+        },
+    3-3. Vue4301Comp 컴포넌트의 computed 에서
+        this.$store.counterStore.getters 값을 가져오도록 작성
+        computed: {
+            ...mapGetters('counterStore', ['welcome', 'counter']),
+        },
+
+    3-4. mapGetters import 설정
+        import { mapActions, mapMutations, mapState, mapGetters } from 'vuex';
+
+
+    ##################################
+    vue4301 작업4. Vuex 의 store 에 데이터 저장하는 set 기능 구현하기
+    ----------------------------------
+    store를 사용하여 increment 기능을 같이 작성하여 본다. <== 같이
+    ##################################
+    4-1. Vue4301Comp 컴포넌트의 methods의 handlerIncrement 수정.
+
+    methods: {
+        // store.counterStore.actions 가져오기.
+        ...mapActions('counterStore', {
+            // dispatch액션명2: '액션명2',
+            dispatchSetCounter: 'setCounter',
+        }),
+
+        handlerIncrement(e) {
+            console.log(e.target);
+            // this.$data.counter = this.$data.counter + 1;
+            debugger;
+
+            // 버튼을 누르면 store의 action 호출
+            // this.$store.dispatch("액션명", 액션값)
+            this.dispatchSetCounter(+1);
+        },
+    }
+
+    4-2. store.counterStore.actions 수정
+    actions: {
+      /* 왜 actions를 사용하나? 비동기로 외부 함수 호출하기 위해서
+       * actions 에는 메서드만 등록 가능하다.
+       * 첫번째인자: 무조건 mutations로 고정.
+       * 두번째인자: 값. store.dispatch()호출시 넘겨지는 값.
+       */
+      setCounter(mutations /* 고정 */, payload) {
+        debugger;
+        mutations.commit('setCounter', payload);
+      },
+    },
+    4-3. store.counterStore.mutations 수정
+    mutations: {
+      /* 왜 mutations 를 사용하나? state 를 바꾸기 위해서
+       * mutations 에는 메서드만 등록 가능하다.
+       * 첫번째인자: 무조건 state 로 고정.
+       * 두번째인자: 값. mutations.commit() 호출시 넘겨지는 값.
+       * */
+      setCounter(state /* 고정 */, param /* mutations.commit 호출시 넘겨지는 값 */) {
+        debugger;
+        state.counter = state.counter + param;
+      },
+    },
+
+
+
+
+
+    ##################################
+    vue4301 작업5.
+    Vue4301Comp 컴포넌트의 decrement 기능을 각자 작성하여 본다. <== 각자
+    ##################################
+    methods: {
+        // store.counterStore.actions 가져오기.
+        ...mapActions('counterStore', {
+          // dispatch액션명2: '액션명2',
+          dispatchSetCounter: 'setCounter',
+        }),
+
+        handlerIncrement(e) {
+          console.log(e.target);
+          // this.$data.counter = this.$data.counter + 1;
+          debugger;
+          this.dispatchSetCounter(+1);
+        },
+
+        handlerDecrement(e) {
+          console.log(e.target);
+          // this.$data.counter = this.$data.counter - 1;
+          debugger;
+          this.dispatchSetCounter(-1);
+        },
+      },
+
+
+
+
+    ##################################
+    vue4301 작업6.
+    axios 를 사용하여 비동기로 외부 함수를 호출하는 기능을 추가하여 본다.
+    ----------------------------------
+    외부 함수 호출 기능을 추가하기 위해서는 서버 기능이 필요합니다.
+
+    GET 기능 구현.
+    axios 로 "http://localhost:5050/counter" 호출하여 counter의 현재 값을 가져오는 기능을 작성한다.
+
+    SET 기능 구현.
+    axios 로 "http://localhost:5050/counter?step=숫자" 호출하여  counter 값을 변경하는 기능을 작성한다.
+
+    ##################################
+    </xmp>
+
+    <div style="margin: 0 0 0 62px;">
+      <div>
+        <p style="color: red; font-style: bold;">
+          6-1. 실행 전에 서버를 실행하세요.
+          <a href="#"
+            onClick="window.open('../../ES2015문법/ap09.서버통신/ap09-01.Node서버실행.html','Node서버실행','width=900,height=650,toolbar=no,menubar=no,scrollbars=no,resizable=yes');return false;"
+            rel="nofollow">Node서버실행</a>
+        </p>
+        <p>&nbsp;</p>
+        <p>
+          2. 브라우저로 서버 실행 여부 확인<br>
+          <a href="http://localhost:5050/counter"
+            target="_blank">http://localhost:5050/counter</a> ==> 현재값 가져오기<br>
+          <a href="http://localhost:5050/counter?step=1"
+            target="_blank">http://localhost:5050/counter?step=1</a> ==> 1 씩 증가<br>
+          <a href="http://localhost:5050/counter?step=-1"
+            target="_blank">http://localhost:5050/counter?step=-1</a> ==> -1 씩 증가<br>
+          <a href="http://localhost:5050/counter?step=10"
+            target="_blank">http://localhost:5050/counter?step=10</a> ==> 10 씩 증가<br>
+          <a href="http://localhost:5050/counter?step=-10"
+            target="_blank">http://localhost:5050/counter?step=-10</a> ==> -10 씩 증가<br>
+        </p>
+      </div>
+    </div>
+
+    <xmp>
+    6-2. counterStore.js 파일 수정
+    // 파일 위치: /src/store/modules/counterStore.js
+
+    const store = {
+        actions: {
+            /* 왜 actions를 사용하나? 비동기로 외부 함수 호출하기 위해서
+                * actions 에는 메서드만 등록 가능하다.
+                * 첫번째인자: 무조건 mutations로 고정.
+                * 두번째인자: 값. store.dispatch()호출시 넘겨지는 값.
+                */
+            setCounter( mutations/* 고정 */, payload ){
+                console.log(payload);
+                debugger;
+
+                // 비동기 함수 호출 대체
+                axios({
+                    url: "http://localhost:5050/counter",  // 호출되는 서버 주소.
+                    method: "get",       // request method: get, post, delete, put
+                    params: { step: payload },  // 서버로 보내는 데이터. 예시) { data1:"test1", data2:"test2" }
+                    timeout: 30000,    // 최대 대기 시간: 30초. 30초 이상이 되면 fail 부분이 실행됨.
+                    responseType: "json",  // response로 넘어오는 데이터 형태: text, html, xml, json, jsonp, script
+                })
+                .then( (res) => {
+                    console.log(res.data);
+                    // this.$data.message = res.data;
+                    debugger;
+                    mutations.commit("setCounter", res.data );
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            getCounter( mutations/* 고정 */, payload ){
+                console.log(payload);
+                debugger;
+
+                // 비동기 함수 호출 대체
+                axios({
+                    url: "http://localhost:5050/counter",  // 호출되는 서버 주소.
+                    method: "get",       // request method: get, post, delete, put
+                    params: { },  // 서버로 보내는 데이터. 예시) { data1:"test1", data2:"test2" }
+                    timeout: 30000,    // 최대 대기 시간: 30초. 30초 이상이 되면 fail 부분이 실행됨.
+                    responseType: "json",  // response로 넘어오는 데이터 형태: text, html, xml, json, jsonp, script
+                })
+                .then( (res) => {
+                    console.log(res.data);
+                    // this.$data.message = res.data;
+                    debugger;
+                    mutations.commit("getCounter", res.data );
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+        },
+        mutations: {
+            /* 왜 mutations 를 사용하나? state 를 바꾸기 위해서
+                * mutations 에는 메서드만 등록 가능하다.
+                * 첫번째인자: 무조건 state 로 고정.
+                * 두번째인자: 값. mutations.commit() 호출시 넘겨지는 값.
+                * */
+            setCounter(state/* 고정 */, param/* mutations.commit 호출시 넘겨지는 값 */){
+                //state 변경
+                console.log(param);
+                debugger;
+                // this.$data.counter = this.$data.counter + param;
+                // state.counter = state.counter + param;
+                state.counter = param;
+            },
+            getCounter(state/* 고정 */, param/* mutations.commit 호출시 넘겨지는 값 */){
+                //state 변경
+                console.log(param);
+                debugger;
+                // this.$data.counter = this.$data.counter + param;
+                // state.counter = state.counter + param;
+                state.counter = param;
+            },
+        },
+        state: {
+            /* vue인스턴스나 컴포넌트의 data 프로퍼티에 해당 */
+            welcome: 'HELLO WORLD VEUX',
+            counter: 10,
+        },
+        getters: {
+            /* state 변경 정보를 컴포넌트에 전달하는 역활.
+                * 메서드로 만들어야 하며 메서드명은 state 의 이름을 그대로 사용
+                * 첫번째인자: 무조건 state
+                * 컴포넌트에서는 computed를 사용하여 store의 state 변경 정보를 자동으로 가져오게 된다.
+                * 예시) message()=> store.getters.인자;
+                */
+            welcome: function(state/* 고정 */){
+                return state.welcome;
+            },
+            counter: function(state/* 고정 */){
+                return state.counter;
+            },
+        },
+    }
+
+    6-3. Vue4301Comp.vue 파일 수정
+        // 파일 위치: src/components/vue4301/Vue4301Comp.vue
+
+        mounted() {
+            console.log('mounted');
+            /* vuex 를 사용하는 경우 */
+            // this.$store.dispatch('액션명', payload);
+            this.dispatchGetCounter();
+        },
+
+
+    </xmp>
+  </body>
+
+</html>

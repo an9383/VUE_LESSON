@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible"
+      content="ie=edge">
+    <title>Vue ToDo Project</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- CSS import -->
+    <link rel="stylesheet"
+      href="../css/reset.css">
+
+  </head>
+  <body>
+    <div style="margin: 40px 0 0 30px;">
+      <p>컴포넌트를 이용하여 아래의 Todo 실행 화면을 작성하여 본다.</p>
+      <a href="#"
+        onClick="window.open('https://vuejstodo-aa185.firebaseapp.com/','Todo앱확인','width=800,height=700,toolbar=no,menubar=no,scrollbars=no,resizable=yes');return false;"
+        rel="nofollow">TODO 애플리케이션 구현 확인 링크</a>
+    </div>
+
+    <p style="margin: 10px 0 -20px 30px;">※ 실행시 Todo html 코드 예시</p>
+
+    <xmp>
+<div id="app">
+    <!-- TodoHeader -->
+    <header>
+        <h1>TODO it!</h1>
+    </header>
+
+    <!-- TodoInput -->
+    <div class="inputBox shadow">
+        <input type="text" placeholder="Type what you have to do" />
+        <span class="addContainer">
+            <i aria-hidden="true" class="addBtn fas fa-plus"></i>
+        </span>
+    </div>
+
+    <!-- TodoList -->
+    <!-- "checked(todoItem.done)"  <==> "todoItem.done ? 'checked': null "  -->
+    <section>
+        <ul>
+            <li>
+                <i aria-hidden="true" class="checkBtn fas fa-check"></i>
+                영화보기
+                <span type="button" class="removeBtn">
+                    <i aria-hidden="true" class="far fa-trash-alt"></i>
+                </span>
+            </li>
+            <li class="checked">
+                <i aria-hidden="true" class="checkBtn fas fa-check"></i>
+                주말 산책
+                <span type="button" class="removeBtn">
+                    <i aria-hidden="true" class="far fa-trash-alt"></i>
+                </span>
+            </li>
+            <li>
+                <i aria-hidden="true" class="checkBtn fas fa-check"></i>
+                ES6 학습
+                <span type="button" class="removeBtn">
+                    <i aria-hidden="true" class="far fa-trash-alt"></i>
+                </span>
+            </li>
+            <li>
+                <i aria-hidden="true" class="checkBtn fas fa-check"></i>
+                잠실 야구장
+                <span type="button" class="removeBtn">
+                    <i aria-hidden="true" class="far fa-trash-alt"></i>
+                </span>
+            </li>
+        </ul>
+    </section>
+
+    <!-- TodoFooter -->
+    <div class="clearAllContainer">
+        <span class="clearAllBtn">Clear All</span>
+    </div>
+</div>
+    </xmp>
+
+    <hr>
+
+    <xmp>
+    Vue-CLI 을 사용하여 ToDo 어플리케이션을 만들어 본다.
+    * 페이지 129~174를 참고
+    * vue29-01.ToDo.html 예제 참조
+
+    "vue30컴포넌트실습" 폴더의 comprj01 프로젝트에 아래 기능을 추가한다.
+
+    ##################################
+    1. 앱 요구사항
+    ##################################
+        1. 컴포넌트 트리 만들기
+            1-1. TodoView 컴포넌트
+            1-2. TodoHeader 컴포넌트
+            1-3. TodoFooter 컴포넌트
+            1-4. TodoInput 컴포넌트
+            1-5. TodoList 컴포넌트
+
+        2. TodoView 컴포넌트 만들기
+            2-1. TodoView 컴포넌트 만들기
+            2-2. TodoView 컴포넌트의 components 컴포넌트 등록.
+            2-3. TodoView 컴포넌트의 템플릿에 사용자태그(컴포넌트 태그) 기술
+
+        3. TodoHeader 컴포넌트 만들고 컴포넌트 등록하고 태그 작성한다.
+            3.1 TodoHeader 컴포넌트 만든다.
+            3.2 TodoHeader 컴포넌트를 인스턴스에 등록한다.
+            3.3 TodoHeader 컴포넌트 태그를 Todo 컴포넌트의 템플릿에 등록한다.
+
+        4. TodoFooter 컴포넌트 만들고 컴포넌트 등록하고 태그 작성한다.
+            4.1 TodoFooter 컴포넌트 만든다.
+            4.2 TodoFooter 컴포넌트를 인스턴스에 등록한다.
+            4.3 TodoFooter 컴포넌트 태그를 Todo 컴포넌트의 템플릿에 등록한다.
+            4.4 TodoFooter 컴포넌트 버튼 클릭시 이벤트 발신 기능을 추가한다.
+                this.$emit('clear-all', null);
+
+        5. TodoInput 컴포넌트 만들고 컴포넌트 등록하고 태그 작성한다.
+            5.1 TodoInput 컴포넌트 만든다.
+            5.2 TodoInput 컴포넌트를 인스턴스에 등록한다.
+            5.3 TodoInput 컴포넌트 태그를 Todo 컴포넌트의 템플릿에 등록한다.
+            5.4 TodoInput 컴포넌트 버튼 클릭시 이벤트 발신 기능을 추가한다.
+                this.$emit('add-todo', 넘길값);
+            5.5 TodoInput 컴포넌트의 input 태그에 값을 초기화
+
+        6. TodoList 컴포넌트 만들고 컴포넌트 등록하고 태그 작성한다.
+            6.1 TodoList 컴포넌트 만든다.
+            6.2 TodoList 컴포넌트를 인스턴스에 등록한다.
+            6.3 TodoList 컴포넌트 태그를 Todo 컴포넌트의 템플릿에 등록한다.
+            6.4 TodoList 컴포넌트 이벤트 발신 기능을 작성한다.
+
+
+
+    ##################################
+    3. 프로젝트에 폴더 및 파일 추가
+    ##################################
+
+        프로젝트
+        |-- dist
+        |-- node_modules
+        |-- public
+        |   |-- favicon.ico
+        |   `-- index.html
+        |-- src
+        |   |-- assets
+        |   |   `-- logo.png
+        |   |-- components
+        |   |       `-- todo
+        |   |           |-- TodoHeader.vue  # 파일 생성. Vue component에 해당됨
+        |   |           |-- TodoInput.vue   # 파일 생성. Vue component에 해당됨
+        |   |           |-- TodoList.vue    # 파일 생성. Vue component에 해당됨
+        |   |           `-- TodoFooter.vue  # 파일 생성. Vue component에 해당됨
+        |   |-- router
+        |   |   `-- index.js
+        |   |-- store
+        |   |   `-- index.js
+        |   |-- views
+        |   |   `-- TodoView.vue            # 파일 생성. Vue 인스턴스에 해당됨
+        |   |-- App.vue
+        |   `-- main.js
+        |-- .browserslistrc
+        |-- .eslintrc.js
+        |-- .gitignore
+        |-- README.md
+        |-- babel.config.js
+        |-- jsconfig.json
+        |-- package.json
+        `-- vue.config.js
+
+        # package.json 존재 여부 확인
+        $ ls
+        babel.config.js  jsconfig.json  node_modules/  package.json  package-lock.json  public/  README.md  src/  vue.config.js
+
+
+        # 폴더 만들기
+        $ mkdir -p src/components/todo/
+
+        # 페이지 컴포넌트 만들기
+        $ touch src/views/TodoView.vue
+
+        # 프리젠테이션 컴포넌트 파일 만들기
+        $ touch src/components/todo/TodoHeader.vue \
+                src/components/todo/TodoInput.vue \
+                src/components/todo/TodoList.vue \
+                src/components/todo/TodoFooter.vue
+
+
+    ##################################
+    5. 프로젝트 초기 설정.
+    ##################################
+
+        프로젝트의 폴더 구조
+        |-- public/index.html 을 열고 아래의 코드를 추가
+
+        5-1. viewport 설정
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        5-2. favicon 설정
+        <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+        <link rel="shortcut icon" href="<%= BASE_URL %>favicon.ico">
+
+        5-3. fontawesome 폰트 설정
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css">
+
+        5-4. ubuntu 폰트 설정
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
+
+
+    ##################################
+    6. 라우팅 설정
+    ~/src/App.vue 에 router-link 추가
+    ~/src/router/index.js 수정
+    ##################################
+
+        step 6-1. ~/src/App.vue 에 router-link 추가
+            <div id="app">
+                <div id="nav">
+                    <router-link to="/">Home</router-link> |
+                    <router-link to="/about">About</router-link> |
+                    <router-link to="/todo">Todo</router-link>
+                </div>
+                <router-view />
+            </div>
+
+        step 6-2. ~/src/router/index.js 수정
+            아래 코드 추가
+            {
+                path: '/todo',
+                name: 'Todo',
+                component: () => import('../views/TodoView.vue')
+            }
+
+
+    ##################################
+    7. 컴포넌트 1차 구현:
+    ##################################
+
+        step 7-1. src/views/TodoView.vue 에 style 과 template 추가
+            vue45ToDo/1차/TodoView.vue 내용을 복사하여 붙여넣기
+
+        step 7-2. src/components/todo/TodoHeader.vue 기능완성
+
+
+        step 7-2-1. src/components/todo/TodoHeader.vue 에 style 과 template 추가
+            vue45ToDo/1차/TodoHeader.vue 내용을 복사하여 붙여넣기
+
+        step 7-2-2. src/components/todo/TodoHeader.vue  에 추가
+            < script>
+              export default {
+                /* pdtmc^2w */
+                props: []
+              };
+            </script>
+
+        step 7-2-3. src/views/TodoView.vue 에 TodoHeader 컴포넌트 등록
+
+            <template>
+                <div id="app">
+                    <!-- TodoHeader -->
+                    <TodoHeader></TodoHeader>
+                </div>
+            </template>
+
+            < script>
+              import TodoHeader from "@/components/todo/TodoHeader.vue";
+
+              export default {
+                // ... 중략
+                components: {
+                  TodoHeader,
+                }
+              }
+            </script>
+
+
+        step 7-3. src/components/todo/TodoFooter.vue  만들기
+
+        step 7-3-1. src/components/todo/TodoFooter.vue 에 style 과 template 추가
+            vue45ToDo/1차/TodoFooter.vue 내용을 복사하여 붙여넣기
+
+        step 7-3-2. src/components/todo/TodoFooter.vue  에 추가
+            < script>
+              export default {
+                /* pdtmc^2w */
+                props: [],
+                methods: {
+                  clearAll(e) {
+                    console.log(e.target);
+                  }
+                }
+              };
+            </script>
+
+        step 7-3-3. src/views/TodoView.vue 에 TodoFooter 컴포넌트 등록
+            template 에 props와 event 바인드를 설정
+            <template>
+                <div id="app">
+                    <!-- TodoHeader -->
+                    <TodoHeader></TodoHeader>
+
+                    <!-- TodoFooter -->
+                    <TodoFooter v-on:clearAll="clearAll"></TodoFooter>
+                </div>
+            </template>
+
+            < script>
+              import TodoHeader from "@/components/todo/TodoHeader.vue";
+              import TodoFooter from "@/components/todo/TodoFooter.vue";
+
+              export default {
+                // ... 중략
+                methods{
+                  clearAll(){
+                    // ... 중략
+                  },
+                },
+                components: {
+                  TodoHeader: TodoHeader,
+                  TodoFooter: TodoFooter,
+                }
+            }
+            </script>
+
+        step 7-4. src/components/todo/TodoInput.vue  만들기
+
+        step 7-4-1. src/components/todo/TodoInput.vue  에 style 과 template 추가
+            vue45ToDo/1차/TodoInput.vue 내용을 복사하여 붙여넣기
+
+        step 7-4-2. src/components/todo/TodoInput.vue 에 나머지 코드 완성
+
+            export default {
+                /* pdtmc^2w */
+                props: [],
+                data() {
+                    return {
+                        newTodoItem: null,
+                        showModal: false
+                    };
+                },
+                methods: {
+                    addTodo() {
+                    }
+                }
+            };
+
+        step 7-4-3. src/views/TodoView.vue 에 TodoInput 컴포넌트 등록
+            template 에 props와 event 바인드를 설정
+            <template>
+                <div id="app">
+                    <!-- TodoHeader -->
+                    <TodoHeader></TodoHeader>
+
+                    <!-- TodoInput -->
+                    <TodoInput v-on:addTodo="addTodo"></TodoInput>
+
+                    <!-- TodoFooter -->
+                    <TodoFooter v-on:clearAll="clearAll"></TodoFooter>
+                </div>
+            </template>
+
+            < script>
+              import TodoHeader from "@/components/todo/TodoHeader.vue";
+              import TodoFooter from "@/components/todo/TodoFooter.vue";
+              import TodoInput from "@/components/todo/TodoInput.vue";
+
+              export default {
+                // ... 중략,
+                methods: {
+                    addTodo() {
+                    }
+                }
+                components: {
+                  TodoHeader: TodoHeader,
+                  TodoFooter: TodoFooter,
+                  TodoInput: TodoInput,
+                }
+              }
+            </script>
+
+
+        step 7-5. src/components/todo/TodoList.vue  만들기
+        step 7-5-1. src/components/todo/TodoList.vue   에 style 과 template 추가
+            vue45ToDo/1차/TodoList.vue 내용을 복사하여 붙여넣기
+        step 7-5-2. src/components/todo/TodoList.vue   에 추가
+            < script>
+              export default {
+                /* pdtmc^2w */
+                props: ["todoItems"],
+                methods: {
+                  checked(done) {
+                    debugger;
+                    console.log(done);
+                  },
+                  doneToggle(id) {
+                    debugger;
+                    console.log(id);
+                  },
+                  removeTodo(id) {
+                    debugger;
+                    console.log(id);
+                  }
+                }
+              };
+            </script>
+        step 7-5-3. src/views/TodoView.vue 에 컴포넌트 등록 및 template 에 props와 event 바인드를 설정
+            <template>
+                <div id="app">
+                    <!-- TodoHeader -->
+                    <TodoHeader></TodoHeader>
+
+                    <!-- TodoInput -->
+                    <TodoInput v-on:addTodo="addTodo">
+                    </TodoInput>
+
+                    <!-- TodoList -->
+                    <TodoList
+                        v-bind:todoItems="todoItems"
+                        v-on:doneToggle="doneToggle"
+                        v-on:removeTodo="removeTodo"
+                    >
+                    </TodoList>
+
+                    <!-- TodoFooter -->
+                    <TodoFooter v-on:clearAll="clearAll">
+                    </TodoFooter>
+                </div>
+            </template>
+
+            < script>
+              import TodoHeader from "@/components/todo/TodoHeader.vue";
+              import TodoInput from "@/components/todo/TodoInput.vue";
+              import TodoList from "@/components/todo/TodoList.vue";
+              import TodoFooter from "@/components/todo/TodoFooter.vue";
+
+              export default {
+                data() {
+                  return {
+                    todoItems: [
+                      { id: 1, todo: "영화보기", done: false },
+                      { id: 2, todo: "주말 산책", done: true },
+                      { id: 3, todo: "ES6 학습", done: false },
+                      { id: 4, todo: "잠실 야구장", done: false }
+                    ]
+                  };
+                },
+                methods: {
+                  /* 이벤트 핸들러 등록 + 일반 함수 */
+                  clearAll(e) {
+                    debugger;
+                    console.log(e.target);
+                  },
+                  addTodo(e) {
+                    debugger;
+                    console.log(e.target);
+                  },
+                  doneToggle(e) {
+                    debugger;
+                    console.log(e.target);
+                  },
+                  removeTodo(e) {
+                    debugger;
+                    console.log(e.target);
+                  },
+                },
+                components: {
+                  TodoHeader: TodoHeader,
+                  TodoFooter: TodoFooter,
+                  TodoInput: TodoInput,
+                  TodoList: TodoList,
+                }
+              }
+            </script>
+
+
+
+    ##################################
+    9.  컴포넌트 3차 구현: 상태 관리 구현
+    ##################################
+
+        props 와 이벤트를 이용하여 상태 관리 구현
+
+
+        step 9-1-1. src/components/todo/TodoFooter.vue  에 추가
+        < script>
+          export default {
+            /* pdtmc^2w */
+            props: [],
+            methods: {
+              clearAll() {
+                debugger;
+                // clearAll 이벤트 발생
+                this.$emit("clearAll");
+              }
+            }
+          };
+        </script>
+        
+
+
+        step 9-1-2. src/views/TodoView.vue  에 추가
+        < script>
+          import TodoHeader from "@/components/todo/TodoHeader.vue";
+          import TodoInput from "@/components/todo/TodoInput.vue";
+          import TodoList from "@/components/todo/TodoList.vue";
+          import TodoFooter from "@/components/todo/TodoFooter.vue";
+
+          export default {
+            /* pdtmc^2w */
+            props: [],
+            data() {
+              return {
+                todoItems: [
+                  { id: 1, todo: "영화보기", done: false },
+                  { id: 2, todo: "주말 산책", done: true },
+                  { id: 3, todo: "ES6 학습", done: false },
+                  { id: 4, todo: "잠실 야구장", done: false }
+                ]
+              };
+            },
+            //template: ``,
+            methods: {
+              clearAll(e) {
+                // delete
+                debugger;
+                console.log(e.target);
+              },
+              doneToggle(id) {
+                debugger;
+                console.log(e.target);
+              },
+              removeTodo(id) {
+                debugger;
+                console.log(e.target);
+              },
+              addTodo(newTodoItem) {
+                debugger;
+                console.log(e.target);
+              },
+            },
+            components: {
+              TodoHeader: TodoHeader,
+              TodoInput: TodoInput,
+              TodoList: TodoList,
+              TodoFooter: TodoFooter
+            }
+          };
+        </script>
+
+        step 9-2-1. src/components/todo/TodoList.vue   에 추가
+        < script>
+          export default {
+            /* pdtmc^2w */
+            props: ["todoItems"],
+            methods: {
+              checked(done) {
+                if (done) {
+                  return "checked"; // 또는 {checked: true}
+                } else {
+                  return null; // 또는 {checked: false}
+                }
+              },
+              doneToggle(id) {
+                this.$emit("doneToggle", id);
+              },
+              removeTodo(id) {
+                this.$emit("removeTodo", id);
+              },
+            }
+          };
+        </script>
+        
+        step 9-2-2. src/views/TodoView.vue  에 doneToggle 기능 완성
+        < script>
+          import TodoHeader from "@/components/todo/TodoHeader.vue";
+          import TodoInput from "@/components/todo/TodoInput.vue";
+          import TodoList from "@/components/todo/TodoList.vue";
+          import TodoFooter from "@/components/todo/TodoFooter.vue";
+
+          export default {
+            /* pdtmc^2w */
+            props: [],
+            data() {
+              return {
+                todoItems: [
+                  { id: 1, todo: "영화보기", done: false },
+                  { id: 2, todo: "주말 산책", done: true },
+                  { id: 3, todo: "ES6 학습", done: false },
+                  { id: 4, todo: "잠실 야구장", done: false }
+                ]
+              };
+            },
+            //template: ``,
+            methods: {
+              clearAll() {
+                // delete
+                this.$data.todoItems = [];
+              },
+              doneToggle(id) {
+                // update
+                const newTodos = this.$data.todoItems.map((item) => {
+                  if (item.id === id) {
+                    item.done = !item.done;
+                  }
+                  return item;
+                });
+                this.$data.todoItems = newTodos;
+              },
+              removeTodo(id) {
+                debugger;
+                console.log(id);
+              },
+              addTodo(newTodoItem) {
+                debugger;
+                console.log(id);
+              },
+            },
+            components: {
+              TodoHeader: TodoHeader,
+              TodoInput: TodoInput,
+              TodoList: TodoList,
+              TodoFooter: TodoFooter
+            }
+          };
+        </script>
+
+        step 9-3-1. src/components/todo/TodoList.vue   에 추가
+                
+        // click 이벤트 버블링 막기==> 이벤트 취소
+        // 1. window.event.stopPropagation() 호출하기
+        // 2. 템플릿에 .stop 수식자 추가
+        
+        < script>
+          export default {
+            /* pdtmc^2w */
+            props: ["todoItems"],
+            methods: {
+              checked(done) {
+                if (done) {
+                  return "checked"; // 또는 {checked: true}
+                } else {
+                  return null; // 또는 {checked: false}
+                }
+              },
+              doneToggle(id) {
+                this.$emit("doneToggle", id);
+              },
+              removeTodo(id) {
+                this.$emit("removeTodo", id);
+                
+                // click 이벤트 버블링 막기==> 이벤트 취소
+                // 1. window.event.stopPropagation() 호출하기
+                // 2. 템플릿에 .stop 수식자 추가
+                window.event.stopPropagation();
+                window.event.preventDefault();
+              },
+            }
+          };
+        </script>
+        
+        step 9-3-2. src/views/TodoView.vue  에 doneToggle 기능 완성
+        < script>
+          import TodoHeader from "@/components/todo/TodoHeader.vue";
+          import TodoInput from "@/components/todo/TodoInput.vue";
+          import TodoList from "@/components/todo/TodoList.vue";
+          import TodoFooter from "@/components/todo/TodoFooter.vue";
+
+          export default {
+            /* pdtmc^2w */
+            props: [],
+            data() {
+              return {
+                todoItems: [
+                  { id: 1, todo: "영화보기", done: false },
+                  { id: 2, todo: "주말 산책", done: true },
+                  { id: 3, todo: "ES6 학습", done: false },
+                  { id: 4, todo: "잠실 야구장", done: false }
+                ]
+              };
+            },
+            //template: ``,
+            methods: {
+              clearAll() {
+                // delete
+                this.$data.todoItems = [];
+              },
+              doneToggle(id) {
+                // update
+                const newTodos = this.$data.todoItems.map((item) => {
+                  if (item.id === id) {
+                    item.done = !item.done;
+                  }
+                  return item;
+                });
+                this.$data.todoItems = newTodos;
+              },
+              removeTodo(id) {
+                debugger;
+                console.log(id);
+
+                // 복제 후 할당
+                // 1. 배열 복제
+                const newTodos = this.$data.todoItems.filter((item) => {
+                  // false 를 반환하면 삭제된다.
+                  if (item.id === id) {
+                    return false;
+                  }
+                  return true;
+                });
+
+                // 2. 할당
+                this.$data.todoItems = newTodos;
+              },
+              addTodo(newTodoItem) {
+                debugger;
+                console.log(id);
+              },
+            },
+            components: {
+              TodoHeader: TodoHeader,
+              TodoInput: TodoInput,
+              TodoList: TodoList,
+              TodoFooter: TodoFooter
+            }
+          };
+        </script>
+
+
+
+
+        step 9-4-1. src/components/todo/TodoInput.vue 에 기능 완성
+        1. this.$emit 을 사용하여 부모와 자식이 연결 되는지 확인
+        2. addTodo 기능 완성.
+          2-1. newTodoItem 이 빈값인 경우 넘기지 않도록 유효성 검사 추가
+              null 이 아니고
+              undefined 아니고
+              빈 문자열이 아니고
+              공백이 아니고
+          2-2. TodoInput 컴포넌트의 input 태그에 값을 초기화
+          
+        < script>
+          export default {
+            /* pdtmc^2w */
+            props: [],
+            data() {
+              return {
+                newTodoItem: null,
+                showModal: false
+              };
+            },
+            methods: {
+              addTodo() {
+                if (
+                  this.$data.newTodoItem &&
+                  this.$data.newTodoItem.trim() !== ""
+                ) {
+                  // 부모에게 addTodo 이벤트에 값을 담아서 넘기기
+                  const newTodoItem = this.$data.newTodoItem.trim();
+                  this.$emit("addTodo", newTodoItem);
+
+                  // input 태그의 입력 값 초기화
+                  this.$data.newTodoItem" = "";
+                } else {
+                  this.$data.showModal = !this.$data.showModal;
+                }
+              }
+            }
+          };
+        </script>
+
+
+        step 9-4-2. src/views/TodoView.vue  에 추가
+        < script>
+          import TodoHeader from "@/components/todo/TodoHeader.vue";
+          import TodoInput from "@/components/todo/TodoInput.vue";
+          import TodoList from "@/components/todo/TodoList.vue";
+          import TodoFooter from "@/components/todo/TodoFooter.vue";
+
+          export default {
+            /* pdtmc^2w */
+            props: [],
+            data() {
+              return {
+                todoItems: [
+                  { id: 1, todo: "영화보기", done: false },
+                  { id: 2, todo: "주말 산책", done: true },
+                  { id: 3, todo: "ES6 학습", done: false },
+                  { id: 4, todo: "잠실 야구장", done: false }
+                ]
+              };
+            },
+            //template: ``,
+            methods: {
+              clearAll() {
+                // delete
+                this.$data.todoItems = [];
+              },
+              doneToggle(id) {
+                // update
+                const newTodos = this.$data.todoItems.map((item) => {
+                  if (item.id === id) {
+                    item.done = !item.done;
+                  }
+                  return item;
+                });
+                this.$data.todoItems = newTodos;
+              },
+              removeTodo(id) {
+                // delete: ;
+                const newTodos = this.$data.todoItems.filter((item) => {
+                  if (item.id === id) {
+                    return false;
+                  }
+                  return true;
+                });
+                this.$data.todoItems = newTodos;
+
+                // 이벤트 취소
+                window.event.stopPropagation();
+                window.event.preventDefault();
+              },
+              addTodo(newTodoItem) {
+
+                // 1. newTodoItem 값이 없으면 종료한다. 빈값 호출 방지.
+                // 입력된 값 초기화
+
+                // 2. max id 구하기 ==> map과 reduce 를 사용하여
+                // 2-1. id 값 만 있는 새로운 배열을 만든다. ==> map() 메서드 사용.
+                // 2-2. map() 메서드로 만들어진 새로운 배열에서 최대값을 찾는다. ===> reduce() 메서드 사용
+                // 2-3. 추가될 새로운 id = max id + 1
+                // 3. 추가할 객체 todoItems 만들기
+                // 4. this.$data.todoItems 에 newTodo를 추가하시오.
+
+                // 1. newTodoItem 값이 없으면 종료한다. 빈값 호출 방지.
+                if (newTodoItem && newTodoItem.trim() === "") {
+                  return;
+                }
+
+                // 2. max id 구하기 ==> map과 reduce 를 사용하여
+                const maxid = this.$data.todoItems
+                  .map((item) => {
+                    return item.id;
+                  }) // [1,2,3,4], []
+                  .reduce((pvaule, cvalue) => {
+                    return pvaule > cvalue ? pvalue : cvalue;
+                  }, 0);
+                const newid = maxid + 1;
+
+                // 3. 추가할 객체 todoItems 만들기
+                // input에 입력된 값 ==> newTodoItem ;
+                const newTodo = {
+                  id: newid,
+                  todo: newTodoItem,
+                  done: false
+                };
+
+                // 4. this.$data.todoItems 에 newTodo를 추가하시오.
+                // this.$data.todoItems.push(newTodo);
+                this.$set(this.$data.todoItems, this.$data.todoItems.length, newTodo);
+              },
+            },
+            components: {
+              TodoHeader: TodoHeader,
+              TodoInput: TodoInput,
+              TodoList: TodoList,
+              TodoFooter: TodoFooter
+            }
+          };
+        </script>
+
+
+    ##################################
+    10. 프로젝트 4차 개선.
+    ##################################
+        Todo 에 Vuex 를 적용하여 본다.
+
+        1. GET 구현
+            1. store.state 코드 작성. 컴포넌트의 공유 데이터를 store.state 로 이동
+            2. store.getters 코드 작성
+            3. 인스턴스나 컴포넌트의 computed 에 store.getters 구독 코드 작성
+
+        2. SET 구현
+            1. store.actions 코드 작성
+            2. store.mutations 코드 작성
+            3. 인스턴스나 컴포넌트 의 methods 에서 store.dispatch 호출 하도록 수정
+
+        3. 컴포넌트의 로직을 Vuex 로 이동시 주의 사항.
+            1. this.$data 는 Vuex 에서 사용할 수 없다. ==> this.$data 는  state 로 변경 한다.
+            2. Vuex 에서 객체배열(Object Array)에 값을 추가할 때는 array의 push 메서드를 사용해도 된다.
+
+
+    ##################################
+    11. Vuex 의 store 사용 설정하기
+    ##################################
+        11-1. store 디렉토리 생성
+            # package.json 파일이 있는지 확인.
+            $ ls
+            babel.config.js  jsconfig.json  node_modules/  package.json  package-lock.json  public/  README.md  src/  vue.config.js
+
+            # modules 디렉토리 생성
+            $ mkdir -p ./src/store/modules
+
+        11-2. store 파일 생성
+            $ touch ./src/store/index.js
+            $ touch ./src/store/modules/todoStore.js
+
+        11-3. todoStore.js 코드 만들기
+            // 파일 위치: /src/store/modules/todoStore.js
+            // 단축키: vuex
+
+            const store = {
+                namespaced: true /* 모듈 store 여부 설정 */,
+                actions: {
+                    /* 왜 actions를 사용하나? 비동기로 외부 함수 호출하기 위해서
+                     * actions 에는 메서드만 등록 가능하다.
+                     * 첫번째인자: 무조건 mutations로 고정.
+                     * 두번째인자: 값. store.dispatch()호출시 넘겨지는 값.
+                     */
+                    set: function( mutations/* 고정 */, param ){
+                        mutations.commit("set", param );
+                    },
+                },
+                mutations: {
+                    /* 왜 mutations 를 사용하나? state 를 바꾸기 위해서
+                     * mutations 에는 메서드만 등록 가능하다.
+                     * 첫번째인자: 무조건 state 로 고정.
+                     * 두번째인자: 값. mutations.commit() 호출시 넘겨지는 값.
+                     * */
+                    set: function(state/* 고정 */, param/* mutations.commit 호출시 넘겨지는 값 */){
+                        state.인자 = param;
+                    },
+                },
+                state: {
+                    /* vue인스턴스나 컴포넌트의 data 프로퍼티에 해당 */
+                    인자: "STORE STATE",,
+                },
+                getters: {
+                    /* state 변경 정보를 컴포넌트에 전달하는 역활.
+                     * 메서드로 만들어야 하며 메서드명은 state 의 이름을 그대로 사용
+                     * 첫번째인자: 무조건 state
+                     * 컴포넌트에서는 computed를 사용하여 store의 state 변경 정보를 자동으로 가져오게 된다.
+                     * 예시) message()=> store.getters.인자;
+                     */
+                    인자: function(state/* 고정 */){
+                        return state.인자;
+                    },
+                },
+            }
+
+            export default store;
+
+
+        11-4. todoStore 등록하기
+            // 파일 위치: /src/store/index.js
+
+            import { createStore } from 'vuex';
+
+            // 작성한 모듈을 가져옵니다.
+            import todoStore from './modules/todoStore.js'
+
+            export default createStore({
+                modules: {
+                  // "모듈명: store명", 형태로 저장됩니다.
+                  todoStore: todoStore,
+                },
+            });
+
+
+        11-5. main.js
+            // 파일 위치: /src/main.js
+
+            import { createApp } from 'vue';
+            import App from './App.vue';
+            import router from './router';
+            import store from './store';
+
+            createApp(App)
+            .use(store)
+            .use(router)
+            .mount('#app')
+            ;
+
+
+
+    ##################################
+    12. Vuex 의 store 에서 데이터 가져오는 get 기능 구현하기
+    ----------------------------------
+    vuex로 store 를 만들고 store 의 state에 상태(변수) 등록 한 후
+    store에서 state을 가져오는 get 기능을 구현 한다.
+    ##################################
+
+        12-1. src/store/modules/todoStore.js
+
+        12-2. store.todoStore.state 작성
+            파일명: src/store/modules/todoStore.js
+
+            TodoView 컴포넌트의 data 의 todoItems 를 vuex store 로 옮기기.
+
+            state: {
+                /* vue인스턴스나 컴포넌트의 data 프로퍼티에 해당 */
+                todoItems: [
+                    { id: 1, todo: "영화보기", done: false },
+                    { id: 2, todo: "주말 산책", done: true },
+                    { id: 3, todo: "ES6 학습", done: false },
+                    { id: 4, todo: "잠실 야구장", done: false }
+                ]
+            },
+
+        12-3. store.todoStore.getters 작성
+            getters: {
+                /* state 변경 여부를 컴포넌트에 알리는 역활
+                * 메서드로 만들어야 하며 메서드명은 state 의 프로퍼티명과 동일하게 사용
+                * 첫번째인자: 무조건 state
+                */
+                todoItems: function(state/* 고정 */){
+                    return state.todoItems;
+                },
+            },
+
+        12-4. TodoView 컴포넌트의 computed 에서
+            mapGetters 헬퍼 메서드를 이용하여
+            this.$store.todoStore.getters 값을 가져오도록 작성
+            computed: {
+                ...mapGetters('todoStore', ['todoItems']),
+            },
+
+        12-5. TodoView 컴포넌트에 mapGetters import 설정
+            import { mapActions, mapMutations, mapState, mapGetters } from 'vuex';
+
+
+    ##################################
+    13. Vuex 의 store 에 데이터 저장하는 set 기능 구현하기
+    ##################################
+
+
+        13-1. src/store/modules/todoStore.js 수정
+        TodoView 컴포넌트 에 있던 메서드를 todoStore.js 에 만든다.
+        todoStore.js 의 actions 에 clearAll, addTodo, doneToggle, removeTodo, getTodo 를 만든다.
+        todoStore.js 의 mutations 에 clearAll, addTodo, doneToggle, removeTodo, getTodo 를 만든다.
+
+        const store = {
+            namespaced: true /* 모듈 store 여부 설정 */,
+            actions: {
+                clearAll( mutations/* 고정 */){
+                    const { commit } = mutations;
+                    commit("clearAll");
+                },
+                doneToggle( mutations/* 고정 */, id ){
+                    const { commit } = mutations;
+                    commit("doneToggle", id );
+                },
+                removeTodo( mutations/* 고정 */, id ){
+                    const { commit } = mutations;
+                    commit("removeTodo", id );
+                },
+                addTodo( mutations/* 고정 */, newTodoItem ){
+                    const { commit } = mutations;
+                    commit("addTodo", newTodoItem );
+                },
+                getTodo( mutations/* 고정 */){
+                    const { commit } = mutations;
+                    commit("getTodo" );
+                },
+            },
+            mutations: {
+                clearAll(state/* 고정 */){
+                    /* ...중략. 직접 작성 */
+                    state.todoItems = [];
+                },
+                doneToggle(state/* 고정 */, id){
+                    /* ...중략. 직접 작성 */
+                    const newTodos = state.todoItems.map((item) => {
+                      if (item.id === id) {
+                        item.done = !item.done;
+                      }
+                      return item;
+                    });
+                    state.todoItems = newTodos;
+                },
+                removeTodo(state/* 고정 */, id){
+                    /* ...중략. 직접 작성 */
+                    const newTodos = state.todoItems.filter((item) => {
+                      if (item.id === id) {
+                        return false;
+                      }
+                      return true;
+                    });
+                    state.todoItems = newTodos;
+                },
+                addTodo(state/* 고정 */, newTodoItem){
+                    /* ...중략. 직접 작성 */
+
+                    // max id 구하기 ==> map과 reduce 를 사용하여
+                    // todoItems 추가할 객체 만들기
+                    // 배열에 추가
+                    let maxid = 0;
+                    if (state.todoItems.length > 0) {
+                      maxid = state.todoItems
+                        .map((item) => item.id)
+                        .reduce((pvalue, cvalue) => {
+                          if (pvalue > cvalue) return pvalue;
+                          else return cvalue;
+                        });
+                    }
+
+                    const newTodo = {
+                      id: maxid + 1,
+                      todo: newTodoItem,
+                      done: false,
+                    };
+
+                    // state.todoItems 에 newTodo를 추가하시오.
+                    // state.todoItems.push(newTodo);
+                    state.todoItems =  [ ...state.todoItems, newTodo ];
+                },
+                getTodo(state/* 고정 */) {
+                    /* ...중략. 직접 작성 */
+                },
+            },
+            state: {
+                /* vue인스턴스나 컴포넌트의 data 프로퍼티에 해당 */
+                todoItems: [
+                    { id: 1, todo: "영화보기", done: false },
+                    { id: 2, todo: "주말 산책", done: true },
+                    { id: 3, todo: "ES6 학습", done: false },
+                    { id: 4, todo: "잠실 야구장", done: false }
+                ]
+            },
+            getters: {
+                /* state 변경 여부를 컴포넌트에 알리는 역활
+                * 메서드로 만들어야 하며 메서드명은 state 의 프로퍼티명과 동일하게 사용
+                * 첫번째인자: 무조건 state
+                */
+                todoItems: function(state/* 고정 */){
+                    return state.todoItems;
+                },
+            },
+        });
+
+        export default store;
+
+
+        13-2. src\views\TodoView.vue 수정
+        < script>
+          import TodoHeader from "@/components/todo/TodoHeader.vue";
+          import TodoInput from "@/components/todo/TodoInput.vue";
+          import TodoList from "@/components/todo/TodoList.vue";
+          import TodoFooter from "@/components/todo/TodoFooter.vue";
+
+          export default {
+            /* pdtmc^2w */
+            data: function () {
+              return {};
+            },
+            //template: ``,
+            methods: {
+              // mapActions Vuex 헬퍼 메서드를 이용해서
+              // todoStore 의 액션 메서드 가져오기
+              // 사용법: ...mapActions('모듈명', { dispatch액션명1: '액션명1', dispatch액션명2: '액션명2' }),
+              ...mapActions('todoStore', {
+                dispatchClearAll: 'clearAll',
+                dispatchDoneToggle: 'doneToggle',
+                dispatchRemoveTodo: 'removeTodo',
+                dispatchAddTodo: 'addTodo',
+                dispatchGetTodo: 'getTodo',
+              }),
+
+              clearAll: function () {
+                // delete all. store의 "clearAll" dispatch
+                this.dispatchClearAll();
+              },
+              doneToggle: function (id) {
+                // update. store의 "doneToggle" dispatch
+                this.dispatchDoneToggle(id);
+              },
+              removeTodo: function (id) {
+                // delete each. store의 "removeTodo" dispatch
+                this.dispatchRemoveTodo(id);
+              },
+              addTodo: function (newTodoItem) {
+                // create. store "addTodo" dispatch
+                this.dispatchAddTodo(newTodoItem);
+              },
+            },
+            components: {
+              TodoHeader: TodoHeader,
+              TodoFooter: TodoFooter,
+              TodoInput: TodoInput,
+              TodoList: TodoList,
+            },
+            computed: {
+              /* vuex 를 사용하는 경우
+                mapGetters 는 store의 getters 를 가져오는 vuex 헬퍼 메서드다.
+                namespaced: true를 설정한 경우 네임스페이스를 사용하기 때문에 store의 모듈 명을 적어주어야 합니다.
+                store 모듈에서 getters 를 가져오는 2가지 방식
+                1) store.모듈명.getters 이름 바꾸어 사용하기
+                   ...mapGetters('모듈명', { get게터명1: '게터명1', get게터명2: '게터명2' }),
+                2) store.모듈명.getters 이름 그대로 사용하기(추천방식)
+                   ...mapGetters('모듈명', ['게터명1', '게터명2']),
+                */
+              ...mapGetters('todoStore', ['todoItems']),
+            },
+            created: function () {
+              console.log("created");
+              // read. store의 "getTodo" dispatch
+            }
+          };
+        </script>
+    </xmp>
+    <hr>
+
+
+    <pre>
+    ##################################
+    14. 프로젝트 5차 개선.
+    ##################################
+        Todo 에 vuex 와 axios를 적용하여 본다.
+    </pre>
+
+    <div style="margin: 0 0 0 90px;">
+      step 14-1. 서버 실행
+      ※ 실행 전에 서버를 실행하세요. <a href="#"
+        onClick="window.open('../../ES2015문법/ap09.서버통신/ap09-01.Node서버실행.html','Node서버실행','width=900,height=850,toolbar=no,menubar=no,scrollbars=no,resizable=yes');return false;"
+        rel="nofollow">Node서버실행</a>
+    </div>
+
+    <pre>
+            <a href="http://localhost:5050/todo/get" target="_blank" rel="noopener noreferrer">http://localhost:5050/todo/get</a>
+            <a href="http://localhost:5050/todo/add?todo=여행가기" target="_blank" rel="noopener noreferrer">http://localhost:5050/todo/add?todo=여행가기</a>
+            <a href="http://localhost:5050/todo/donetoggle?id=1" target="_blank" rel="noopener noreferrer">http://localhost:5050/todo/donetoggle?id=1</a>
+            <a href="http://localhost:5050/todo/remove?id=2" target="_blank" rel="noopener noreferrer">http://localhost:5050/todo/remove?id=2</a>
+            <a href="http://localhost:5050/todo/clearall" target="_blank" rel="noopener noreferrer">http://localhost:5050/todo/clearall</a>
+    </pre>
+    <xmp>
+        step 14-2. src\store\index.js 수정
+
+        import Vue from "vue";
+        import Vuex from "vuex";
+        import axios from "axios";  // 추가
+
+        Vue.use(Vuex);
+
+        export default new Vuex.Store({
+            actions: {
+                addTodo(mutations, newTodoItem) {
+                    /**
+                        * Create.
+                        * axios 로  http://localhost:5050/todo/add 호출
+                        * 비동기 호출 코드는 직접 작성.
+                        * 서버로 보내는 데이터. 예시) { todo: "여행가기", done: false }
+                        * params: { todo: "여행가기", done: false }
+                        * axios 호출 성공 하면 mutations.commit("addTodo", res.data); 호출
+                        */
+                },
+                doneToggle(mutations, id) {
+                    /**
+                        * Update(개별).
+                        * axios 로  http://localhost:5050/todo/donetoggle 호출
+                        * 비동기 호출 코드는 직접 작성.
+                        * 서버로 보내는 데이터. 예시) { id:2 }
+                        * params: { id }
+                        *
+                        * axios 호출 성공 하면 mutations.commit("doneToggle", res.data); 호출
+                        */
+                },
+                removeTodo(mutations, id) {
+                    /**
+                        * Delete(개별)
+                        * axios 로  http://localhost:5050/todo/remove
+                        * 비동기 호출 코드는 직접 작성.
+                        * 서버로 보내는 데이터. 예시) { id:2 }
+                        * params: { id }
+                        * axios 호출 성공 하면 mutations.commit("removeTodo", res.data); 호출
+                        */
+                },
+                clearAll(mutations) {
+                    /**
+                        * Delete(전체)
+                        * axios 로  http://localhost:5050/todo/clearall
+                        * 비동기 호출 코드는 직접 작성.
+                        * 서버로 보내는 데이터. 예시) {  }
+                        * params: null
+                        * axios 호출 성공 하면 mutations.commit("clearAll", res.data); 호출
+                        */
+                },
+                getTodo(mutations) {
+                    /**
+                        * Read.
+                        * axios 로  http://localhost:5050/todo/get 호출
+                        * 비동기 호출 코드는 직접 작성.
+                        * 서버로 보내는 데이터. 예시) {  }
+                        * params: null
+                        * axios 호출 성공 하면 mutations.commit("todo", res.data); 호출
+                        */
+                },
+            },
+            mutations: {
+                /* 왜 mutations 를 사용하나? state 를 바꾸기 위해서
+                    * mutations 에는 메서드만 등록 가능하다.
+                    * 첫번째인자: 무조건 state 로 고정.
+                    * 두번째인자: 값. mutations.commit() 호출시 넘겨지는 값.
+                    * */
+                addTodo(
+                    state /* 고정 */,
+                    param /* mutations.commit 호출시 넘겨지는 값 */
+                ) {
+                    state.todoItems = param;
+                },
+                doneToggle(
+                    state /* 고정 */,
+                    param /* mutations.commit 호출시 넘겨지는 값 */
+                ) {
+                    state.todoItems = param;
+                },
+                removeTodo(
+                    state /* 고정 */,
+                    param /* mutations.commit 호출시 넘겨지는 값 */
+                ) {
+                    state.todoItems = param;
+                },
+                clearAll(
+                    state /* 고정 */,
+                    param /* mutations.commit 호출시 넘겨지는 값 */
+                ) {
+                    state.todoItems = param;
+                },
+                getTodo(
+                    state /* 고정 */,
+                    param /* mutations.commit 호출시 넘겨지는 값 */
+                ) {
+                    state.todoItems = param;
+                },
+            },
+            state: {
+                /* vue인스턴스나 컴포넌트의 data 프로퍼티에 해당 */
+                todoItems: []
+            },
+            getters: {
+                /* state 변경 정보를 컴포넌트에 전달하는 역활.
+                    * 메서드로 만들어야 하며 메서드명은 state 의 이름을 그대로 사용
+                    * 첫번째인자: 무조건 state
+                    * 컴포넌트에서는 computed를 사용하여 store의 state 변경 정보를 자동으로 가져오게 된다.
+                    * 예시) message()=> store.getters.인자;
+                    */
+                todoItems: function (state /* 고정 */) {
+                    return state.todoItems;
+                }
+            }
+        });
+
+
+        step 14-3. src\views\TodoView.vue 수정
+        < script>
+          import TodoHeader from "@/components/todo/TodoHeader.vue";
+          import TodoInput from "@/components/todo/TodoInput.vue";
+          import TodoList from "@/components/todo/TodoList.vue";
+          import TodoFooter from "@/components/todo/TodoFooter.vue";
+
+          import store from "@/store/index.js";  // <== 추가
+
+          export default {
+            /* pdtmc^2w */
+            data: function () {
+              return {};
+            },
+            //template: ``,
+            methods: {
+              addTodo: function (newTodoItem) {
+                // create. store "addTodo" dispatch
+                store.dispatch("addTodo", newTodoItem);
+              },
+              doneToggle: function (id) {
+                // update. store의 "doneToggle" dispatch
+                store.dispatch("doneToggle", id);
+              },
+              removeTodo: function (id) {
+                // delete each. store의 "removeTodo" dispatch
+                store.dispatch("removeTodo", id);
+              },
+              clearAll: function () {
+                // delete all. store의 "clearAll" dispatch
+                store.dispatch("clearAll");
+              }
+            },
+            components: {
+              TodoHeader: TodoHeader,
+              TodoInput: TodoInput,
+              TodoList: TodoList,
+              TodoFooter: TodoFooter
+            },
+            computed: {
+              /* computed를 사용하여 store의 state를 모니터링하게 작성
+                  * 동일한 프로퍼티명이 computed 와 data 에 존재하면 안된다. 한쪽에만 있어야 한다
+                  */
+              todoItems: function () {
+                return store.getters.todoItems;
+              }
+            },
+            watch: {},
+            created: function () {
+              console.log("created");
+              // read. store의 "getTodo" dispatch
+            },
+            mounted: function () {
+              console.log("mounted");
+            },
+            updated: function () {
+              console.log("updated");
+            }
+          };
+        </script>
+
+    </xmp>
+
+  </body>
+</html>

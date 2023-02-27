@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue를 이용한 파일 합치기</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- CSS import -->
+    <link rel="stylesheet" href="../css/reset.css">
+</head>
+
+<body>
+    <div style="margin: 40px 0 0 40px;">
+        <a href="#" onClick="window.open('../../ES2015문법/ap01.docs/npm사용법.html','npm사용법','width=800,height=400,toolbar=no,menubar=no,scrollbars=no,resizable=yes');return false;" rel="nofollow">npm 사용법</a>
+    </div>
+    <pre>
+      Vue-CLI 를 사용하여 SFC(Single File Component) 만들기를 실습한다.
+
+      # CLI 는 command line interface의 약자.
+
+
+      step 1. Vue-CLI 설치
+            $ vue -V
+            $ npm install @vue/cli -g              # -g : 전역으로 설치한다는 의미
+            $ vue -V
+            @vue/cli  5.0.1
+
+      step 2. Vue 프로젝트 생성
+            $ vue  create  sfcprj01
+            Vue CLI v 5.0.1
+            ? Please pick a preset: (Use arrow keys)
+              Default (Vue 3) ([Vue 3] babel, eslint)
+            > Default ([Vue 2] babel, eslint)
+              Manually select features
+
+            $ ls    # 현재 폴더 파일 목록 출력
+            sfcprj01/  vue17-01.컴포넌트_템플릿_생성_방법_7가지.html  vue17-03.템플릿do.html  vue17-05.SFC.html
+
+      step 3. sfcprj01 폴더 이동
+            $ cd sfcprj01
+
+            $ pwd   # 현재 폴더 위치 확인
+            /c/TIS/VueReact/Vuejs/vue17템플릿/sfcprj01
+
+            $ ls    # 현재 폴더 파일 목록 출력. package.json 이 있는지 확인
+            babel.config.js  node_modules/  package.json  package-lock.json  public/  README.md  src/
+
+      step 4. Vue 프로젝트 실행
+            $ npm run serve
+
+      step 5. src/App.vue 파일을 열고 수정한다.
+
+      step 6. 터미널에서 실행중인 프로세스 종료
+            "ctrl + c"  누르면 프로세스 종료 됨
+
+      [참고] 페이지 184~185
+    </pre>
+
+</body>
+
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible"
+      content="ie=edge">
+    <title>React CLI Sample</title>
+
+    <link rel="stylesheet"
+      href="../css/App.css" />
+
+  </head>
+  <body>
+    <xmp>
+    만들어진 프로젝트에 라우팅을 적용하여 본다.
+
+    ##################################
+    1. 작업 개요
+    ##################################
+
+
+    ##################################
+    2. 프로젝트 생성 작업
+       소요시간: 20분
+    ##################################
+    "rt20.create-react-project.html"을 참조하여 프로젝트를 만드시오.
+
+    step 1-07. 웹용 라우터 react-router-dom 패키지 설치
+        $ npm install react-router-dom --save
+
+    step 1-08. 프로젝트 모듈 전체재설치
+        $ npm install       # node_modules 폴더 생성됨
+
+
+    ##################################
+    step 6. 프로젝트 폴더 구조
+        소요시간: 05분
+    ##################################
+        |-- dist                     # 빌드 결과물 폴더
+        |-- node_modules             # npm 모듈(패키지) 저장 폴더
+        |-- public                   # 배포 버전을 빌드할 때 사용하는 파일
+        |   |---- favicon.ico
+        |   |---- index.html
+        |   |---- logo192.png
+        |   |---- logo512.png
+        |   |---- manifest.json
+        |   `---- robots.txt
+        |---- src                      # 소스 코드 폴더
+        |   |---- components           <== 폴더 추가
+        |   |---- pages                <== 폴더 추가
+        |   |---- App.css              <== 파일 삭제
+        |   |---- App.js
+        |   |---- App.test.js          <== 파일 삭제
+        |   |---- index.css
+        |   |---- index.js
+        |   |---- logo.svg             <== 파일 삭제
+        |   |---- reportWebVitals.js
+        |   `---- setupTests.js
+        |---- package.json
+        `---- README.md
+
+        # 폴더 생성
+        $ mkdir -p src/components \
+                   src/pages
+
+        # 사용하지 않는 파일 삭제
+        $ rm src/App.css \
+             src/App.test.js \
+             src/logo.svg
+
+        # 파일 생성
+        $ touch src/components/Home.js \
+                src/components/About.js \
+                src/components/Memo.js \
+                src/components/Topics.js \
+                src/components/TopicDetail.js \
+                src/components/MenuHome.js \
+                src/pages/PageHome.js
+
+    ##################################
+    step 11. 프로젝트에 BrowserRouter 설정
+    ##################################
+
+        작업 파일: src/index.js 수정
+
+        변경 전
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(
+            <React.StrictMode>
+                <App />
+            </React.StrictMode>,
+        );
+
+
+        변경 후
+        import { BrowserRouter } from "react-router-dom";
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(
+            <React.StrictMode>
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>
+            </React.StrictMode>,
+        );
+
+
+    ##################################
+    step 12. 프로젝트에 라우팅 설정
+    ##################################
+
+    step 12-1. 폴더 및 파일 생성
+    $ mkdir -p ./src/pages
+    $ touch src/pages/PageHome.js
+
+    step 12-2. src/App.js 수정
+        import PageHome from './pages/PageHome';
+        function App() {
+            return (
+                <div>
+                    <div>리액트 라우터를 배워 봅니다</div>
+                    <PageHome />
+                </div>
+            );
+        }
+        export default App;
+
+
+    ##################################
+    step 13. 프로젝트에 라우팅 설정
+    ##################################
+
+    페이지 컴포넌트만들기
+    $ touch src/pages/PageHome.js
+
+    PageHome 컴포넌트 만들기
+        src/pages/PageHome
+        <div>
+            <ul>
+                <h2>URL 테스트</h2>
+                <li><a rel="noreferrer" target="_blank" href="/">http://localhost:3000/</a></li>
+                <li><a rel="noreferrer" target="_blank" href="/about">http://localhost:3000/about</a></li>
+                <li><a rel="noreferrer" target="_blank" href="/about/first">http://localhost:3000/about/first</a></li>
+                <li><a rel="noreferrer" target="_blank" href="/about/first/second">http://localhost:3000/about/first/second</a></li>
+                <li><a rel="noreferrer" target="_blank" href="/about/first/second/third">http://localhost:3000/about/first/second/third</a></li>
+                <li><a rel="noreferrer" target="_blank" href="/about/name?color=red">http://localhost:3000/about/name?color=red</a></li>
+            </ul>
+
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/memo" element={<Memo />} />
+                <Route path="/topics/*" element={<Topics />} />
+                <Route path="/about/:name/:name2" element={<About />}></Route>
+            </Routes>
+        </div>
+
+
+    ##################################
+    step 14. 프로젝트에 컨텐츠 컴포넌트 만들기
+    ##################################
+
+    step 14-1.컨텐츠 컴포넌트 만들기
+        $ touch src/components/About  \
+                src/components/Home.js  \
+                src/components/Memo.js  \
+                src/components/Topics.js  \
+                src/components/TopicDetail.js
+
+    step 14-2. About 컴포넌트 만들기
+        <div>
+            <h2 style={{}}> About</h2>
+            <p>
+                안녕하세요. 저는 "{this.props.match.params.name}" 입니다.
+            </p>
+        </div>
+
+    step 14-3. Home 컴포넌트 만들기
+        <div>
+            <h2>Home</h2>
+        </div>
+
+    step 14-4. Memo 컴포넌트 만들기
+        <div>
+            <h2>Memo</h2>
+            <p>
+                안녕하세요. 저는 "{this.props.match.params.name}" 입니다.
+            </p>
+        </div>
+
+    step 14-5. Topics 컴포넌트 만들기
+        src/components/Topics.js
+
+        <div>
+            <h2>Topics</h2>
+        </div>
+
+    step 14-6. TopicDetail 컴포넌트 만들기
+        src/components/TopicDetail.js
+
+        <div>
+            <h2>Home</h2>
+        </div>
+
+    step 14-7. App 수정
+        src/App.js
+
+        <div>
+            <div>리액트 라우터를 배워 봅니다</div>
+            <PageHome />
+        </div>
+
+    ##################################
+    step 15. 프로젝트에 메뉴 만들기
+    ##################################
+
+    step 15-1. 메뉴 컴포넌트 만들기
+    $ touch src/components/MenuHome.js
+
+    step 15-2. MenuHome 컴포넌트 만들기
+        src/components/Menu
+        메뉴 설정을 할 때는 Link나 NavLink 컴포넌트를 사용해야 한다. a 태그 사용하면 안됨
+        NavLink 컴포넌트는 Link 컴포넌트에 active를 적용할 수 있는 컴포넌트다.
+
+        <div>
+            <ul>
+                <li><NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/">Home</NavLink></li>
+                <li><NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/memo">Memo</NavLink></li>
+                <li><NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/topics">Topics</NavLink></li>
+                <li><NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/about">소개</NavLink></li>
+                <li><NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/about/react">소개 >> react</NavLink></li>
+            </ul>
+            <div>
+                <p>메뉴 설정을 할 때는 Link나 NavLink 컴포넌트를 사용해야 한다. a 태그를 사용하면 안됨</p>
+                <p>NavLink 컴포넌트는 Link 컴포넌트에 active 기능이 추가된 컴포넌트다.</p>
+            </div>
+        </div>
+
+
+    step 15-3. 페이지 컴포넌트에 메뉴 컴포넌트 추가
+        $ touch src/pages/PageHome.js
+
+    </xmp>
+
+  </body>
+</html>

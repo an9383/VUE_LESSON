@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible"
+      content="ie=edge" />
+    <title>컴포넌트 생명주기</title>
+
+    <link rel="stylesheet"
+      href="../css/reset.css" />
+  </head>
+
+  <body>
+    <div>
+      <h3>useEffect 사용법</h3>
+      <a href="https://ko.reactjs.org/docs/hooks-overview.html#effect-hook"
+        target="_blank"
+        rel="noopener noreferrer">useEffect OverView</a>
+      <br />
+      <br />
+      <a href="https://ko.reactjs.org/docs/hooks-effect.html"
+        target="_blank"
+        rel="noopener noreferrer">useEffect 와 lifecycle
+      </a>
+    </div>
+    <pre>
+      함수 컴포넌트에서 생명주기, 마운트, 업데이트, 언마운트를 이해한다.
+
+      아래 사이트의 코드를 이용하여 컴포넌트를 만들어 본다.
+      참고: https://ko.reactjs.org/docs/conditional-rendering.html
+
+      Greeting 컴포넌트에서 isLoggedIn 의 값에 따라 리턴하는 컴포넌트 분기한다.
+      isLoggedIn 은 부모로 부터 받는 값이다.
+
+      부모로부터 받은 props 를 자식 컴포넌트에 넘기시오.
+      Greeting 컴포넌트에서 UserGreeting 컴포넌트로 모든 props를 넘기시오.
+      Greeting 컴포넌트에서 GuestGreeting 컴포넌트로 모든 props를 넘기시오
+
+
+      Greeting 컴포넌트의 인자로 isLoggedIn 을 넘긴다.
+      isLoggedIn 값으로는 true 를 넘기도록 설정하시오.
+    </pre>
+    <hr />
+
+    <div id="app"></div>
+  </body>
+</html>
+
+<script src="https://unpkg.com/@babel/standalone/babel.js"
+  crossorigin="anonymous">
+    /* 자바스크립트로 컴파일러. ES6 ==> ES5, JSX ==> ES5  */
+  </script>
+<script src="http://unpkg.com/react@17/umd/react.development.js"
+  crossorigin="anonymous">
+    /* import React, { Component, PureComponent } from 'react' */
+  </script>
+<script src="http://unpkg.com/react-dom@17/umd/react-dom.development.js"
+  crossorigin="anonymous">
+    /* import ReactDOM from 'react-dom' */
+  </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.8.1/prop-types.js"
+  crossorigin="anonymous">
+  </script>
+<script type="text/babel">
+
+  const { useState, useEffect, useRef, useCallback, useMemo, useReducer, Fragment } = React;
+
+  // id="app" 인 태그 에 컴포넌트를 화면에 붙이시오
+  // ReactDOM.render( 인자1, 인자2 )
+  ReactDOM.render(<GreetingContainer />, document.getElementById('app'));
+
+  // 단축키 rfc
+  function GreetingContainer({
+    ...props
+  }) {
+    // useState 를 사용한 컴포넌트의 상태값 설정
+    const [isLogedIn, setIsLogedIn] = useState(false); // 상태값이 기본타입인 경우
+
+    // refIsMounted는 생명주기의 마운트와 업데이트를 구분하기 위한 ref
+    const refIsMounted = useRef(false);
+    useEffect(() => {
+      if (refIsMounted.current) {
+        // 업데이트 될 때마다 실행됨. 여러번. state 가 변경될 때마다
+        console.log('GreetingContainer >> componentDidUpdate');
+      }
+      else {
+        // 마운트 완료 후에 실행됨. 한번만. focus 줄때
+        console.log('GreetingContainer >> componentDidMount');
+        refIsMounted.current = true;
+      }
+      return () => {
+        // 언마운트 직전에 한번만 실행됨.
+        console.log('GreetingContainer >> componentWillUmount');
+      };
+    }, [/* 연관배열: 메서드와 연관되는 상태(변수)명들을 기술 */ isLogedIn]);
+
+    // 이벤트 핸들러 작성.
+    const handler = (e) => {
+      // 이벤트 핸들러는 화살표 함수로 만든다
+      console.log(e.target);
+      setIsLogedIn(!isLogedIn);
+    };
+
+    // JSX로 화면 만들기. 조건부 렌더링: https://ko.reactjs.org/docs/conditional-rendering.html
+    return (
+      <div>
+        GreetingContainer
+        <button onClick={handler}>isLogedIn 값 변경</button>
+        <hr />
+        <Greeting isLogedIn={isLogedIn}></Greeting>
+      </div>
+    )
+  }
+  GreetingContainer.propTypes = {};
+  GreetingContainer.defaultProps = {};
+
+
+  function Greeting({ isLogedIn }) {
+    // refIsMounted는 생명주기의 마운트와 업데이트를 구분하기 위한 ref
+    const refIsMounted = useRef(false);
+    useEffect(() => {
+      if (refIsMounted.current) {
+        // 업데이트 될 때마다 실행됨. 여러번. state 가 변경될 때마다
+        console.log('Greeting >> componentDidUpdate');
+      }
+      else {
+        // 마운트 완료 후에 실행됨. 한번만. focus 줄때
+        console.log('Greeting >> componentDidMount');
+        refIsMounted.current = true;
+      }
+      return () => {
+        // 언마운트 직전에 한번만 실행됨.
+        console.log('Greeting >> componentWillUmount');
+      };
+    }, [/* 연관배열: 메서드와 연관되는 상태(변수)명들을 기술 */]);
+
+    if (isLogedIn)
+      return (<UserGreeting></UserGreeting>);
+    else
+      return (<GuestGreeting></GuestGreeting>);
+  }
+
+  Greeting.propTypes = {
+    isLogedIn: PropTypes.bool,
+  };
+  Greeting.defaultProps = {
+    isLogedIn: false,
+  };
+
+  function UserGreeting({ }) {
+    // refIsMounted는 생명주기의 마운트와 업데이트를 구분하기 위한 ref
+    const refIsMounted = useRef(false);
+    useEffect(() => {
+      if (refIsMounted.current) {
+        // 업데이트 될 때마다 실행됨. 여러번. state 가 변경될 때마다
+        console.log('UserGreeting >> componentDidUpdate');
+      }
+      else {
+        // 마운트 완료 후에 실행됨. 한번만. focus 줄때
+        console.log('UserGreeting >> componentDidMount');
+        refIsMounted.current = true;
+      }
+      return () => {
+        // 언마운트 직전에 한번만 실행됨.
+        console.log('UserGreeting >> componentWillUmount');
+      };
+    }, [/* 연관배열: 메서드와 연관되는 상태(변수)명들을 기술 */]);
+
+    return (
+      <div>
+        UserGreeting
+      </div>
+    )
+  }
+  UserGreeting.propTypes = {};
+  UserGreeting.defaultProps = {};
+
+  function GuestGreeting({ }) {
+    // refIsMounted는 생명주기의 마운트와 업데이트를 구분하기 위한 ref
+    const refIsMounted = useRef(false);
+    useEffect(() => {
+      if (refIsMounted.current) {
+        // 업데이트 될 때마다 실행됨. 여러번. state 가 변경될 때마다
+        console.log('GuestGreeting >> componentDidUpdate');
+      }
+      else {
+        // 마운트 완료 후에 실행됨. 한번만. focus 줄때
+        console.log('GuestGreeting >> componentDidMount');
+        refIsMounted.current = true;
+      }
+      return () => {
+        // 언마운트 직전에 한번만 실행됨.
+        console.log('GuestGreeting >> componentWillUmount');
+      };
+    }, [/* 연관배열: 메서드와 연관되는 상태(변수)명들을 기술 */]);
+
+    return (<div> GuestGreeting </div>)
+  }
+
+  GuestGreeting.propTypes = {};
+  GuestGreeting.defaultProps = {};
+</script>
