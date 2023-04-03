@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
     <title>Vue Sample</title>
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
     <!-- CSS import -->
-    <link rel="stylesheet" href="../css/reset.css">
-</head>
+    <link rel="stylesheet"
+      href="../css/reset.css">
+  </head>
 
-<body>
+  <body>
     <xmp>
         Vue Reactivity의 동작 원리에 대해서 배운다.
         ==> page 178 을 5분 동안 읽기
@@ -48,8 +51,8 @@
         예제) vue06-03.hello-vue.html 을 참조.
     </pre>
     <div id="app1">
-        <h2>{{msg}}</h2>
-        <button v-on:click="app2BtnClick"> 클릭</button>
+      <h2>{{msg}}</h2>
+      <button v-on:click="app2BtnClick"> 클릭</button>
     </div>
 
     <hr color="red">
@@ -68,9 +71,9 @@
 
     </pre>
     <h2 id="app2">
-        이자리에 있는 정보를 가져오다.
+      이자리에 있는 정보를 가져오다.
     </h2>
     <button onclick="app2BtnClick()"> 클릭</button>
-</body>
+  </body>
 
 </html>
